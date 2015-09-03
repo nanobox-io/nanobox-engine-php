@@ -106,7 +106,7 @@ build:
 ```
 
 ##### Quick Links
-- [Apache httpd settings](#apache-httpd-settins)
+- [Apache httpd settings](#apache-httpd-settings)
 - [PHP-FPM settings](#php-fpm-settings)
 - [PHP settings](#php-settings)
 - [PHP APC settings](#php-apc-settings)
