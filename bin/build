@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# source the Nos framework
+. /opt/nos/common.sh
+
+# initialize Nos with the original arguments
+nos_init $@
+
+# run before exec hooks
+
+run_hooks "before"
+
+# run composer install
+
+if [[ -f composer.json ]]; then
+  if [[ ! -f composer.lock ]]; then
+    print_warning "No 'composer.lock' file detected. This may cause a slow or failed build. To avoid this issue, commit the 'composer.lock' file to your git repo."
+  fi
+  (cd $(payload 'code_dir'); run_process "composer install", "composer install --no-interaction --prefer-source")
+fi
+
+# run exec hooks
+
+run_hooks "exec"
+
+# run after exec hooks
+
+run_hooks "after"
+
+print_bullet "Copying release into live code directory..."
+rsync -a $(payload 'code_dir') $(payload 'live_dir')

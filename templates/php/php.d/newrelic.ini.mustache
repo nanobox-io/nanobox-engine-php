@@ -1,0 +1,30 @@
+
+{{#newrelic_license}}
+extension=newrelic.so
+newrelic.daemon.dont_launch = 3
+newrelic.enabled=true
+newrelic.appname="nanobox {{app_name}}"
+newrelic.license="{{newrelic_license}}"
+newrelic.capture_params={{newrelic_capture_params}}
+newrelic.ignored_params="{{newrelic_ignored_params}}"
+newrelic.loglevel="{{newrelic_loglevel}}"
+{{#newrelic_framework}}
+newrelic.framework="{{newrelic_framework}}"
+{{/newrelic_framework}}
+newrelic.browser_monitoring.auto_instrument={{newrelic_browser_monitoring_auto_instrument}}
+newrelic.framework.drupal.modules={{newrelic_framework_drupal_modules}}
+newrelic.transaction_tracer.detail={{newrelic_transaction_tracer_detail}}
+newrelic.transaction_tracer.enabled={{newrelic_transaction_tracer_enabled}}
+newrelic.transaction_tracer.record_sql="{{newrelic_transaction_tracer_record_sql}}"
+newrelic.transaction_tracer.threshold={{newrelic_transaction_tracer_threshold}}
+newrelic.transaction_tracer.stack_trace_threshold={{newrelic_transaction_tracer_stack_trace_threshold}}
+newrelic.transaction_tracer.explain_threshold={{newrelic_transaction_tracer_explain_threshold}}
+newrelic.transaction_tracer.slow_sql={{newrelic_transaction_tracer_slow_sql}}
+newrelic.transaction_tracer.custom="{{newrelic_transaction_tracer_custom}}"
+newrelic.error_collector.enabled={{newrelic_error_collector_enabled}}
+newrelic.error_collector.record_database_errors={{newrelic_error_collector_record_database_errors}}
+newrelic.webtransaction.name.functions="{{newrelic_webtransaction_name_functions}}"
+newrelic.webtransaction.name.files="{{newrelic_webtransaction_name_files}}"
+newrelic.webtransaction.name.remove_trailing_path={{newrelic_webtransaction_name_remove_trailing_path}}
+newrelic.synchronous_startup={{newrelic_synchronous_startup}}
+{{/newrelic_license}}

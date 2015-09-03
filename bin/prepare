@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# source the Nos framework
+. /opt/nos/common.sh
+
+# source php common lib
+. ../lib/php_common.sh
+
+# initialize Nos with the original arguments
+nos_init $@
+
+# Install PHP and dependencies
+php_version=$(payload_boxfile_php_version)
+newrelic_license=$(payload newrelic_license)
+if [[ -z "$php_version" ]]; then
+  php_version="5.6"
+fi
+php_condensed_version=${php_version//./}
+
+install "php${php_condensed_version}-bundle"
+
+# Make environment variables and configuration files
+php_interpreter=$(payload 'boxfile_php_interpreter')
+php_extensions=$(payload 'boxfile_php_extensions')
+php_zend_extensions=$(payload 'boxfile_php_zend_extensions')
+
+persist_evars
+create_apache_conf
+[[ "$php_interpreter" = "fpm" ]] && create_php_fpm_conf
+create_php_ini
+[[ -n "$newrelic_license" ]] && create_php_newrelic_ini
+for extension in ${php_extensions//,/ } ${php_zend_extensions//,/ }; do
+  [[ -f ../templates/php/php.d/${extension}.ini.mustache ]] && eval create_php_${extension}_ini
+done

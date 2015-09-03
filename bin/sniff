@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# $1 = code_dir
+
+if [ ! -f ${1}/index.php ]
+  exit 1
+fi

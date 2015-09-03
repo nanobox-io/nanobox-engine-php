@@ -1,0 +1,83 @@
+[PHP]
+engine = On
+short_open_tag = {{short_open_tag}}
+asp_tags = Off
+precision = 14
+y2k_compliance = On
+output_buffering = 4096
+zlib.output_compression = {{zlib_output_compression}}
+implicit_flush = Off
+unserialize_callback_func =
+serialize_precision = 100
+allow_call_time_pass_reference = Off
+safe_mode = Off
+safe_mode_gid = Off
+safe_mode_include_dir =
+safe_mode_exec_dir =
+safe_mode_allowed_env_vars = PHP_
+safe_mode_protected_env_vars = LD_LIBRARY_PATH
+allow_url_fopen = {{allow_url_fopen}}
+disable_functions = {{disable_functions}}
+disable_classes =
+expose_php = {{expose_php}}
+max_execution_time = {{max_execution_time}}
+max_input_time = {{max_input_time}}
+memory_limit = {{memory_limit}}M
+error_reporting = {{error_reporting}}
+display_errors = {{display_errors}}
+display_startup_errors = Off
+log_errors = On
+log_errors_max_len = 1024
+ignore_repeated_errors = Off
+ignore_repeated_source = Off
+report_memleaks = On
+track_errors = Off
+html_errors = Off
+error_log = {{deploy_dir}}/var/log/php/error.log
+variables_order = "EGPCS"
+request_order = "GP"
+register_globals = {{register_globals}}
+register_long_arrays = Off
+register_argc_argv = {{register_argc_argv}}
+auto_globals_jit = Off
+post_max_size = {{post_max_size}}
+magic_quotes_gpc = Off
+magic_quotes_runtime = Off
+magic_quotes_sybase = Off
+auto_prepend_file =
+auto_append_file =
+default_mimetype = {{default_mimetype}}
+doc_root =
+user_dir =
+enable_dl = Off
+{{#browscap}}
+browscap = {{browscap}}
+{{/browscap}}
+file_uploads = {{file_uploads}}
+max_input_vars = {{max_input_vars}}
+upload_max_filesize = {{upload_max_filesize}}
+max_file_uploads = {{max_file_uploads}}
+allow_url_include = Off
+default_socket_timeout = 60
+{{#extensions}}
+extension={{.}}.so
+{{/extensions}}
+{{#zend_extensions}}
+zend_extension={{extension_folder}}/{{.}}.so
+{{/zend_extensions}}
+session.gc_maxlifetime = {{session_length}}
+{{#default_locale}}
+intl.default_locale = {{default_locale}}
+{{/default_locale}}
+session.auto_start = {{session_autostart}}
+session.save_path = {{session_save_path}}
+session.save_handler = {{session_save_handler}}
+date.timezone = {{date_timezone}}
+SMTP = localhost
+smtp_port = 25
+sendmail_path = {{deploy_dir}}/libexec/sendmail/sendmail
+mail.add_x_header = On
+sql.safe_mode = Off
+iconv.internal_encoding = {{iconv_internal_encoding}}
+mysql.connect_timeout = "15"
+default_socket_timeout = "15"

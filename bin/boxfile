@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# source the Nos framework
+. /opt/nos/common.sh
+
+# initialize Nos with the original arguments
+nos_init $@
+
+# extract php interpreter
+if [[ -n "$(payload 'boxfile_php_interpreter')" ]]; then
+  php_interpreter=$(payload 'boxfile_php_interpreter')
+else
+  php_interpreter="fpm"
+fi
+
+deploy_dir=$(payload 'deploy_dir')
+etc_dir=$(payload 'etc_dir')
+
+echo "web1:"
+
+# echo out the exec command
+if [[ ${php_interpreter} = "fpm" ]]; then
+  echo "  exec:"
+  echo "    fpm: \"${deploy_dir}/sbin/php-fpm -y ${etc_dir}/php/php-fpm.conf -c ${etc_dir}/php/php.ini\""
+  echo "    apache: \"${deploy_dir}/sbin/httpd -DNO_DETACH\""
+else if [[ ${php_interpreter} = "mod_php" ]]; then
+  echo "  exec: \"${deploy_dir}/sbin/httpd -DNO_DETACH\""
+fi
+
+# echo out the logs to watch
+echo "  log_watch:"
+echo "    apache[access]: /data/var/log/apache/access.log"
+echo "    apache[error]: /data/var/log/apache/error.log"
+echo "    php[error]: /data/var/log/php/php_error.log"
+if [[ ${php_interpreter} = "fpm" ]]; then
+  echo "    php[fpm]: /data/var/log/php/php_fpm.log"
+fi

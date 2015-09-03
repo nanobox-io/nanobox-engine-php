@@ -1,0 +1,20 @@
+[global]
+pid = {{deploy_dir}}/var/run/php-fpm.pid
+error_log = {{deploy_dir}}/var/log/php/php-fpm.log
+log_level = warning
+{{#events_mechanism}}
+events.mechanism = {{events_mechanism}}
+{{events_mechanism}}
+
+[www]
+listen = {{deploy_dir}}/var/tmp/php.sock
+
+pm = dynamic
+pm.max_children = {{max_children}}
+pm.start_servers = 1
+pm.min_spare_servers = 1
+pm.max_spare_servers = {{max_spare_servers}}
+pm.max_requests = {{max_requests}}
+{{^php53}}
+clear_env = false
+{{/php53}}
