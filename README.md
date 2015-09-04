@@ -177,7 +177,7 @@ build:
 
 ##### `httpd_modules`
 
-Specify which Apache modules to enable or disable. View the [full list of available Apache Modules](https://gist.github.com/sanderson/948bdf49ccea35496d3e). By default, all modules are enabled.
+Specify which Apache modules to enable or disable. View the [full list of available Apache Modules](https://github.com/pagodabox/nanobox-engine-php/blob/master/doc/apache-modules.md). By default, all modules are enabled.
 ```yaml
 build:
   httpd_modules
