@@ -35,8 +35,8 @@ LoadModule alias_module lib/httpd/mod_alias.so
 LoadModule fastcgi_module lib/httpd/mod_fastcgi.so
 {{/fastcgi}}
 
-{{modules}}
-LoadModule {{name}}_module lib/httpd/mod_{{name}}.so
+{{#modules}}
+LoadModule {{.}}_module lib/httpd/mod_{{.}}.so
 {{/modules}}
 
 #############################################
@@ -134,7 +134,7 @@ AddType application/x-httpd-php .php
 AddHandler type-map var
 {{#fastcgi}}
 ScriptAlias /cgi-bin/ "{{deploy_dir}}/libexec/cgi-bin/"
-FastCgiExternalServer {{deploy_dir}}/libexec/cgi-bin/php-cgi -idle-timeout {{idle_timeout}} -socket {{deploy_dir}}/var/tmp/php.sock -pass-header Authorization
+FastCgiExternalServer {{deploy_dir}}/libexec/cgi-bin/php-cgi -idle-timeout {{timeout}} -socket {{deploy_dir}}/var/tmp/php.sock -pass-header Authorization
 AddHandler php-fastcgi .php
 Action php-fastcgi /cgi-bin/php-cgi
 {{/fastcgi}}
@@ -166,10 +166,12 @@ SetEnv "{{key}}" "{{value}}"
 #############################################
 # VirtualHost Configuration     	        #
 #############################################
-NameVirtualHost 0.0.0.0:80
+{{#domains}}
+NameVirtualHost 0.0.0.0:{{port}}
+{{/domains}}
 
 {{#domains}}
-<VirtualHost 0.0.0.0:80>
+<VirtualHost 0.0.0.0:{{port}}>
     DocumentRoot "{{live_dir}}{{document_root}}"
     ServerName {{.}}
     ServerAlias *.{{.}}

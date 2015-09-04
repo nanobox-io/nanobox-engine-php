@@ -1,0 +1,5 @@
+build:
+    engine: ../../../../nanobox-engine-php
+    php_extensions: 
+        - filter
+        - curl

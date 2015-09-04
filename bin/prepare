@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "$(echo $1 | shon)"
+
 # source the Nos framework
 . /opt/nos/common.sh
 
@@ -10,25 +12,64 @@
 nos_init $@
 
 # Install PHP and dependencies
-php_version=$(payload_boxfile_php_version)
+php_version=$(payload boxfile_php_version)
 newrelic_license=$(payload newrelic_license)
+webserver=$(payload boxfile_webserver)
+use_fastcgi=$(fastcgi)
+php_extensions=$(payload boxfile_php_extensions)
+php_zend_extensions=$(payload boxfile_php_zend_extensions)
+extensions_list=(${!php_extensions})
+zend_extensions_list=(${!php_zend_extensions})
+
+echo "PL_boxfile_php_extensions_value: ${PL_boxfile_php_extensions_value[@]}"
+
+echo "use_fastcgi: $use_fastcgi"
+echo "php_extensions: $php_extensions"
+echo "php_zend_extensions: $php_zend_extensions"
+
 if [[ -z "$php_version" ]]; then
   php_version="5.6"
 fi
+if [[ -z "$webserver" ]]; then
+  webserver="apache"
+fi
 php_condensed_version=${php_version//./}
 
-install "php${php_condensed_version}-bundle"
+if [[ "${webserver}" = "apache" ]]; then
+	install "apache-2.2"
+	install "ap22-cloudflare"
+	install "ap22-xsendfile"
+	if [[ "$use_fastcgi" = "true" ]]; then
+		install "ap22-fastcgi"
+	else
+		install "ap22-php${php_condensed_version}"
+	fi
+fi
+
+# install "php${php_condensed_version}-bundle"
+install "php-${php_version}"
+for extension in ${extensions_list[@]} ${zend_extensions_list[@]}; do
+  echo "$extension"
+  install "php${php_condensed_version}-${extension}"
+done
 
 # Make environment variables and configuration files
-php_interpreter=$(payload 'boxfile_php_interpreter')
-php_extensions=$(payload 'boxfile_php_extensions')
-php_zend_extensions=$(payload 'boxfile_php_zend_extensions')
+etc_dir=$(payload 'etc_dir')
+deploy_dir=$(payload 'deploy_dir')
+mkdir -p ${etc_dir}/php
+mkdir -p ${etc_dir}/php.d
+mkdir -p ${etc_dir}/httpd
+mkdir -p ${deploy_dir}/var/log/httpd
+mkdir -p ${deploy_dir}/var/log/php
+mkdir -p ${deploy_dir}/var/run
+mkdir -p ${deploy_dir}/var/tmp
+
 
 persist_evars
 create_apache_conf
-[[ "$php_interpreter" = "fpm" ]] && create_php_fpm_conf
+[[ "$use_fastcgi" = "true" ]] && create_php_fpm_conf
 create_php_ini
 [[ -n "$newrelic_license" ]] && create_php_newrelic_ini
-for extension in ${php_extensions//,/ } ${php_zend_extensions//,/ }; do
+for extension in ${php_extensions} ${php_zend_extensions}; do
   [[ -f ../templates/php/php.d/${extension}.ini.mustache ]] && eval create_php_${extension}_ini
 done
