@@ -1,4 +1,4 @@
-# PHP/Zend Extension Availability for Nanobox's PHP Engine
+# PHP/Zend Extension Availability in the Nanobox PHP Engine
 
 #### PHP Extensions
 | php_extensions      | PHP 5.3             | PHP 5.4             | PHP 5.5             | PHP 5.6             |
