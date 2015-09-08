@@ -148,7 +148,7 @@ apache_document_root(){
 
 apache_directory_index(){
   # boxfile apache_index_list
-  index_list=$(validate "$(payload boxfile_apache_default_gateway)" "string" "index.html index.php")
+  index_list=$(validate "$(payload boxfile_apache_index_list)" "string" "index.html index.php")
   for i in $index_list; do
     ignore=$(validate "$i" "file" "")
   done
@@ -233,7 +233,7 @@ nginx_document_root(){
 
 nginx_directory_index(){
   # boxfile nginx_index_list
-  index_list=$(validate "$(payload boxfile_nginx_default_gateway)" "string" "index.html index.php")
+  index_list=$(validate "$(payload boxfile_nginx_index_list)" "string" "index.html index.php")
   for i in $index_list; do
     ignore=$(validate "$i" "file" "")
   done
