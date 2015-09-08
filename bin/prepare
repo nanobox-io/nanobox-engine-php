@@ -53,6 +53,10 @@ fi
 # install "php${php_condensed_version}-bundle"
 install "php-${php_version}"
 
+if [[ -f "$(payload 'code_dir')/composer.json" ]]; then
+  install "composer"
+fi
+
 if [[ "${PL_boxfile_php_extensions_type}" = "array" ]]; then
   for ((i=0; i < PL_boxfile_php_extensions_length ; i++)); do
     type=PL_boxfile_php_extensions_${i}_type
@@ -81,10 +85,11 @@ mkdir -p ${etc_dir}/php.d
 if [[ "${webserver}" = "apache" ]]; then
   mkdir -p ${etc_dir}/httpd
   mkdir -p ${deploy_dir}/var/log/httpd
+  mkdir -p ${deploy_dir}/libexec/cgi-bin/
 elif [[ "${webserver}" = "nginx" ]]; then
   mkdir -p ${etc_dir}/nginx
   mkdir -p ${deploy_dir}/var/log/nginx
-  mkdir -p /data/var/db/nginx/client_body_temp
+  mkdir -p ${deploy_dir}/var/tmp/nginx/client_body_temp
 fi
 mkdir -p ${deploy_dir}/var/log/php
 mkdir -p ${deploy_dir}/var/run
