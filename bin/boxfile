@@ -23,8 +23,10 @@ if [[ ${php_interpreter} = "fpm" ]]; then
   echo "  exec:"
   echo "    fpm: \"${deploy_dir}/sbin/php-fpm -y ${etc_dir}/php/php-fpm.conf -c ${etc_dir}/php/php.ini\""
   echo "    apache: \"${deploy_dir}/sbin/httpd -DNO_DETACH\""
-else if [[ ${php_interpreter} = "mod_php" ]]; then
-  echo "  exec: \"${deploy_dir}/sbin/httpd -DNO_DETACH\""
+else 
+  if [[ ${php_interpreter} = "mod_php" ]]; then
+    echo "  exec: \"${deploy_dir}/sbin/httpd -DNO_DETACH\""
+  fi
 fi
 
 # echo out the logs to watch

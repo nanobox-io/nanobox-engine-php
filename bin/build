@@ -28,4 +28,4 @@ run_hooks "exec"
 run_hooks "after"
 
 print_bullet "Copying release into live code directory..."
-rsync -a $(payload 'code_dir') $(payload 'live_dir')
+rsync -a $(payload 'code_dir')/ $(payload 'live_dir')
