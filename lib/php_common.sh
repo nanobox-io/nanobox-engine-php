@@ -185,26 +185,39 @@ access_log(){
 
 env_vars(){
   # filtered payload env
-  env=$(payload env)
-  >&2 echo "env: ${env}"
-  if [[ -z "$env" ]]; then
+  declare -a envlist
+  if [[ "${PL_env_type}" = "map" ]]; then
+    for i in ${PL_env_nodes//,/ }; do
+      key=${i}
+      value=PL_env_${i}_value
+      envlist+=("{\"key\":\"${key}\",\"value\":\"${!value}\"}")
+    done
+  fi
+  if [[ -z "${envlist[@]}" ]]; then
     echo "[]"
   else
-    list=(${env//,/ })
-    envlist=($(for i in ${list[@]}; do echo "{ \"key\":\"${i}\", \"value\": \"$(payload "env_${i}")\"}"; done))
     echo "[ $(join "," ${envlist[@]}) ]"
   fi
 }
 
 domains(){
   # payload dns
-  dns=$(payload dns)
-  >&2 echo "dns: ${dns}"
-  if [[ -z "$dns" ]]; then
+  declare -a dns
+  if [[ "${PL_dns_type}" = "array" ]]; then
+    for ((i=0; i < PL_dns_length ; i++)); do
+      type=PL_dns_${i}_type
+      value=PL_dns_${i}_value
+      if [[ ${!type} = "string" ]]; then
+        dns+=(${!value})
+      fi
+    done
+  else
+    dns+=("localhost")
+  fi
+  if [[ -z "dns[@]" ]]; then
     echo "[]"
   else
-    domainlist=(${dns//,/ })
-    echo "[ \"$(join '","' ${domainlist[@]})\" ]"
+    echo "[ \"$(join '","' ${dns[@]})\" ]"
   fi
 }
 
@@ -357,27 +370,59 @@ max_file_uploads(){
 
 extension_folder(){
   # folder in lib/php/???
-  for i in $(payload live_dir)/lib/php/*; do [[ "$i" =~ /[0-9]+$ ]] && echo $i && return; done
+  for i in $(payload deploy_dir)/lib/php/*; do [[ "$i" =~ /[0-9]+$ ]] && echo $i && return; done
 }
 
 extensions(){
   # boxfile php_extensions
   extension_dir=$(extension_folder)
-  php_extensions=$(payload boxfile_php_extensions)
-  [[ -z "$php_extensions" ]] && echo "[ \"mysql\" ]" && return
-  php_extensions_list=(${php_extensions//,/ })
-  for i in ${php_extensions_list[@]}; do [[ ! -f ${extension_dir}/$i.so ]] && >&2 echo "Error: Can't find extension $i" && exit 1; done
-  echo "[ \"$(join '","' ${php_extensions_list[@]})\" ]"
+  declare -a php_extensions_list
+  if [[ "${PL_boxfile_php_extensions_type}" = "array" ]]; then
+    for ((i=0; i < PL_boxfile_php_extensions_length ; i++)); do
+      type=PL_boxfile_php_extensions_${i}_type
+      value=PL_boxfile_php_extensions_${i}_value
+      if [[ ${!type} = "string" ]]; then
+        if [[ -f ${extension_dir}/${!value}.so ]]; then
+          php_extensions_list+=(${!value})
+        else
+          >&2 echo "Error: Can't find extension ${!value}"
+          exit 1
+        fi
+      fi
+    done
+  else
+    php_extensions_list+=("mysql")
+  fi
+  if [[ -z "php_extensions_list[@]" ]]; then
+    echo "[]"
+  else
+    echo "[ \"$(join '","' ${php_extensions_list[@]})\" ]"
+  fi
 }
 
 zend_extensions(){
   # boxfile php_zend_extensions
   extension_dir=$(extension_folder)
-  php_zend_extensions=$(payload boxfile_php_zend_extensions)
-  [[ -z "$php_zend_extensions" ]] && echo "[]" && return
-  php_zend_extensions_list=(${php_zend_extensions//,/ })
-  for i in ${php_zend_extensions_list[@]}; do [[ ! -f ${extension_dir}/$i.so ]] && >&2 echo "Error: Can't find Zend extension $i" && exit 1; done
-  echo "[ \"$(join '","' ${php_zend_extensions_list[@]})\" ]"
+  declare -a php_zend_extensions_list
+  if [[ "${PL_boxfile_php_zend_extensions_type}" = "array" ]]; then
+    for ((i=0; i < PL_boxfile_php_zend_extensions_length ; i++)); do
+      type=PL_boxfile_php_zend_extensions_${i}_type
+      value=PL_boxfile_php_zend_extensions_${i}_value
+      if [[ ${!type} = "string" ]]; then
+        if [[ -f ${extension_dir}/${!value}.so ]]; then
+          php_zend_extensions_list+=(${!value})
+        else
+          >&2 echo "Error: Can't find extension ${!value}"
+          exit 1
+        fi
+      fi
+    done
+  fi
+  if [[ -z "${php_zend_extensions_list[@]}" ]]; then
+    echo "[]"
+  else
+    echo "[ \"$(join '","' ${php_zend_extensions_list[@]})\" ]"
+  fi
 }
 
 session_length(){
@@ -641,12 +686,6 @@ newrelic_webtransaction_name_remove_trailing_path(){
   echo "$php_newrelic_webtransaction_name_remove_trailing_path"
 }
 
-newrelic_synchronous_startup(){
-  # boxfile php_newrelic_synchronous_startup
-  php_newrelic_synchronous_startup=$(validate "$(payload boxfile_php_newrelic_synchronous_startup)" "boolean" "Off")
-  echo "$php_newrelic_synchronous_startup"
-}
-
 opcache_memory_consumption(){
   # boxfile php_opcache_memory_consumption
   php_opcache_memory_consumption=$(validate "$(payload boxfile_php_opcache_memory_consumption)" "integer" "128")
@@ -789,6 +828,7 @@ generate_php_ini_json(){
   "register_argc_argv": "$(register_argc_argv)",
   "post_max_size": "$(post_max_size)",
   "default_mimetype": "$(default_mimetype)",
+  "live_dir": "$(live_dir)",
   "browscap": "$(browscap)",
   "file_uploads": "$(file_uploads)",
   "max_input_vars": "$(max_input_vars)",
@@ -880,8 +920,7 @@ generate_php_newrelic_ini_json(){
   "newrelic_error_collector_record_database_errors": "$(newrelic_error_collector_record_database_errors)",
   "newrelic_webtransaction_name_functions": "$(newrelic_webtransaction_name_functions)",
   "newrelic_webtransaction_name_files": "$(newrelic_webtransaction_name_files)",
-  "newrelic_webtransaction_name_remove_trailing_path": "$(newrelic_webtransaction_name_remove_trailing_path)",
-  "newrelic_synchronous_startup": "$(newrelic_synchronous_startup)"
+  "newrelic_webtransaction_name_remove_trailing_path": "$(newrelic_webtransaction_name_remove_trailing_path)"
 }
 END
 }
