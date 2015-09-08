@@ -10,23 +10,23 @@ This engine exposes configuration option through the [Boxfile](http://docs.nanob
 ```yaml
 build:
   # Apache httpd Settings
-  httpd_document_root: '/'
-  httpd_index_list:
+  apache_document_root: '/'
+  apache_index_list:
     - index.php
     - index.html
-  httpd_php_interpreter: fastcgi
-  httpd_modules:
+  apache_php_interpreter: fpm
+  apache_modules:
     - actions
     - alias
     - rewrite
-  httpd_max_spares: 10
-  httpd_max_clients: 128
-  httpd_server_limit: 128
-  httpd_max_requests: 10000
-  httpd_default_gateway: 'index.php'
-  httpd_static_expire: 86400
-  httpd_log_level: warn
-  httpd_access_log: false
+  apache_max_spares: 10
+  apache_max_clients: 128
+  apache_server_limit: 128
+  apache_max_requests: 10000
+  apache_default_gateway: 'index.php'
+  apache_static_expire: 86400
+  apache_log_level: warn
+  apache_access_log: false
 
   # PHP Settings
   php_version: 5.6
@@ -157,106 +157,106 @@ The following settings are used to configure Apache.
 
 ---
 
-##### `httpd_document_root`
+##### `apache_document_root`
 The public root of your web application. For instance, if you like to house your app in `/public` for security or organizational purposes, you can specify that here. The default is the `/`.
 ```yaml
 build:
-  httpd_document_root: '/'
+  apache_document_root: '/'
 ```
 
 ---
 
-##### `httpd_index_list`
+##### `apache_index_list`
 When a path is not specified in the url, these files are served in order in which they're listed.
 ```yaml
 build:
-  httpd_index_list:
+  apache_index_list:
     - index.php
     - index.html
 ```
 
 ---
 
-##### `httpd_php_interpreter`
+##### `apache_php_interpreter`
 
 Specify which PHP interepreter you would like Apache to use.
 
-- fastcgi *(default)*
+- fpm *(default)*
 - mod_php
 
 ```yaml
 build:
-  httpd_php_interpreter: fastcgi
+  apache_php_interpreter: fpm
 ```
 
 ---
 
-##### `httpd_modules`
+##### `apache_modules`
 
 Specify which Apache modules to enable or disable. View the [full list of available Apache Modules](https://github.com/pagodabox/nanobox-engine-php/blob/master/doc/apache-modules.md). By default, all modules are enabled.
 ```yaml
 build:
-  httpd_modules
+  apache_modules
 ```
 
 ---
 
-##### `httpd_max_spares`
+##### `apache_max_spares`
 
 Sets Apaches [`MaxSpareServers` directive](http://httpd.apache.org/docs/2.2/mod/prefork.html#maxspareservers).
 ```yaml
 build:
-  httpd_max_spares: 10
+  apache_max_spares: 10
 ```
 
 ---
 
-##### `httpd_max_clients`
-Sets Apache's [`MaxClients` directive](http://httpd.apache.org/docs/2.2/mod/mpm_common.html#maxclients). **Note:**This configuration must be less than or equal to the [`httpd_server_limit`](#httpd_server_limit).
+##### `apache_max_clients`
+Sets Apache's [`MaxClients` directive](http://httpd.apache.org/docs/2.2/mod/mpm_common.html#maxclients). **Note:**This configuration must be less than or equal to the [`apache_server_limit`](#apache_server_limit).
 ```yaml
 build:
-  httpd_max_clients: 128
+  apache_max_clients: 128
 ```
 
 ---
 
-##### `httpd_server_limit`
-Sets Apaches [`ServerLimit` directive](http://httpd.apache.org/docs/2.2/mod/mpm_common.html#serverlimit). **Note:** This configuration must be greater than or equal to the [`httpd_max_clients`](#httpd_max_clients).
+##### `apache_server_limit`
+Sets Apaches [`ServerLimit` directive](http://httpd.apache.org/docs/2.2/mod/mpm_common.html#serverlimit). **Note:** This configuration must be greater than or equal to the [`apache_max_clients`](#apache_max_clients).
 ```yaml
 build:
-  httpd_server_limit: 128
+  apache_server_limit: 128
 ```
 
 ---
 
-##### `httpd_max_requests`
+##### `apache_max_requests`
 Sets Apache's [`MaxRequestsPerChild` directive](http://httpd.apache.org/docs/2.2/mod/mpm_common.html#maxrequestsperchild).
 ```yaml
 build:
-  httpd_max_requests: 10000
+  apache_max_requests: 10000
 ```
 
 ---
 
-##### `httpd_default_gateway`
-When a path is not specified in the url, this files is served. *This is similar to [`httpd_index_list`](#httpd_index_list) except it only accepts a single argument.*
+##### `apache_default_gateway`
+When a path is not specified in the url, this files is served. *This is similar to [`apache_index_list`](#apache_index_list) except it only accepts a single argument.*
 ```yaml
 build:
-  httpd_default_gateway: "index.php"
+  apache_default_gateway: "index.php"
 ```
 
 ---
 
-##### `httpd_static_expire`
+##### `apache_static_expire`
 Adds far future expires to your header, setting the number of seconds static assets are cached. By default, static asset caching is not enabled. We only recommend using this directive on apps whose static assets do not change often.
 ```yaml
 build:
-  httpd_static_expire: 86400
+  apache_static_expire: 86400
 ```
 
 ---
 
-##### `httpd_log_level`
+##### `apache_log_level`
 Sets Apache's [`LogLevel` directive](http://httpd.apache.org/docs/2.2/mod/core.html#loglevel).
 ```yaml
 build:
@@ -265,11 +265,11 @@ build:
 
 ---
 
-##### `httpd_access_log`
+##### `apache_access_log`
 Enables or disables the Apache Access log.
 ```yaml
 build:
-  httpd_access_log: false
+  apache_access_log: false
 ```
 
 ---
@@ -560,7 +560,7 @@ build:
 ---
 
 ### PHP-FPM Settings
-These settings only apply when using `fastcgi` as your `httpd_php_interpreter`.
+These settings only apply when using `fpm` as your `apache_php_interpreter`.
 
 ---
 

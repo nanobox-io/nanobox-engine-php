@@ -36,37 +36,41 @@ fi
 php_condensed_version=${php_version//./}
 
 if [[ "${webserver}" = "apache" ]]; then
-	install "apache-2.2"
-	install "ap22-cloudflare"
-	install "ap22-xsendfile"
-	if [[ "$use_fastcgi" = "true" ]]; then
-		install "ap22-fastcgi"
-	else
-		install "ap22-php${php_condensed_version}"
-	fi
+  install "apache-2.2"
+  install "ap22-cloudflare"
+  install "ap22-xsendfile"
+  if [[ "$use_fastcgi" = "true" ]]; then
+    install "ap22-fastcgi"
+  else
+    install "ap22-php${php_condensed_version}"
+  fi
+fi
+
+if [[ "${webserver}" = "nginx" ]]; then
+  install "nginx"
 fi
 
 # install "php${php_condensed_version}-bundle"
 install "php-${php_version}"
 
 if [[ "${PL_boxfile_php_extensions_type}" = "array" ]]; then
-	for ((i=0; i < PL_boxfile_php_extensions_length ; i++)); do
-		type=PL_boxfile_php_extensions_${i}_type
-		value=PL_boxfile_php_extensions_${i}_value
-		if [[ ${!type} = "string" ]]; then
-			install php${php_condensed_version}-${!value}
-		fi
-	done
+  for ((i=0; i < PL_boxfile_php_extensions_length ; i++)); do
+    type=PL_boxfile_php_extensions_${i}_type
+    value=PL_boxfile_php_extensions_${i}_value
+    if [[ ${!type} = "string" ]]; then
+      install php${php_condensed_version}-${!value}
+    fi
+  done
 fi
 
 if [[ "${PL_boxfile_php_zend_extensions_type}" = "array" ]]; then
-	for ((i=0; i < PL_boxfile_php_zend_extensions_length ; i++)); do
-		type=PL_boxfile_php_zend_extensions_${i}_type
-		value=PL_boxfile_php_zend_extensions_${i}_value
-		if [[ ${!type} = "string" ]]; then
-			install php${php_condensed_version}-${!value}
-		fi
-	done
+  for ((i=0; i < PL_boxfile_php_zend_extensions_length ; i++)); do
+    type=PL_boxfile_php_zend_extensions_${i}_type
+    value=PL_boxfile_php_zend_extensions_${i}_value
+    if [[ ${!type} = "string" ]]; then
+      install php${php_condensed_version}-${!value}
+    fi
+  done
 fi
 
 # Make environment variables and configuration files
@@ -74,34 +78,41 @@ etc_dir=$(payload 'etc_dir')
 deploy_dir=$(payload 'deploy_dir')
 mkdir -p ${etc_dir}/php
 mkdir -p ${etc_dir}/php.d
-mkdir -p ${etc_dir}/httpd
-mkdir -p ${deploy_dir}/var/log/httpd
+if [[ "${webserver}" = "apache" ]]; then
+  mkdir -p ${etc_dir}/httpd
+  mkdir -p ${deploy_dir}/var/log/httpd
+elif [[ "${webserver}" = "nginx" ]]; then
+  mkdir -p ${etc_dir}/nginx
+  mkdir -p ${deploy_dir}/var/log/nginx
+  mkdir -p /data/var/db/nginx/client_body_temp
+fi
 mkdir -p ${deploy_dir}/var/log/php
 mkdir -p ${deploy_dir}/var/run
 mkdir -p ${deploy_dir}/var/tmp
 
-persist_evars
-create_apache_conf
+# persist_evars
+[[ "${webserver}" = "apache" ]] && create_apache_conf
+[[ "${webserver}" = "nginx" ]] && create_ngnix_conf
 [[ "$use_fastcgi" = "true" ]] && create_php_fpm_conf
 create_php_ini
 [[ -n "$newrelic_license" ]] && create_php_newrelic_ini
 
 if [[ "${PL_boxfile_php_extensions_type}" = "array" ]]; then
-	for ((i=0; i < PL_boxfile_php_extensions_length ; i++)); do
-		type=PL_boxfile_php_extensions_${i}_type
-		value=PL_boxfile_php_extensions_${i}_value
-		if [[ ${!type} = "string" ]]; then
-			[[ -f ../templates/php/php.d/${!value}.ini.mustache ]] && eval create_php_${!value}_ini
-		fi
-	done
+  for ((i=0; i < PL_boxfile_php_extensions_length ; i++)); do
+    type=PL_boxfile_php_extensions_${i}_type
+    value=PL_boxfile_php_extensions_${i}_value
+    if [[ ${!type} = "string" ]]; then
+      [[ -f ../templates/php/php.d/${!value}.ini.mustache ]] && eval create_php_${!value}_ini
+    fi
+  done
 fi
 
 if [[ "${PL_boxfile_php_zend_extensions_type}" = "array" ]]; then
-	for ((i=0; i < PL_boxfile_php_zend_extensions_length ; i++)); do
-		type=PL_boxfile_php_zend_extensions_${i}_type
-		value=PL_boxfile_php_zend_extensions_${i}_value
-		if [[ ${!type} = "string" ]]; then
-			[[ -f ../templates/php/php.d/${!value}.ini.mustache ]] && eval create_php_${!value}_ini
-		fi
-	done
+  for ((i=0; i < PL_boxfile_php_zend_extensions_length ; i++)); do
+    type=PL_boxfile_php_zend_extensions_${i}_type
+    value=PL_boxfile_php_zend_extensions_${i}_value
+    if [[ ${!type} = "string" ]]; then
+      [[ -f ../templates/php/php.d/${!value}.ini.mustache ]] && eval create_php_${!value}_ini
+    fi
+  done
 fi

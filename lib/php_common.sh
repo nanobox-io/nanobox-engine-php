@@ -71,27 +71,27 @@ timeout(){
 }
 
 max_spares(){
-  # boxfile httpd_max_spares
-  httpd_max_spares=$(validate "$(payload boxfile_httpd_max_spares)" "integer" "1")
-  echo "$httpd_max_spares"
+  # boxfile apache_max_spares
+  apache_max_spares=$(validate "$(payload boxfile_apache_max_spares)" "integer" "1")
+  echo "$apache_max_spares"
 }
 
 max_clients(){
-  # boxfile httpd_max_clients
-  httpd_max_clients=$(validate "$(payload boxfile_httpd_max_clients)" "integer" "128")
-  echo "$httpd_max_clients"
+  # boxfile apache_max_clients
+  apache_max_clients=$(validate "$(payload boxfile_apache_max_clients)" "integer" "128")
+  echo "$apache_max_clients"
 }
 
 max_requests_per_child(){
-  # boxfile httpd_max_requests
-  httpd_max_requests_per_child=$(validate "$(payload boxfile_httpd_max_requests_per_child)" "integer" "768")
-  echo "$httpd_max_requests_per_child"
+  # boxfile apache_max_requests
+  apache_max_requests_per_child=$(validate "$(payload boxfile_apache_max_requests_per_child)" "integer" "768")
+  echo "$apache_max_requests_per_child"
 }
 
 server_limit(){
-  # boxfile httpd_server_limit
-  httpd_server_limit=$(validate "$(payload boxfile_httpd_server_limit)" "integer" "128")
-  echo "$httpd_server_limit"
+  # boxfile apache_server_limit
+  apache_server_limit=$(validate "$(payload boxfile_apache_server_limit)" "integer" "128")
+  echo "$apache_server_limit"
 }
 
 port(){
@@ -100,29 +100,29 @@ port(){
 }
 
 mod_php(){
-  # boxfile httpd_php_interpreter = mod_php
-  httpd_php_interpreter=$(payload boxfile_httpd_php_interpreter)
-  [[ "$httpd_php_interpreter" = "mod_php" ]] && echo "true" && return
+  # boxfile apache_php_interpreter = mod_php
+  apache_php_interpreter=$(payload boxfile_apache_php_interpreter)
+  [[ "$apache_php_interpreter" = "mod_php" ]] && echo "true" && return
   echo "false"
 }
 
 fastcgi(){
-  # boxfile httpd_php_interpreter = fastcgi
-  httpd_php_interpreter=$(payload boxfile_httpd_php_interpreter)
-  [[ -z "$httpd_php_interpreter" ]] && echo "true" && return
-  [[ "$httpd_php_interpreter" = "fastcgi" ]] && echo "true" && return
+  # boxfile apache_php_interpreter = fastcgi
+  apache_php_interpreter=$(payload boxfile_apache_php_interpreter)
+  [[ -z "$apache_php_interpreter" ]] && echo "true" && return
+  [[ "$apache_php_interpreter" = "fpm" ]] && echo "true" && return
   echo "false"
 }
 
 modules(){
-  # boxfile httpd_modules
+  # boxfile apache_modules
   prefix=$(payload "deploy_dir")
-  default_httpd_modules="authn_file,authn_dbm,authn_anon,authn_dbd,authn_default,authn_alias,authz_host,authz_groupfile,authz_user,authz_dbm,authz_owner,authnz_ldap,authz_default,auth_basic,auth_digest,isapi,file_cache,cache,disk_cache,mem_cache,dbd,bucketeer,dumpio,echo,example,case_filter,case_filter_in,reqtimeout,ext_filter,include,filter,substitute,charset_lite,ldap,log_config,log_forensic,logio,env,mime_magic,cern_meta,expires,headers,ident,usertrack,setenvif,version,proxy,proxy_connect,proxy_ftp,proxy_http,proxy_scgi,proxy_ajp,proxy_balancer,mime,dav,status,autoindex,asis,info,cgi,cgid,dav_fs,dav_lock,vhost_alias,negotiation,dir,imagemap,actions,speling,userdir,alias,rewrite,deflate,cloudflare,xsendfile"
-  httpd_modules=$(validate "$(payload boxfile_httpd_modules)" "string" "$default_httpd_modules")
-  if [[ -z "$httpd_modules" ]]; then
+  default_apache_modules="authn_file,authn_dbm,authn_anon,authn_dbd,authn_default,authn_alias,authz_host,authz_groupfile,authz_user,authz_dbm,authz_owner,authnz_ldap,authz_default,auth_basic,auth_digest,isapi,file_cache,cache,disk_cache,mem_cache,dbd,bucketeer,dumpio,echo,example,case_filter,case_filter_in,reqtimeout,ext_filter,include,filter,substitute,charset_lite,ldap,log_config,log_forensic,logio,env,mime_magic,cern_meta,expires,headers,ident,usertrack,setenvif,version,proxy,proxy_connect,proxy_ftp,proxy_http,proxy_scgi,proxy_ajp,proxy_balancer,mime,dav,status,autoindex,asis,info,cgi,cgid,dav_fs,dav_lock,vhost_alias,negotiation,dir,imagemap,actions,speling,userdir,alias,rewrite,deflate,cloudflare,xsendfile"
+  apache_modules=$(validate "$(payload boxfile_apache_modules)" "string" "$default_apache_modules")
+  if [[ -z "$apache_modules" ]]; then
     echo "[]"
   else
-    modules_list=(${httpd_modules//,/ })
+    modules_list=(${apache_modules//,/ })
     for i in ${modules_list[@]}; do
       [[ ! -f ${prefix}/lib/httpd/mod_${i}.so ]] && >&2 echo "Error: Can't find file for module ${i}." && exit 1
     done
@@ -136,29 +136,29 @@ live_dir(){
   echo $(payload "live_dir")
 }
 
-document_root(){
-  # boxfile httpd_document_root
-  httpd_document_root=$(validate "$(payload boxfile_httpd_document_root)" "folder" "/")
-  if [[ ${httpd_document_root:0:1} = '/' ]]; then
-    echo $httpd_document_root
+apache_document_root(){
+  # boxfile apache_document_root
+  document_root=$(validate "$(payload boxfile_apache_document_root)" "folder" "/")
+  if [[ ${document_root:0:1} = '/' ]]; then
+    echo $document_root
   else
-    echo /$httpd_document_root
+    echo /$document_root
   fi
 }
 
-directory_index(){
-  # boxfile httpd_index_list
-  httpd_index_list=$(validate "$(payload boxfile_httpd_default_gateway)" "string" "index.html index.php")
-  for i in $httpd_index_list; do
+apache_directory_index(){
+  # boxfile apache_index_list
+  index_list=$(validate "$(payload boxfile_apache_default_gateway)" "string" "index.html index.php")
+  for i in $index_list; do
     ignore=$(validate "$i" "file" "")
   done
-  echo "$httpd_index_list"
+  echo "$index_list"
 }
 
-default_gateway(){
-  # boxfile httpd_default_gateway
-  httpd_default_gateway=$(validate "$(payload boxfile_httpd_default_gateway)" "file" "index.php")
-  echo "$httpd_default_gateway"
+apache_default_gateway(){
+  # boxfile apache_default_gateway
+  default_gateway=$(validate "$(payload boxfile_apache_default_gateway)" "file" "index.php")
+  echo "$default_gateway"
 }
 
 etc_dir(){
@@ -166,21 +166,21 @@ etc_dir(){
 }
 
 static_expire(){
-  # boxfile httpd_static_expire
-  httpd_static_expire=$(validate "$(payload boxfile_httpd_static_expire)" "integer" "3600")
-  echo "$httpd_static_expire"
+  # boxfile apache_static_expire
+  apache_static_expire=$(validate "$(payload boxfile_apache_static_expire)" "integer" "3600")
+  echo "$apache_static_expire"
 }
 
 log_level(){
-  # boxfile httpd_log_level
-  httpd_log_level=$(validate "$(payload boxfile_httpd_log_level)" "string" "warn")
-  echo "$httpd_log_level"
+  # boxfile apache_log_level
+  apache_log_level=$(validate "$(payload boxfile_apache_log_level)" "string" "warn")
+  echo "$apache_log_level"
 }
 
 access_log(){
-  # boxfile httpd_access_log
-  httpd_access_log=$(validate "$(payload boxfile_httpd_access_log)" "boolean" "false")
-  echo "$httpd_access_log"
+  # boxfile apache_access_log
+  apache_access_log=$(validate "$(payload boxfile_apache_access_log)" "boolean" "false")
+  echo "$apache_access_log"
 }
 
 env_vars(){
@@ -219,6 +219,31 @@ domains(){
   else
     echo "[ \"$(join '","' ${dns[@]})\" ]"
   fi
+}
+
+nginx_document_root(){
+  # boxfile nginx_document_root
+  document_root=$(validate "$(payload boxfile_nginx_document_root)" "folder" "/")
+  if [[ ${document_root:0:1} = '/' ]]; then
+    echo $document_root
+  else
+    echo /$document_root
+  fi
+}
+
+nginx_directory_index(){
+  # boxfile nginx_index_list
+  index_list=$(validate "$(payload boxfile_nginx_default_gateway)" "string" "index.html index.php")
+  for i in $index_list; do
+    ignore=$(validate "$i" "file" "")
+  done
+  echo "$index_list"
+}
+
+nginx_default_gateway(){
+  # boxfile nginx_default_gateway
+  default_gateway=$(validate "$(payload boxfile_nginx_default_gateway)" "file" "index.php")
+  echo "$default_gateway"
 }
 
 events_mechanism(){
@@ -341,7 +366,11 @@ default_mimetype(){
 browscap(){
   # boxfile php_browscap
   php_browscap=$(validate "$(payload boxfile_php_browscap)" "string" "")
-  echo "$php_browscap"
+  if [[ -z "${php_browscap}" ]]; then
+    echo "false"
+  else
+    echo "\"$php_browscap\""
+  fi
 }
 
 file_uploads(){
@@ -785,15 +814,30 @@ generate_apache_conf_json(){
   "fastcgi": $(fastcgi),
   "modules": $(modules),
   "live_dir": "$(live_dir)",
-  "document_root": "$(document_root)",
-  "directory_index": "$(directory_index)",
-  "default_gateway": "$(default_gateway)",
+  "document_root": "$(apache_document_root)",
+  "directory_index": "$(apache_directory_index)",
+  "default_gateway": "$(apache_default_gateway)",
   "etc_dir": "$(etc_dir)",
   "static_expire": "$(static_expire)",
   "log_level": "$(log_level)",
   "access_log": "$(access_log)",
   "env_vars": $(env_vars),
   "domains": $(domains)
+}
+END
+}
+
+generate_nginx_conf_json(){
+  cat <<-END
+{
+  "deploy_dir": "$(deploy_dir)",
+  "port": "$(port)",
+  "domains": $(domains),
+  "live_dir": "$(live_dir)",
+  "document_root": "$(nginx_document_root)",
+  "directory_index": "$(nginx_directory_index)",
+  "default_gateway": "$(nginx_default_gateway)",
+  "env_vars": $(env_vars)
 }
 END
 }
@@ -829,7 +873,7 @@ generate_php_ini_json(){
   "post_max_size": "$(post_max_size)",
   "default_mimetype": "$(default_mimetype)",
   "live_dir": "$(live_dir)",
-  "browscap": "$(browscap)",
+  "browscap": $(browscap),
   "file_uploads": "$(file_uploads)",
   "max_input_vars": "$(max_input_vars)",
   "upload_max_filesize": "$(upload_max_filesize)",
@@ -956,76 +1000,83 @@ END
 create_apache_conf(){
   template \
     "apache/apache.conf.mustache" \
-    "$(payload 'deploy_dir')/etc/httpd/httpd.conf" \
+    "$(payload 'etc_dir')/httpd/httpd.conf" \
     "$(generate_apache_conf_json)"
+}
+
+create_ngnix_conf(){
+  template \
+  "nginx/nginx.conf.mustache" \
+  "$(payload 'etc_dir')/nginx/nginx.conf" \
+  "$(generate_nginx_conf_json)"
 }
 
 create_php_fpm_conf(){
   template \
     "php/php-fpm.conf.mustache" \
-    "$(payload 'deploy_dir')/etc/php/php-fpm.conf" \
+    "$(payload 'etc_dir')/php/php-fpm.conf" \
     "$(generate_php_fpm_conf_json)"
 }
 
 create_php_ini(){
   template \
     "php/php.ini.mustache" \
-    "$(payload 'deploy_dir')/etc/php/php.ini" \
+    "$(payload 'etc_dir')/php/php.ini" \
     "$(generate_php_ini_json)"
 }
 
 create_php_apc_ini(){
   template \
     "php/php.d/apc.ini.mustache" \
-    "$(payload 'deploy_dir')/etc/php.d/apc.ini" \
+    "$(payload 'etc_dir')/php.d/apc.ini" \
     "$(generate_php_apc_ini_json)"
 }
 
 create_php_eaccelerator_ini(){
   template \
     "php/php.d/eaccelerator.ini.mustache" \
-    "$(payload 'deploy_dir')/etc/php.d/eaccelerator.ini" \
+    "$(payload 'etc_dir')/php.d/eaccelerator.ini" \
     "$(generate_php_eaccelerator_ini_json)"
 }
 
 create_php_geoip_ini(){
   template \
     "php/php.d/geoip.ini.mustache" \
-    "$(payload 'deploy_dir')/etc/php.d/geoip.ini" \
+    "$(payload 'etc_dir')/php.d/geoip.ini" \
     "$(generate_php_geoip_ini_json)"
 }
 
 create_php_memcache_ini(){
   template \
     "php/php.d/memcache.ini.mustache" \
-    "$(payload 'deploy_dir')/etc/php.d/memcache.ini" \
+    "$(payload 'etc_dir')/php.d/memcache.ini" \
     "$(generate_php_memcache_ini_json)"
 }
 
 create_php_mongo_ini(){
   template \
     "php/php.d/mongo.ini.mustache" \
-    "$(payload 'deploy_dir')/etc/php.d/mongo.ini" \
+    "$(payload 'etc_dir')/php.d/mongo.ini" \
     "$(generate_php_mongo_ini_json)"
 }
 
 create_php_newrelic_ini(){
   template \
     "php/php.d/newrelic.ini.mustache" \
-    "$(payload 'deploy_dir')/etc/php.d/newrelic.ini" \
+    "$(payload 'etc_dir')/php.d/newrelic.ini" \
     "$(generate_php_newrelic_ini_json)"
 }
 
 create_php_opcache_ini(){
   template \
     "php/php.d/opcache.ini.mustache" \
-    "$(payload 'deploy_dir')/etc/php.d/opcache.ini" \
+    "$(payload 'etc_dir')/php.d/opcache.ini" \
     "$(generate_php_opcache_ini_json)"
 }
 
 create_php_xcache_ini(){
   template \
     "php/php.d/xcache.ini.mustache" \
-    "$(payload 'deploy_dir')/etc/php.d/xcache.ini" \
+    "$(payload 'etc_dir')/php.d/xcache.ini" \
     "$(generate_php_xcache_ini_json)"
 }

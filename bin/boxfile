@@ -6,34 +6,57 @@
 # initialize Nos with the original arguments
 nos_init $@
 
-# extract php interpreter
-if [[ -n "$(payload 'boxfile_php_interpreter')" ]]; then
-  php_interpreter=$(payload 'boxfile_php_interpreter')
+# find webserver
+if [[ -n "$(payload boxfile_webserver)" ]]; then
+  webserver=$(payload boxfile_webserver)
 else
-  php_interpreter="fpm"
+  webserver="apache"
+fi
+
+# extract php interpreter
+if [[ -n "$(payload 'boxfile_httpd_php_interpreter')" ]]; then
+  httpd_php_interpreter=$(payload 'boxfile_httpd_php_interpreter')
+else
+  httpd_php_interpreter="fpm"
 fi
 
 deploy_dir=$(payload 'deploy_dir')
 etc_dir=$(payload 'etc_dir')
+live_dir=$(payload 'live_dir')
+port=$(payload 'port')
 
 echo "web1:"
 
-# echo out the exec command
-if [[ ${php_interpreter} = "fpm" ]]; then
-  echo "  exec:"
-  echo "    fpm: \"${deploy_dir}/sbin/php-fpm -y ${etc_dir}/php/php-fpm.conf -c ${etc_dir}/php/php.ini\""
-  echo "    apache: \"${deploy_dir}/sbin/httpd -DNO_DETACH\""
-else 
-  if [[ ${php_interpreter} = "mod_php" ]]; then
+if [[ "${webserver}" = "apache" ]]; then
+  # echo out the exec command
+  echo "  webserver: apache"
+  if [[ "${httpd_php_interpreter}" = "fpm" ]]; then
+    echo "  exec:"
+    echo "    fpm: \"${deploy_dir}/sbin/php-fpm -y ${etc_dir}/php/php-fpm.conf -c ${etc_dir}/php/php.ini\""
+    echo "    apache: \"${deploy_dir}/sbin/httpd -DNO_DETACH\""
+  elif [[ "${httpd_php_interpreter}" = "mod_php" ]]; then
     echo "  exec: \"${deploy_dir}/sbin/httpd -DNO_DETACH\""
   fi
-fi
-
-# echo out the logs to watch
-echo "  log_watch:"
-echo "    apache[access]: /data/var/log/apache/access.log"
-echo "    apache[error]: /data/var/log/apache/error.log"
-echo "    php[error]: /data/var/log/php/php_error.log"
-if [[ ${php_interpreter} = "fpm" ]]; then
-  echo "    php[fpm]: /data/var/log/php/php_fpm.log"
+  # echo out the logs to watch
+  echo "  log_watch:"
+  echo "    apache[access]: ${deploy_dir}/var/log/apache/access.log"
+  echo "    apache[error]: ${deploy_dir}/var/log/apache/error.log"
+  echo "    php[error]: ${deploy_dir}/var/log/php/php_error.log"
+  if [[ "${httpd_php_interpreter}" = "fpm" ]]; then
+    echo "    php[fpm]: ${deploy_dir}/var/log/php/php_fpm.log"
+  fi
+elif [[ "${webserver}" = "nginx" ]]; then
+  echo "  exec:"
+  echo "    fpm: \"${deploy_dir}/sbin/php-fpm -y ${etc_dir}/php/php-fpm.conf -c ${etc_dir}/php/php.ini\""
+  echo "    nginx: \"${deploy_dir}/sbin/nginx\""
+  echo "  log_watch:"
+  echo "    nginx[access]: ${deploy_dir}/var/log/nginx/access.log"
+  echo "    nginx[error]: ${deploy_dir}/var/log/nginx/error.log"
+  echo "    php[error]: ${deploy_dir}/var/log/php/php_error.log"
+  echo "    php[fpm]: ${deploy_dir}/var/log/php/php_fpm.log"
+elif [[ "${webserver}" = "builtin" ]]; then
+  echo "  exec: \"${deploy_dir}/bin/php -S 0.0.0.0:${port} -c ${etc_dir}/php/php.ini -t ${live_dir}/\""
+  echo "  log_watch:"
+  echo "    php[access]: ${deploy_dir}/var/log/php/access.log"
+  echo "    php[error]: ${deploy_dir}/var/log/php/php_error.log"
 fi
