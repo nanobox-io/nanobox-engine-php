@@ -10,7 +10,6 @@ nginx_conf_payload() {
   cat <<-END
 {
   "deploy_dir": "$(deploy_dir)",
-  "port": "$(port)",
   "domains": $(domains),
   "live_dir": "$(live_dir)",
   "document_root": "$(nginx_document_root)",
@@ -45,4 +44,17 @@ nginx_default_gateway() {
   # boxfile nginx_default_gateway
   default_gateway=$(validate "$(payload boxfile_nginx_default_gateway)" "file" "index.php")
   echo "$default_gateway"
+}
+
+install_nginx() {
+  install "nginx"
+}
+
+configure_nginx() {
+  mkdir -p $(etc_dir)/nginx
+  mkdir -p $(deploy_dir)/var/log/nginx
+  mkdir -p $(deploy_dir)/var/tmp/nginx/client_body_temp
+  mkdir -p $(deploy_dir)/var/run
+  mkdir -p $(deploy_dir)/var/tmp
+  create_ngnix_conf
 }

@@ -273,3 +273,71 @@ date_timezone() {
   php_date_timezone=$(validate "$(payload boxfile_php_date_timezone)" "string" "Etc/UTC")
   echo "$php_date_timezone"
 }
+
+php_version() {
+  version=$(validate "$(payload boxfile_php_version)" "string" "5.6")
+  echo "${version}"
+}
+
+php_condensed_version() {
+  version="$(php_version)"
+  echo "${version//./}"
+}
+
+install_php() {
+  install "php-$(php_version)"
+}
+
+install_php_extensions() {
+  if [[ "${PL_boxfile_php_extensions_type}" = "array" ]]; then
+    for ((i=0; i < PL_boxfile_php_extensions_length ; i++)); do
+      type=PL_boxfile_php_extensions_${i}_type
+      value=PL_boxfile_php_extensions_${i}_value
+      if [[ ${!type} = "string" ]]; then
+        install php$(php_condensed_version)-${!value}
+      fi
+    done
+  fi
+
+  if [[ "${PL_boxfile_php_zend_extensions_type}" = "array" ]]; then
+    for ((i=0; i < PL_boxfile_php_zend_extensions_length ; i++)); do
+      type=PL_boxfile_php_zend_extensions_${i}_type
+      value=PL_boxfile_php_zend_extensions_${i}_value
+      if [[ ${!type} = "string" ]]; then
+        install php$(php_condensed_version)-${!value}
+      fi
+    done
+  fi
+}
+
+configure_php() {
+  mkdir -p $(etc_dir)/php
+  mkdir -p $(deploy_dir)/var/log/php
+  mkdir -p $(deploy_dir)/var/run
+  mkdir -p $(deploy_dir)/var/tmp
+  create_php_ini
+
+}
+
+configure_php_extensions() {
+  mkdir -p $(etc_dir)/php.d
+  if [[ "${PL_boxfile_php_extensions_type}" = "array" ]]; then
+    for ((i=0; i < PL_boxfile_php_extensions_length ; i++)); do
+      type=PL_boxfile_php_extensions_${i}_type
+      value=PL_boxfile_php_extensions_${i}_value
+      if [[ ${!type} = "string" ]]; then
+        [[ -f ../templates/php/php.d/${!value}.ini.mustache ]] && eval create_php_${!value}_ini
+      fi
+    done
+  fi
+
+  if [[ "${PL_boxfile_php_zend_extensions_type}" = "array" ]]; then
+    for ((i=0; i < PL_boxfile_php_zend_extensions_length ; i++)); do
+      type=PL_boxfile_php_zend_extensions_${i}_type
+      value=PL_boxfile_php_zend_extensions_${i}_value
+      if [[ ${!type} = "string" ]]; then
+        [[ -f ../templates/php/php.d/${!value}.ini.mustache ]] && eval create_php_${!value}_ini
+      fi
+    done
+  fi
+}

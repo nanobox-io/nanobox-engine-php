@@ -20,7 +20,7 @@ MaxClients       {{max_clients}}
 MaxRequestsPerChild  {{max_requests_per_child}}
 ServerLimit      {{server_limit}}
 
-Listen 0.0.0.0:{{port}}
+Listen 0.0.0.0:8080
 
 #############################################
 # Dynamic Apache Modules                    #
@@ -166,11 +166,11 @@ SetEnv "{{key}}" "{{value}}"
 # VirtualHost Configuration     	        #
 #############################################
 {{#domains}}
-NameVirtualHost 0.0.0.0:{{port}}
+NameVirtualHost 0.0.0.0:8080
 {{/domains}}
 
 {{#domains}}
-<VirtualHost 0.0.0.0:{{port}}>
+<VirtualHost 0.0.0.0:8080>
     DocumentRoot "{{live_dir}}{{document_root}}"
     ServerName {{.}}
     ServerAlias *.{{.}}

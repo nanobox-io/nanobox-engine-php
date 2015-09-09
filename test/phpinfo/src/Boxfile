@@ -1,4 +1,6 @@
 build:
+    webserver: apache
+    apache_php_interpreter: mod_php
     stability: alpha
     engine: ../../../../nanobox-engine-php
     php_extensions: 

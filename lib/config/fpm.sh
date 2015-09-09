@@ -44,3 +44,24 @@ max_requests() {
   php_fpm_max_requests=$(validate "$(payload boxfile_php_fpm_max_requests)" "integer" "128")
   echo "$php_fpm_max_requests"
 }
+
+use_fastcgi() {
+  # use fastcgi when apache is configured to use it
+  # use fastcgi when the webserver is nginx
+  # don't use fastcgi if webserver is builtin
+  # don't use fastcgi if apache is using mod_php
+  [[ "$(webserver)" = 'nginx' ]] && echo 'true' && return
+  [[ "$(webserver)" = 'builtin' ]] && echo 'false' && return
+  [[ "$(webserver)" = 'apache' && "$(validate "$(payload boxfile_apache_php_interpreter)" "string" "fpm")" = 'fpm' ]] && echo "true" && return
+  [[ "$(webserver)" = 'apache' && "$(validate "$(payload boxfile_apache_php_interpreter)" "string" "fpm")" = 'mod_php' ]] && echo "false" && return
+  echo 'false'
+}
+
+configure_php_fpm() {
+  if [[ "$(use_fastcgi)" = "true" ]]; then
+    mkdir -p $(etc_dir)/php
+    mkdir -p $(deploy_dir)/var/run
+    mkdir -p $(deploy_dir)/var/tmp
+    create_php_fpm_conf
+  fi
+}

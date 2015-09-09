@@ -16,9 +16,8 @@ apache_conf_payload() {
   "max_clients": "$(max_clients)",
   "max_requests_per_child": "$(max_requests_per_child)",
   "server_limit": "$(server_limit)",
-  "port": "$(port)",
   "mod_php": $(mod_php),
-  "fastcgi": $(fastcgi),
+  "fastcgi": $(use_fastcgi),
   "modules": $(modules),
   "live_dir": "$(live_dir)",
   "document_root": "$(apache_document_root)",
@@ -62,14 +61,6 @@ mod_php() {
   # boxfile apache_php_interpreter = mod_php
   apache_php_interpreter=$(payload boxfile_apache_php_interpreter)
   [[ "$apache_php_interpreter" = "mod_php" ]] && echo "true" && return
-  echo "false"
-}
-
-fastcgi() {
-  # boxfile apache_php_interpreter = fastcgi
-  apache_php_interpreter=$(payload boxfile_apache_php_interpreter)
-  [[ -z "$apache_php_interpreter" ]] && echo "true" && return
-  [[ "$apache_php_interpreter" = "fpm" ]] && echo "true" && return
   echo "false"
 }
 
@@ -134,3 +125,22 @@ access_log() {
   echo "$apache_access_log"
 }
 
+install_apache() {
+  install "apache-2.2"
+  install "ap22-cloudflare"
+  install "ap22-xsendfile"
+  if [[ "$(use_fastcgi)" = "true" ]]; then
+    install "ap22-fastcgi"
+  else
+    install "ap22-php$(php_condensed_version)"
+  fi
+}
+
+configure_apache() {
+  mkdir -p $(etc_dir)/httpd
+  mkdir -p $(deploy_dir)/var/log/httpd
+  mkdir -p $(deploy_dir)/libexec/cgi-bin/
+  mkdir -p $(deploy_dir)/var/run
+  mkdir -p $(deploy_dir)/var/tmp
+  create_apache_conf
+}

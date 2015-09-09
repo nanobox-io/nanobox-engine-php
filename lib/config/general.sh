@@ -19,6 +19,11 @@ port() {
   echo $(payload "port")
 }
 
+code_dir() {
+  # payload code_dir
+  echo $(payload "code_dir")
+}
+
 live_dir() {
   # payload live_dir
   echo $(payload "live_dir")
@@ -66,3 +71,28 @@ domains() {
   fi
 }
 
+webserver() {
+  echo $(validate "$(payload boxfile_webserver)" "string" "apache")
+}
+
+install_webserver() {
+  if [[ "$(webserver)" = 'apache' ]]; then
+    install_apache
+  elif [[ "$(webserver)" = 'nginx' ]]; then
+    install_nginx
+  fi
+}
+
+install_composer() {
+  if [[ -f $(code_dir)/composer.json ]]; then
+    install "composer"
+  fi
+}
+
+configure_webserver() {
+  if [[ "$(webserver)" = 'apache' ]]; then
+    configure_apache
+  elif [[ "$(webserver)" = 'nginx' ]]; then
+    configure_nginx
+  fi
+}

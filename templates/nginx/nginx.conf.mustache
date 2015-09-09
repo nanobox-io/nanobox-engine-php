@@ -32,7 +32,7 @@ http {
     gzip_types      text/plain text/xml text/css application/x-javascript application/javascript;
 
     server {
-        listen       {{port}};
+        listen       8080;
         server_name {{#domains}} {{.}} *.{{.}}{{/domains}};
 
         location / {

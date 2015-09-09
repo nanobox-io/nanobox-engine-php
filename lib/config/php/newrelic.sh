@@ -163,3 +163,10 @@ newrelic_webtransaction_name_remove_trailing_path() {
   php_newrelic_webtransaction_name_remove_trailing_path=$(validate "$(payload boxfile_php_newrelic_webtransaction_name_remove_trailing_path)" "boolean" "Off")
   echo "$php_newrelic_webtransaction_name_remove_trailing_path"
 }
+
+configure_newrelic() {
+  if [[ -n "$(newrelic_license)" ]]; then
+    mkdir -p $(etc_dir)/php.d
+    create_php_newrelic_ini
+  fi
+}
