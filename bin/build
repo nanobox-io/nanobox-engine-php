@@ -9,19 +9,11 @@ nos_init $@
 # source common lib
 . ${engine_lib_dir}/common.sh
 
-# run before exec hooks
-
 run_hooks "before"
-
-# run composer install
 
 composer_install
 
-# run exec hooks
-
 run_hooks "exec"
-
-# run after exec hooks
 
 run_hooks "after"
 
