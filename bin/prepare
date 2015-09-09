@@ -5,11 +5,11 @@
 # source the Nos framework
 . /opt/nos/common.sh
 
-# source php common lib
-. ../lib/php_common.sh
-
 # initialize Nos with the original arguments
 nos_init $@
+
+# source common lib
+. ${engine_lib_dir}/common.sh
 
 # Install PHP and dependencies
 php_version=$(payload boxfile_php_version)
