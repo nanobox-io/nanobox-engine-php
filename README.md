@@ -67,8 +67,8 @@ build:
 *Web server specific settings are available in the following sections of the Advanced PHP Configuration doc:
 
 [Apache Settings](https://github.com/pagodabox/nanobox-engine-php/blob/master/doc/advanced-php-config.md#apache-settings)  
-[Nginx Settings](https://github.com/pagodabox/nanobox-engine-php/blob/master/doc/advanced-php-config.md#nginx-settings)
-[Built-In PHP Web Server Settings]https://github.com/pagodabox/nanobox-engine-php/blob/master/doc/advanced-php-config.md(#built-in-php-web-server-settings)
+[Nginx Settings](https://github.com/pagodabox/nanobox-engine-php/blob/master/doc/advanced-php-config.md#nginx-settings)  
+[Built-In PHP Web Server Settings](https://github.com/pagodabox/nanobox-engine-php/blob/master/doc/advanced-php-config.md#built-in-php-web-server-settings)
 
 ---
 
