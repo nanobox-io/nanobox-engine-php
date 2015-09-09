@@ -89,6 +89,15 @@ install_composer() {
   fi
 }
 
+composer_install() {
+  if [[ -f $(code_dir)/composer.json ]]; then
+    if [[ ! -f $(code_dir)/composer.lock ]]; then
+      print_warning "No 'composer.lock' file detected. This may cause a slow or failed build. To avoid this issue, commit the 'composer.lock' file to your git repo."
+    fi
+    (cd $(payload 'code_dir'); run_process "composer install", "composer install --no-interaction --prefer-source")
+  fi
+}
+
 configure_webserver() {
   if [[ "$(webserver)" = 'apache' ]]; then
     configure_apache

@@ -6,18 +6,16 @@
 # initialize Nos with the original arguments
 nos_init $@
 
+# source common lib
+. ${engine_lib_dir}/common.sh
+
 # run before exec hooks
 
 run_hooks "before"
 
 # run composer install
 
-if [[ -f composer.json ]]; then
-  if [[ ! -f composer.lock ]]; then
-    print_warning "No 'composer.lock' file detected. This may cause a slow or failed build. To avoid this issue, commit the 'composer.lock' file to your git repo."
-  fi
-  (cd $(payload 'code_dir'); run_process "composer install", "composer install --no-interaction --prefer-source")
-fi
+composer_install
 
 # run exec hooks
 
