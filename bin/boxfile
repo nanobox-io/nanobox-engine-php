@@ -28,7 +28,7 @@ is_interpreter() {
   if [[ -n "$(payload 'boxfile_apache_php_interpreter')" ]]; then
     interpreter=$(payload 'boxfile_apache_php_interpreter')
   fi
-  if [[ "$interpreter" = "$1" ]]; then
+  if [[ "${interpreter}" = "$1" ]]; then
     echo "true"
   else
     echo "false"
@@ -55,4 +55,4 @@ END
 template \
   "boxfile.mustache" \
   "-" \
-  "${boxfile_json}"
+  "$(boxfile_json)"

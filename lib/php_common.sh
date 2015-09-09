@@ -1,57 +1,5 @@
 #!/bin/bash
-
-join(){
-  local IFS=$'\014'
-  delimeter=$1
-  shift
-  temp=$(echo "${*}")
-  echo ${temp//$'\014'/$delimeter}
-}
-
-valid_integer(){
-  [[ "$1" =~ ^[0-9]+$ ]] && return 1
-  return 0
-}
-
-valid_file(){
-  [[ "$1" =~ ^\/?[^\/]+(\/[^\/]+)*$ ]] && return 1
-  return 0
-}
-
-valid_folder(){
-  [[ "$1" =~ ^\/?[^\/]+(\/[^\/]+)*\/?$ ]] && return 1
-  return 0
-}
-
-valid_boolean(){
-  [[ "$1" = 'true' ]] && return 1
-  [[ "$1" = 'false' ]] && return 1
-  [[ "$1" =~ ^[Oo]n$ ]] && return 1
-  [[ "$1" =~ ^[Oo]ff$ ]] && return 1
-  [[ $1 -eq 1 ]] && return 1
-  [[ $1 -eq 0 ]] && return 1
-  return 0
-}
-
-valid_byte(){
-  [[ "$1" =~ ^[0-9]+[BbKkMmGgTt]?$ ]] && return 1
-  return 0
-}
-
-valid_string(){
-  return 1
-}
-
-validate(){
-  # $1 value
-  # $2 type
-  # $3 default
-  [[ -z $1 ]] && echo $3 && return
-  $(eval valid_$2 $1)
-  [[ $? -eq 1 ]] && echo $1 && return
-  >&2 echo "Error: value \"$1\" is invalid $2"
-  exit 1
-}
+. ../lib/helpers.sh
 
 hostname(){
   # app.gonano.io
@@ -138,7 +86,7 @@ live_dir(){
 
 apache_document_root(){
   # boxfile apache_document_root
-  document_root=$(validate "$(payload boxfile_apache_document_root)" "folder" "$(validate "boxfile_document_root" "folder" "/")")
+  document_root=$(validate "$(payload boxfile_apache_document_root)" "folder" "$(validate "$(payload boxfile_document_root)" "folder" "/")")
   if [[ ${document_root:0:1} = '/' ]]; then
     echo $document_root
   else
@@ -223,7 +171,7 @@ domains(){
 
 nginx_document_root(){
   # boxfile nginx_document_root
-  document_root=$(validate "$(payload boxfile_nginx_document_root)" "folder" "$(validate "boxfile_document_root" "folder" "/")")
+  document_root=$(validate "$(payload boxfile_nginx_document_root)" "folder" "$(validate "$(payload boxfile_document_root)" "folder" "/")")
 
   if [[ ${document_root:0:1} = '/' ]]; then
     echo $document_root
@@ -249,7 +197,7 @@ nginx_default_gateway(){
 
 builtin_document_root(){
   # boxfile builtin_document_root
-  document_root=$(validate "$(payload boxfile_builtin_document_root)" "folder" "$(validate "boxfile_document_root" "folder" "/")")
+  document_root=$(validate "$(payload boxfile_builtin_document_root)" "folder" "$(validate "$(payload boxfile_document_root)" "folder" "/")")
   if [[ ${document_root:0:1} = '/' ]]; then
     echo $document_root
   else
