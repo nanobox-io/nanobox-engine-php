@@ -138,7 +138,7 @@ live_dir(){
 
 apache_document_root(){
   # boxfile apache_document_root
-  document_root=$(validate "$(payload boxfile_apache_document_root)" "folder" "/")
+  document_root=$(validate "$(payload boxfile_apache_document_root)" "folder" "$(validate "boxfile_document_root" "folder" "/")")
   if [[ ${document_root:0:1} = '/' ]]; then
     echo $document_root
   else
@@ -223,7 +223,8 @@ domains(){
 
 nginx_document_root(){
   # boxfile nginx_document_root
-  document_root=$(validate "$(payload boxfile_nginx_document_root)" "folder" "/")
+  document_root=$(validate "$(payload boxfile_nginx_document_root)" "folder" "$(validate "boxfile_document_root" "folder" "/")")
+
   if [[ ${document_root:0:1} = '/' ]]; then
     echo $document_root
   else
@@ -244,6 +245,16 @@ nginx_default_gateway(){
   # boxfile nginx_default_gateway
   default_gateway=$(validate "$(payload boxfile_nginx_default_gateway)" "file" "index.php")
   echo "$default_gateway"
+}
+
+builtin_document_root(){
+  # boxfile builtin_document_root
+  document_root=$(validate "$(payload boxfile_builtin_document_root)" "folder" "$(validate "boxfile_document_root" "folder" "/")")
+  if [[ ${document_root:0:1} = '/' ]]; then
+    echo $document_root
+  else
+    echo /$document_root
+  fi
 }
 
 events_mechanism(){

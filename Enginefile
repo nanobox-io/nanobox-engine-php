@@ -1,16 +1,10 @@
 name: 'php'
 version: '0.1.0'
 summary: 'Nanobox engine for generic PHP deployments'
-description: 'Generic PHP engine that allows the Boxfile to configure most of the configuration.'
+language: 'php'
 stability: 'stable'
 license: 'MIT'
-readme: 'README.md'
+generic: true
 
 authors:
   - braxton@nanobox.io
-
-release_content:
-  - bin/*
-  - lib/*
-  - templates/*
-  - files/*
