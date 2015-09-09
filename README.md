@@ -9,24 +9,8 @@ This engine exposes configuration option through the [Boxfile](http://docs.nanob
 #### Overview of Boxfile Configuration Options
 ```yaml
 build:
-  # Apache httpd Settings
-  apache_document_root: '/'
-  apache_index_list:
-    - index.php
-    - index.html
-  apache_php_interpreter: fpm
-  apache_modules:
-    - actions
-    - alias
-    - rewrite
-  apache_max_spares: 10
-  apache_max_clients: 128
-  apache_server_limit: 128
-  apache_max_requests: 10000
-  apache_default_gateway: 'index.php'
-  apache_static_expire: 86400
-  apache_log_level: warn
-  apache_access_log: false
+  # Web Server Settings
+  webserver: 'apache'
 
   # PHP Settings
   php_version: 5.6
@@ -67,6 +51,32 @@ build:
   php_session_autostart: false
   php_date_timezone: 'US/central'
   php_iconv_internal_encoding: 'UTF-8'
+
+  # Apache Settings
+  apache_document_root: '/'
+  apache_index_list:
+    - index.php
+    - index.html
+  apache_default_gateway: 'index.php'
+  apache_php_interpreter: fpm
+  apache_modules:
+    - actions
+    - alias
+    - rewrite
+  apache_max_spares: 10
+  apache_max_clients: 128
+  apache_server_limit: 128
+  apache_max_requests: 10000
+  apache_static_expire: 86400
+  apache_log_level: warn
+  apache_access_log: false
+
+  # Nginx Settings
+  nginx_document_root: '/'
+  nginx_index_list:
+    - index.php
+    - index.html
+  nginx_default_gateway: 'index.php'
   
   # PHP-FPM Settings
   php_fpm_events_mechanism: 'epoll'
@@ -140,9 +150,11 @@ build:
 ```
 
 ##### Quick Links
-[Apache httpd Settings](#apache-httpd-settings)  
-[PHP-FPM Settings](#php-fpm-settings)  
+[Web Server Settings](#web-server-settings)  
 [PHP Settings](#php-settings)  
+[Apache Settings](#apache-settings)  
+[Nginx Settings](#nginx-settings)  
+[PHP-FPM Settings](#php-fpm-settings)  
 [PHP GeoIP Settings](#php-geoip-settings)  
 [PHP Memcache Settings](#php-memcache-settings)  
 [PHP Mongo Settings](#php-mongo-settings)  
@@ -152,8 +164,344 @@ build:
 [PHP XCache Settings](#php-xcache-settings)  
 [PHP Newrelic Settings](#php-newrelic-settings)  
 
-### Apache httpd Settings
-The following settings are used to configure Apache.
+### Web Server Settings
+The following setting is used to select which web server to use in your application.
+
+---
+
+##### `webserver`
+The following web servers are available:
+
+- apache *(default)*
+- nginx
+- builtin ([PHP's built-in web server](http://php.net/manual/en/features.commandline.webserver.php) available in 5.4+)
+
+```yaml
+build:
+  webserver: apache
+```
+
+*Web server specific settings are available in the [Apache Settings](#apache-settings) & [Nginx Settings](#nginx-settings) sections below.*
+
+---
+
+### PHP Settings
+The following settings are typically configured in the php.ini. When using Nanobox, these are configured in the Boxfile.
+
+- [`php_version`](#php_version)
+- [`php_extensions`](#php_extensions)
+- [`php_zend_extensions`](#php_zend_extensions)
+- [`php_short_open_tag`](#php_short_open_tag)
+- [`php_zlib_output_compression`](#php_zlib_output_compression)
+- [`php_allow_url_fopen`](#php_allow_url_fopen)
+- [`php_disable_functions`](#php_disable_functions)
+- [`php_expose_php`](#php_expose_php)
+- [`php_max_execution_time`](#php_max_execution_time)
+- [`php_max_input_time`](#php_max_input_time)
+- [`php_memory_limit`](#php_memory_limit)
+- [`php_error_reporting`](#php_error_reporting)
+- [`php_display_errors`](#php_display_errors)
+- [`php_register_globals`](#php_register_globals)
+- [`php_register_argc_argv`](#php_register_argc_argv)
+- [`php_post_max_size`](#php_post_max_size)
+- [`php_upload_max_filesize`](#php_upload_max_filesize)
+- [`php_file_uploads`](#php_file_uploads)
+- [`php_max_file_uploads`](#php_max_file_uploads)
+- [`php_max_input_vars`](#php_max_input_vars)
+- [`php_default_mimetype`](#php_default_mimetype)
+- [`php_default_locale`](#php_default_locale)
+- [`php_browscap`](#php_browscap)
+- [`php_session_save_handler`](#php_session_save_handler)
+- [`php_session_save_path`](#php_session_save_path)
+- [`php_session_length`](#php_session_length)
+- [`php_session_autostart`](#php_session_autostart)
+- [`php_date_timezone`](#php_date_timezone)
+- [`php_iconv_internal_encoding`](#php_iconv_internal_encoding)
+
+---
+
+##### `php_version`
+Specifies which version of PHP to use. The following versions are available:
+
+- 5.3
+- 5.4
+- 5.5
+- 5.6
+
+```yaml
+build:
+  php_version: 5.6
+```
+
+---
+
+##### `php_extensions`
+Specifies what PHP extensions should be included in your app's environment. To see what PHP extensions are available, view the [full list of available PHP extensions](https://github.com/pagodabox/nanobox-engine-php/blob/master/doc/php-extensions.md).
+
+```yaml
+build:
+  php_extensions:
+    - curl
+    - gd
+    - mbstring
+    - pdo_mysql
+```
+
+---
+
+##### `php_zend_extensions`
+Specifies what Zend extensions should be included in your app's environment. To see what Zend extensions are available, view the [Zend Extensions section of the PHP extensions list](https://github.com/pagodabox/nanobox-engine-php/blob/master/doc/php-extensions.md#zend-extensions).
+```yaml
+build:
+  php_zend_extensions:
+    - ioncube_loader
+    - opcache
+```
+
+---
+
+##### `php_short_open_tag`
+Sets the [`short_open_tag` PHP setting](http://www.php.net/manual/en/ini.core.php#ini.short-open-tag).
+```yaml
+build:
+  php_short_open_tag: true
+```
+
+---
+
+##### `php_zlib_output_compression`
+Sets the [`zlib.output_compression` PHP setting](http://php.net/manual/en/zlib.configuration.php#ini.zlib.output-compression).
+```yaml
+build:
+  php_zlib_output_compression: 'Off'
+```
+
+---
+
+##### `php_allow_url_fopen`
+Sets the [`allow_url_fopen` PHP setting](http://php.net/manual/en/filesystem.configuration.php#ini.allow-url-fopen).
+```yaml
+build:
+  php_allow_url_fopen: 'On'
+```
+
+---
+
+##### `php_disable_functions`
+Sets the [`disable_fuctions` PHP setting](http://php.net/manual/en/ini.core.php#ini.disable-functions).
+```yaml
+build:
+  php_disable_functions:
+    - exec
+    - shell_exec
+    - system
+```
+
+---
+
+##### `php_expose_php`
+Sets the [`expose_php` PHP setting](http://www.php.net/manual/en/ini.core.php#ini.expose-php).
+```yaml
+build:
+  php_expose_php: 'On'
+```
+
+---
+
+##### `php_max_execution_time`
+Sets the [`max_execution_time` PHP setting](http://www.php.net/manual/en/info.configuration.php#ini.max-execution-time).
+```yaml
+build:
+  php_max_execution_time: 30
+```
+
+---
+
+##### `php_max_input_time`
+Sets the [`max_input_time` PHP setting](http://www.php.net/manual/en/info.configuration.php#ini.max-input-time).
+```yaml
+build:
+  php_max_input_time: 60
+```
+
+---
+
+##### `php_memory_limit`
+Sets the [`memory_limit` PHP setting](http://php.net/manual/en/ini.core.php#ini.memory-limit). **Note:** This setting should not exceed the memory available on your PHP server(s).
+```yaml
+build:
+  php_memory_limit: '128M'
+```
+
+---
+
+##### `php_error_reporting`
+Sets the [`error_reporting` PHP setting](http://www.php.net/manual/en/errorfunc.configuration.php#ini.error-reporting).
+```yaml
+build:
+  php_error_reporting: E_ALL
+```
+
+---
+
+##### `php_display_errors`
+Sets the [`display_errors` PHP setting](http://us3.php.net/manual/en/errorfunc.configuration.php#ini.display-errors).
+```yaml
+build:
+  php_display_errors: 'stderr'
+```
+
+---
+
+##### `php_register_globals`
+Sets the [`register_globals` PHP setting](http://www.php.net/manual/en/ini.core.php#ini.register-globals)
+```yaml
+build:
+  php_register_globals: 'Off'
+```
+
+---
+
+##### `php_register_argc_argv`
+Sets the [`register_argc_argv` PHP setting](http://www.php.net/manual/en/ini.core.php#ini.register-argc-argv).
+```yaml
+build:
+  php_register_argc_argv: 'Off'
+```
+
+---
+
+##### `php_post_max_size`
+Sets the [`post_max_size` PHP setting](http://www.php.net/manual/en/ini.core.php#ini.post-max-size).
+```yaml
+build:
+  php_post_max_size: '8M'
+```
+
+---
+
+##### `php_upload_max_filesize`
+Sets the [`upload_max_filesize` PHP setting](http://php.net/manual/en/ini.core.php#ini.upload-max-filesize).
+```yaml
+build:
+  php_upload_max_filesize: '2M'
+```
+
+---
+
+##### `php_file_uploads`
+Sets the [`file_uploads` PHP setting](http://php.net/manual/en/ini.core.php#ini.file-uploads).
+```yaml
+build:
+  php_file_uploads: true
+```
+
+---
+
+##### `php_max_file_uploads`
+Sets the [`max_file_uploads` PHP setting](http://php.net/manual/en/ini.core.php#ini.max-file-uploads).
+```yaml
+build:
+  php_max_file_uploads: 20
+```
+
+---
+
+##### `php_max_input_vars`
+Sets the [`max_input_vars` PHP setting](http://php.net/manual/en/info.configuration.php#ini.max-input-vars).
+```yaml
+build:
+  php_max_input_vars: 1000
+```
+
+---
+
+##### `php_default_mimetype`
+Sets the [`default_mime_type` PHP setting](http://www.php.net/manual/en/ini.core.php#ini.default-mimetype).
+```yaml
+build:
+  php_default_mimetype: 'text/html'
+```
+
+---
+
+##### `php_default_locale`
+Sets the [`intl.default_locale` PHP setting](http://php.net/manual/en/intl.configuration.php#ini.intl.default-locale).
+```yaml
+build:
+  php_default_locale: 'en_US'
+```
+
+---
+
+##### `php_browscap`
+This allows you to specify the filepath to your browser capabilities file (browscap.ini). See [PHP.net Docs](http://php.net/manual/en/misc.configuration.php#ini.browscap) for definition & configuration options. When specifying the path to your browscap.ini in your Boxfile, it should relative to the root of your repo.
+
+***Note:*** You must include your own browscap.ini in your app's repo. They are available for free from [browscap.org](http://browscap.org/).
+
+```yaml
+build:
+  php_browscap: 'app/browscap.ini'
+```
+
+---
+
+##### `php_session_save_handler`
+Sets the [`session.save_handler` PHP setting](http://www.php.net/manual/en/session.configuration.php#ini.session.save-handler).
+```yaml
+build:
+  php_session_save_handler: 'files'
+```
+
+---
+
+##### `php_session_save_path`
+Sets the [`session.save_path` PHP setting](http://www.php.net/manual/en/session.configuration.php#ini.session.save-path).
+```yaml
+build:
+  php_session_save_path: '/tmp/nanobox/sessions'
+```
+
+---
+
+##### `php_session_length`
+Sets the [`session.gc_maxlifetime` PHP setting](http://www.php.net/manual/en/session.configuration.php#ini.session.gc-maxlifetime).
+```yaml
+build:
+  php_session_length: 3600
+```
+
+---
+
+##### `php_session_autostart`
+Sets the [`session.autostart` PHP setting](http://www.php.net/manual/en/session.configuration.php#ini.session.auto-start).
+```yaml
+build:
+  php_session_autostart: 'false'
+```
+
+---
+
+##### `php_date_timezone`
+Sets the [`date.timezone` PHP setting](http://php.net/manual/en/datetime.configuration.php#ini.date.timezone).
+```yaml
+build:
+  php_date_timezone: 'US/central'
+```
+
+---
+
+##### `php_iconv_internal_encoding`
+Sets the [`iconv.internal_encoding` PHP setting](http://www.php.net/manual/en/iconv.configuration.php#ini.iconv.internal-encoding).
+```yaml
+build:
+  php_iconv_internal_encoding: 'UTF-8'
+```
+
+---
+
+### Apache Settings
+The following settings are used to configure Apache. These only apply when using `apache` as your `webserver`.
 
 ---
 
@@ -177,9 +525,18 @@ build:
 
 ---
 
+##### `apache_default_gateway`
+When a path is not specified in the url, this files is served. *This is similar to [`apache_index_list`](#apache_index_list) except it only accepts a single argument.*
+```yaml
+build:
+  apache_default_gateway: "index.php"
+```
+
+---
+
 ##### `apache_php_interpreter`
 
-Specify which PHP interepreter you would like Apache to use.
+Specify which PHP interpreter you would like Apache to use.
 
 - fpm *(default)*
 - mod_php
@@ -238,15 +595,6 @@ build:
 
 ---
 
-##### `apache_default_gateway`
-When a path is not specified in the url, this files is served. *This is similar to [`apache_index_list`](#apache_index_list) except it only accepts a single argument.*
-```yaml
-build:
-  apache_default_gateway: "index.php"
-```
-
----
-
 ##### `apache_static_expire`
 Adds far future expires to your header, setting the number of seconds static assets are cached. By default, static asset caching is not enabled. We only recommend using this directive on apps whose static assets do not change often.
 ```yaml
@@ -274,287 +622,34 @@ build:
 
 ---
 
-### PHP Settings
-The following settings are typically configured in the php.ini. When using Nanobox, these are configured in the Boxfile.
+### Nginx Settings
+These settings are used to configure nginx. They only apply when using `nginx` as your `webserver`.
 
 ---
-
-##### `php_version`
-Specifies which version of PHP to use. The following versions are avaiable:
-
-- 5.3
-- 5.4
-- 5.5
-- 5.6
-
+##### `nginx_document_root`
+The public root of your web application. For instance, if you like to house your app in `/public` for security or organizational purposes, you can specify that here. The default is the `/`.
 ```yaml
 build:
-  php_version: 5.6
+  nginx_document_root: '/'
 ```
 
 ---
 
-##### `php_extensions`
-Specifies what PHP extensions should be included in your app's environment. To see what PHP extensions are available, view the [full list of avialable PHP extensions](https://github.com/pagodabox/nanobox-engine-php/blob/master/doc/php-extensions.md).
-
+##### `nginx_index_list`
+When a path is not specified in the url, these files are served in order in which they're listed.
 ```yaml
 build:
-  php_extensions:
-    - curl
-    - gd
-    - mbstring
-    - pdo_mysql
+  nginx_index_list:
+    - index.php
+    - index.html
 ```
 
 ---
-
-##### `php_zend_extensions`
-Specifies what Zend extensions should be included in your app's environment. To see what Zend extensions are available, view the [Zend Extensions section of the PHP extensions list](https://github.com/pagodabox/nanobox-engine-php/blob/master/doc/php-extensions.md#zend-extensions).
+##### `nginx_default_gateway`
+When a path is not specified in the url, this files is served. *This is similar to [`nginx_index_list`](#nginx_index_list) except it only accepts a single argument.*
 ```yaml
 build:
-  php_zend_extensions:
-    - ioncube_loader
-    - opcache
-```
-
----
-
-##### `php_short_open_tag`
-Sets the [`short_open_tag` PHP setting](http://www.php.net/manual/en/ini.core.php#ini.short-open-tag).
-```yaml
-build:
-  php_short_open_tag: true
-```
-
----
-
-##### `php_zlib_output_compression`
-Sets the [`zlib.output_compression` PHP Setting](http://php.net/manual/en/zlib.configuration.php#ini.zlib.output-compression).
-```yaml
-build:
-  php_zlib_output_compression: 'Off'
-```
-
----
-
-##### `php_allow_url_fopen`
-Sets the [`allow_url_fopen` PHP Setting](http://php.net/manual/en/filesystem.configuration.php#ini.allow-url-fopen).
-```yaml
-build:
-  php_allow_url_fopen: 'On'
-```
-
----
-
-##### `php_disable_functions`
-Sets the [`disable_fuctions` PHP Setting](http://php.net/manual/en/ini.core.php#ini.disable-functions).
-```yaml
-build:
-  php_disable_functions:
-    - exec
-    - shell_exec
-    - system
-```
-
----
-
-##### `php_expose_php`
-Sets the [`expose_php` PHP Setting](http://www.php.net/manual/en/ini.core.php#ini.expose-php).
-```yaml
-build:
-  php_expose_php: 'On'
-```
-
----
-
-##### `php_max_execution_time`
-Sets the [`max_execution_time` PHP Setting](http://www.php.net/manual/en/info.configuration.php#ini.max-execution-time).
-```yaml
-build:
-  php_max_execution_time: 30
-```
-
----
-
-##### `php_max_input_time`
-Sets the [`max_input_time` PHP Setting](http://www.php.net/manual/en/info.configuration.php#ini.max-input-time).
-```yaml
-build:
-  php_max_input_time: 60
-```
-
----
-
-##### `php_memory_limit`
-Sets the [`memory_limit` PHP Setting](http://php.net/manual/en/ini.core.php#ini.memory-limit). **Note:** This setting should not exceed the memory available on your PHP server(s).
-```yaml
-build:
-  php_memory_limit: '128M'
-```
-
----
-
-##### `php_error_reporting`
-Sets the [`error_reporting` PHP Setting](http://www.php.net/manual/en/errorfunc.configuration.php#ini.error-reporting).
-```yaml
-build:
-  php_error_reporting: E_ALL
-```
-
----
-
-##### `php_display_errors`
-Sets the [`dispaly_errors` PHP Setting](http://us3.php.net/manual/en/errorfunc.configuration.php#ini.display-errors).
-```yaml
-build:
-  php_display_errors: 'stderr'
-```
-
----
-
-##### `php_register_globals`
-Sets the [`register_globals` PHP Setting](http://www.php.net/manual/en/ini.core.php#ini.register-globals)
-```yaml
-build:
-  php_register_globals: 'Off'
-```
-
----
-
-##### `php_register_argc_argv`
-Sets the [`register_argc_argv` PHP Setting](http://www.php.net/manual/en/ini.core.php#ini.register-argc-argv).
-```yaml
-build:
-  php_register_argc_argv: 'Off'
-```
-
----
-
-##### `php_post_max_size`
-Sets the [`post_max_size` PHP Setting](http://www.php.net/manual/en/ini.core.php#ini.post-max-size).
-```yaml
-build:
-  php_post_max_size: '8M'
-```
-
----
-
-##### `php_upload_max_filesize`
-Sets the [`upload_max_filesize` PHP Setting](http://php.net/manual/en/ini.core.php#ini.upload-max-filesize).
-```yaml
-build:
-  php_upload_max_filesize: '2M'
-```
-
----
-
-##### `php_file_uploads`
-Sets the [`file_uploads` PHP Setting](http://php.net/manual/en/ini.core.php#ini.file-uploads).
-```yaml
-build:
-  php_file_uploads: true
-```
-
----
-
-##### `php_max_file_uploads`
-Sets the [`max_file_uploads` PHP Setting](http://php.net/manual/en/ini.core.php#ini.max-file-uploads).
-```yaml
-build:
-  php_max_file_uploads: 20
-```
-
----
-
-##### `php_max_input_vars`
-Sets the [`max_input_vars` PHP Setting](http://php.net/manual/en/info.configuration.php#ini.max-input-vars).
-```yaml
-build:
-  php_max_input_vars: 1000
-```
-
----
-
-##### `php_default_mimetype`
-Sets the [`default_mime_type` PHP Setting](http://www.php.net/manual/en/ini.core.php#ini.default-mimetype).
-```yaml
-build:
-  php_default_mimetype: 'text/html'
-```
-
----
-
-##### `php_default_locale`
-Sets the [`intl.default_locale` PHP Setting](http://php.net/manual/en/intl.configuration.php#ini.intl.default-locale).
-```yaml
-build:
-  php_default_locale: 'en_US'
-```
-
----
-
-##### `php_browscap`
-This allows you to specify the filepath to your browser capabilities file (browscap.ini). See [PHP.net Docs](http://php.net/manual/en/misc.configuration.php#ini.browscap) for definition & configuration options. When specifying the path to your browscap.ini in your Boxfile, it should relative to the root of your repo.
-
-***Note:*** You must include your own browscap.ini in your app's repo. They are available for free from [browscap.org](http://browscap.org/).
-
-```yaml
-build:
-  php_browscap: 'app/browscap.ini'
-```
-
----
-
-##### `php_session_save_handler`
-Sets the [`session.save_handler` PHP Setting](http://www.php.net/manual/en/session.configuration.php#ini.session.save-handler).
-```yaml
-build:
-  php_session_save_handler: 'files'
-```
-
----
-
-##### `php_session_save_path`
-Sets the [`session.save_path` PHP Setting](http://www.php.net/manual/en/session.configuration.php#ini.session.save-path).
-```yaml
-build:
-  php_session_save_path: '/tmp/nanobox/sessions'
-```
-
----
-
-##### `php_session_length`
-Sets the [`session.gc_maxlifetime` PHP Setting](http://www.php.net/manual/en/session.configuration.php#ini.session.gc-maxlifetime).
-```yaml
-build:
-  php_session_length: 3600
-```
-
----
-
-##### `php_session_autostart`
-Sets the [`session.autostart` PHP Setting](http://www.php.net/manual/en/session.configuration.php#ini.session.auto-start).
-```yaml
-build:
-  php_session_autostart: 'false'
-```
-
----
-
-##### `php_date_timezone`
-Sets the [`date.timezone` PHP Setting](http://php.net/manual/en/datetime.configuration.php#ini.date.timezone).
-```yaml
-build:
-  php_date_timezone: 'US/central'
-```
-
----
-
-##### `php_iconv_internal_encoding`
-Sets the [`iconv.internal_encoding` PHP Setting](http://www.php.net/manual/en/iconv.configuration.php#ini.iconv.internal-encoding).
-```yaml
-build:
-  php_iconv_internal_encoding: 'UTF-8'
+  nginx_default_gateway: 'index.php'
 ```
 
 ---
@@ -606,7 +701,7 @@ The following settings are used to configure the GeoIP PHP extension.
 ---
 
 ##### `php_geoip_custom_directory`
-Sets the [`geoip.custom_directory` PHP Setting](http://php.net/manual/en/geoip.configuration.php). When specifying the path to the directory, it should be relative to the root of your repo.
+Sets the [`geoip.custom_directory` PHP setting](http://php.net/manual/en/geoip.configuration.php). When specifying the path to the directory, it should be relative to the root of your repo.
 
 **Note:** When using the `geoip` php extension, you need to provide your own GeoIP database. Free databases are [available for download from Maxmind]http://dev.maxmind.com/geoip/legacy/geolite/#Downloads. Maxmind also provides subscription databases that tend to be more accurate.
 ```yaml
@@ -622,7 +717,7 @@ The following settings are used to configure the PHP Memcache driver.
 ---
 
 ##### `php_memcache_chunk_size`
-Sets the [`memcache.chunk_size` PHP Setting](http://php.net/manual/en/memcache.ini.php#ini.memcache.chunk-size).
+Sets the [`memcache.chunk_size` PHP setting](http://php.net/manual/en/memcache.ini.php#ini.memcache.chunk-size).
 ```yaml
 build:
   php_memcache_chunk_size: 8192
@@ -631,7 +726,7 @@ build:
 ---
 
 ##### `php_memcache_hash_strategy`
-Sets the [`memcache.hash_strategy` PHP Setting](http://php.net/manual/en/memcache.ini.php#ini.memcache.hash-strategy)
+Sets the [`memcache.hash_strategy` PHP setting](http://php.net/manual/en/memcache.ini.php#ini.memcache.hash-strategy)
 ```yaml
 build:
   php_memcache_hash_strategy: 'standard'
@@ -645,7 +740,7 @@ The following settings are used to configure the PHP Mongo driver.
 ---
 
 ##### `php_mongo_native_long`
-Sets the [`mongo.native_long` PHP Setting](http://php.net/manual/en/mongo.configuration.php#ini.mongo.native-long).
+Sets the [`mongo.native_long` PHP setting](http://php.net/manual/en/mongo.configuration.php#ini.mongo.native-long).
 ```yaml
 build:
   php_mongo_native_long: 1
@@ -654,7 +749,7 @@ build:
 ---
 
 ##### `php_mongo_allow_empty_keys`
-Sets the [`mongo.allow_empty_keys` PHP Setting](http://php.net/manual/en/mongo.configuration.php#ini.mongo.allow-empty-keys)
+Sets the [`mongo.allow_empty_keys` PHP setting](http://php.net/manual/en/mongo.configuration.php#ini.mongo.allow-empty-keys)
 ```yaml
 build:
   php_mongo_allow_empty_keys: 0
@@ -663,7 +758,7 @@ build:
 ---
 
 ##### `php_mongo_cmd`
-Sets the [`mongo.cmd` PHP Setting](http://php.net/manual/en/mongo.configuration.php#ini.mongo.cmd).
+Sets the [`mongo.cmd` PHP setting](http://php.net/manual/en/mongo.configuration.php#ini.mongo.cmd).
 ```yaml
 build:
   php_mongo_cmd: '$'
@@ -672,7 +767,7 @@ build:
 ---
 
 ##### `php_mongo_long_as_object`
-Sets the [`mongo.long_as_object` PHP Setting](http://php.net/manual/en/mongo.configuration.php#ini.mongo.long-as-object).
+Sets the [`mongo.long_as_object` PHP setting](http://php.net/manual/en/mongo.configuration.php#ini.mongo.long-as-object).
 ```yaml
 build:
   php_mongo_long_as_object: 0
@@ -686,14 +781,14 @@ The following settings are used to configure APC, a PHP byte-code caching engine
 ---
 
 ##### `php_apc_shm_size`
-Sets the [`apc.shm_size` PHP Setting](http://php.net/manual/en/apc.configuration.php#ini.apc.shm-size).
+Sets the [`apc.shm_size` PHP setting](http://php.net/manual/en/apc.configuration.php#ini.apc.shm-size).
 ```yaml
 build:
   php_apc_shm_size: '32M'
 ```
 
 ##### `php_apc_num_files_hint`
-Sets the [`apc.num_files_hint` PHP Setting](http://php.net/manual/en/apc.configuration.php#ini.apc.num-files-hint).
+Sets the [`apc.num_files_hint` PHP setting](http://php.net/manual/en/apc.configuration.php#ini.apc.num-files-hint).
 ```yaml
 build:
   php_apc_num_files_hint: 1000
@@ -702,7 +797,7 @@ build:
 ---
 
 ##### `php_apc_user_entries_hint`
-Sets the [`apc.user_entries_hint` PHP Setting](http://php.net/manual/en/apc.configuration.php#ini.apc.user-entries-hint).
+Sets the [`apc.user_entries_hint` PHP setting](http://php.net/manual/en/apc.configuration.php#ini.apc.user-entries-hint).
 ```yaml
 build:
   php_apc_user_entries_hint: 4096
@@ -711,7 +806,7 @@ build:
 ---
 
 ##### `php_apc_filters`
-Sets the [`apc.filters` PHP Setting](http://php.net/manual/en/apc.configuration.php#ini.apc.filters).
+Sets the [`apc.filters` PHP setting](http://php.net/manual/en/apc.configuration.php#ini.apc.filters).
 ```yaml
 build:
   php_apc_filters: ''
@@ -757,7 +852,7 @@ The following settings are used to configure the OPcache PHP byte-code caching e
 ---
 
 ##### `php_opcache_memory_consumption`
-Sets the [`opcache.memory_consumption` PHP Setting](http://php.net/manual/en/opcache.configuration.php#ini.opcache.memory-consumption).
+Sets the [`opcache.memory_consumption` PHP setting](http://php.net/manual/en/opcache.configuration.php#ini.opcache.memory-consumption).
 ```yaml
 build:
   php_opcache_memory_consumption: 64
@@ -766,7 +861,7 @@ build:
 ---
 
 ##### `php_opcache_validate_timestamps`
-Sets the [`opcache.validate_timestamps` PHP Setting](http://php.net/manual/en/opcache.configuration.php#ini.opcache.validate-timestamps).
+Sets the [`opcache.validate_timestamps` PHP setting](http://php.net/manual/en/opcache.configuration.php#ini.opcache.validate-timestamps).
 ```yaml
 build:
   php_opcache_validate_timestamps: 1
@@ -775,7 +870,7 @@ build:
 ---
 
 ##### `php_opcache_revalidate_freq`
-Sets the [`opcache.revalidate_freq` PHP Setting](http://php.net/manual/en/opcache.configuration.php#ini.opcache.revalidate-freq)
+Sets the [`opcache.revalidate_freq` PHP setting](http://php.net/manual/en/opcache.configuration.php#ini.opcache.revalidate-freq)
 ```yaml
 build:
   php_opcache_revalidate_freq: 2
@@ -784,7 +879,7 @@ build:
 ---
 
 ##### `php_opcache_revalidate_path`
-Sets the [`opcache.revalidate_path` PHP Setting](http://php.net/manual/en/opcache.configuration.php#ini.opcache.revalidate-path).
+Sets the [`opcache.revalidate_path` PHP setting](http://php.net/manual/en/opcache.configuration.php#ini.opcache.revalidate-path).
 ```yaml
 build:
   php_opcache_revalidate_path: 0
@@ -793,7 +888,7 @@ build:
 ---
 
 ##### `php_opcache_save_comments`
-Sets the [`opcache.save_comments` PHP Setting](http://php.net/manual/en/opcache.configuration.php#ini.opcache.save-comments).
+Sets the [`opcache.save_comments` PHP setting](http://php.net/manual/en/opcache.configuration.php#ini.opcache.save-comments).
 ```yaml
 build:
   php_opcache_save_comments: 1
@@ -802,7 +897,7 @@ build:
 ---
 
 ##### `php_opcache_load_comments`
-Sets the [`opcache_load_comments` PHP Setting](http://php.net/manual/en/opcache.configuration.php#ini.opcache.load-comments).
+Sets the [`opcache_load_comments` PHP setting](http://php.net/manual/en/opcache.configuration.php#ini.opcache.load-comments).
 ```yaml
 build:
   php_opcache_load_comments: 1
@@ -811,7 +906,7 @@ build:
 ---
 
 ##### `php_opcache_enable_file_override`
-Sets the [`opcache.enable_file_override` PHP Setting](http://php.net/manual/en/opcache.configuration.php#ini.opcache.enable-file-override).
+Sets the [`opcache.enable_file_override` PHP setting](http://php.net/manual/en/opcache.configuration.php#ini.opcache.enable-file-override).
 ```yaml
 build:
   php_opcache_enable_file_override: 0
@@ -820,7 +915,7 @@ build:
 ---
 
 ##### `php_opcache_optimization_level`
-Sets the [`opcache.optimization_level` PHP Setting](http://php.net/manual/en/opcache.configuration.php#ini.opcache.optimization-level).
+Sets the [`opcache.optimization_level` PHP setting](http://php.net/manual/en/opcache.configuration.php#ini.opcache.optimization-level).
 ```yaml
 build:
   php_opcache_optimization_level: '0xffffffff'
@@ -829,7 +924,7 @@ build:
 ---
 
 ##### `php_opcache_inherited_hack`
-Sets the [`opcache.inherited_hack` PHP Setting](http://php.net/manual/en/opcache.configuration.php#ini.opcache.inherited-hack).
+Sets the [`opcache.inherited_hack` PHP setting](http://php.net/manual/en/opcache.configuration.php#ini.opcache.inherited-hack).
 ```yaml
 build:
   php_opcache_inherited_hack: 1
@@ -838,7 +933,7 @@ build:
 ---
 
 ##### `php_opcache_dups_fix`
-Sets the [`opcache.dups_fix` PHP Setting](http://php.net/manual/en/opcache.configuration.php#ini.opcache.dups-fix).
+Sets the [`opcache.dups_fix` PHP setting](http://php.net/manual/en/opcache.configuration.php#ini.opcache.dups-fix).
 ```yaml
 build:
   php_opcache_dups_fix: 0
@@ -847,7 +942,7 @@ build:
 ---
 
 ##### `php_opcache_blacklist_filename`
-Sets the [`opcache.blacklist_filename` PHP Setting](http://php.net/manual/en/opcache.configuration.php#ini.opcache.blacklist-filename).
+Sets the [`opcache.blacklist_filename` PHP setting](http://php.net/manual/en/opcache.configuration.php#ini.opcache.blacklist-filename).
 ```yaml
 build:
   php_opcache_blacklist_filename: ''
