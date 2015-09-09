@@ -1,6 +1,9 @@
 build:
+    stability: alpha
     engine: ../../../../nanobox-engine-php
-    webserver: nginx
+    webserver: builtin
     php_extensions: 
         - filter
         - curl
+web1:
+    stability: alpha

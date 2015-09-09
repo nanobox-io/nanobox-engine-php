@@ -21,6 +21,8 @@ http {
 
     access_log  {{deploy_dir}}/var/log/nginx/access.log  main;
 
+    client_body_temp_path {{deploy_dir}}/var/tmp/nginx/client_body_temp;
+
     sendfile        on;
     keepalive_timeout  15;
 
