@@ -14,6 +14,7 @@ This Readme outlines only the most basic and commonly used settings. For the ful
 build:
   # Web Server Settings
   webserver: 'apache'
+  document_root: '/'
 
   # PHP Settings
   php_version: 5.6
@@ -34,22 +35,20 @@ build:
   php_file_uploads: true
 
   # Apache Settings
-  apache_document_root: '/'
   apache_php_interpreter: fpm
   apache_access_log: false
-
-  # Nginx Settings
-  nginx_document_root: '/'
 ```
 
 ##### Quick Links
 [Web Server Settings](#web-server-settings)  
 [PHP Settings](#php-settings)  
 [Apache Settings](#apache-settings)  
-[Nginx Settings](#nginx-settings)  
 
 ### Web Server Settings
 The following setting is used to select which web server to use in your application.
+
+- [webserver](#webserver)
+- [document_root](#document_root)
 
 ---
 
@@ -65,7 +64,20 @@ build:
   webserver: 'apache'
 ```
 
-*Web server specific settings are available in the [Apache Settings](#apache-settings) & [Nginx Settings](#nginx-settings) sections below.*
+*Web server specific settings are available in the following sections of the Advanced PHP Configuration doc:
+
+[Apache Settings](https://github.com/pagodabox/nanobox-engine-php/blob/master/doc/advanced-php-config.md#apache-settings)  
+[Nginx Settings](https://github.com/pagodabox/nanobox-engine-php/blob/master/doc/advanced-php-config.md#nginx-settings)
+[Built-In PHP Web Server Settings]https://github.com/pagodabox/nanobox-engine-php/blob/master/doc/advanced-php-config.md(#built-in-php-web-server-settings)
+
+---
+
+##### `document_root`
+The public root of your web application. For instance, if you like to house your app in `/public` for security or organizational purposes, you can specify that here. The default is the `/`.
+```yaml
+build:
+  document_root: '/'
+```
 
 ---
 
@@ -201,18 +213,8 @@ build:
 ### Apache Settings
 The following settings are used to configure Apache. These only apply when using `apache` as your `webserver`.
 
-- [apache_document_root](#apache_document_root)
 - [apache_php_interpreter](#apache_php_interpreter)
 - [apache_access_log](#apache_access_log)
-
----
-
-##### `apache_document_root`
-The public root of your web application. For instance, if you like to house your app in `/public` for security or organizational purposes, you can specify that here. The default is the `/`.
-```yaml
-build:
-  apache_document_root: '/'
-```
 
 ---
 
@@ -235,22 +237,6 @@ Enables or disables the Apache Access log.
 ```yaml
 build:
   apache_access_log: false
-```
-
----
-
-### Nginx Settings
-These settings are used to configure nginx. They only apply when using `nginx` as your `webserver`.
-
-- [nginx_document_root](#nginx_document_root)
-
----
-
-##### `nginx_document_root`
-The public root of your web application. For instance, if you like to house your app in `/public` for security or organizational purposes, you can specify that here. The default is the `/`.
-```yaml
-build:
-  nginx_document_root: '/'
 ```
 
 ---

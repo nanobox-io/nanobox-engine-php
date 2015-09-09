@@ -7,6 +7,7 @@ This engine exposes configuration option through the [Boxfile](http://docs.nanob
 build:
   # Web Server Settings
   webserver: 'apache'
+  document_root: '/'
 
   # PHP Settings
   php_version: 5.6
@@ -73,6 +74,9 @@ build:
     - index.php
     - index.html
   nginx_default_gateway: 'index.php'
+
+  # Built-In PHP Web Server Settings
+  builtin_document_root: '/'
   
   # PHP-FPM Settings
   php_fpm_events_mechanism: 'epoll'
@@ -150,6 +154,7 @@ build:
 [PHP Settings](#php-settings)  
 [Apache Settings](#apache-settings)  
 [Nginx Settings](#nginx-settings)  
+[Built-In PHP Web Server Settings](#built-in-php-web-server-settings)  
 [PHP-FPM Settings](#php-fpm-settings)  
 [PHP GeoIP Settings](#php-geoip-settings)  
 [PHP Memcache Settings](#php-memcache-settings)  
@@ -163,6 +168,9 @@ build:
 ### Web Server Settings
 The following setting is used to select which web server to use in your application.
 
+- [webserver](#webserver)
+- [document_root](#document_root)
+
 ---
 
 ##### `webserver`
@@ -174,10 +182,19 @@ The following web servers are available:
 
 ```yaml
 build:
-  webserver: apache
+  webserver: 'apache'
 ```
 
-*Web server specific settings are available in the [Apache Settings](#apache-settings) & [Nginx Settings](#nginx-settings) sections below.*
+*Web server specific settings are available in the [Apache Settings](#apache-settings), [Nginx Settings](#nginx-settings), & [Built-In PHP Web Server Settings](#built-in-php-web-server-settings) sections below.*
+
+---
+
+##### `document_root`
+The public root of your web application. For instance, if you like to house your app in `/public` for security or organizational purposes, you can specify that here. The default is the `/`.
+```yaml
+build:
+  document_root: '/'
+```
 
 ---
 
@@ -516,6 +533,9 @@ The following settings are used to configure Apache. These only apply when using
 
 ##### `apache_document_root`
 The public root of your web application. For instance, if you like to house your app in `/public` for security or organizational purposes, you can specify that here. The default is the `/`.
+
+**Note:** If both this setting and the [global `document_root`](#document_root) are set, the `builtin_document_root` will take precedence.
+
 ```yaml
 build:
   apache_document_root: '/'
@@ -634,13 +654,17 @@ build:
 ### Nginx Settings
 These settings are used to configure nginx. They only apply when using `nginx` as your `webserver`.
 
-- [nginx_document_root](nginx_document_root:)
-- [nginx_index_list](nginx_index_list)
-- [nginx_default_gateway](nginx_default_gateway)
+- [nginx_document_root](#nginx_document_root)
+- [nginx_index_list](#nginx_index_list)
+- [nginx_default_gateway](#nginx_default_gateway)
 
 ---
+
 ##### `nginx_document_root`
 The public root of your web application. For instance, if you like to house your app in `/public` for security or organizational purposes, you can specify that here. The default is the `/`.
+
+**Note:** If both this setting and the [global `document_root`](#document_root) are set, the `nginx_document_root` will take precedence.
+
 ```yaml
 build:
   nginx_document_root: '/'
@@ -658,11 +682,29 @@ build:
 ```
 
 ---
+
 ##### `nginx_default_gateway`
 When a path is not specified in the url, this files is served. *This is similar to [`nginx_index_list`](#nginx_index_list) except it only accepts a single argument.*
 ```yaml
 build:
   nginx_default_gateway: 'index.php'
+```
+
+---
+
+### Built-In PHP Web Server Settings
+The following setting is used to configure the built-in PHP web server available in PHP 5.4+. These settings only apply when using `builtin` as your `webserver`.
+
+---
+
+##### `builtin_document_root`
+The public root of your web application. For instance, if you like to house your app in `/public` for security or organizational purposes, you can specify that here. The default is the `/`.
+
+**Note:** If both this setting and the [global `document_root`](#document_root) are set, the `builtin_document_root` will take precedence.
+
+```yaml
+build:
+  builtin_document_root: '/'
 ```
 
 ---
