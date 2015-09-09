@@ -138,7 +138,7 @@ install_apache() {
 
 configure_apache() {
   mkdir -p $(etc_dir)/httpd
-  mkdir -p $(deploy_dir)/var/log/httpd
+  mkdir -p $(deploy_dir)/var/log/apache
   mkdir -p $(deploy_dir)/libexec/cgi-bin/
   mkdir -p $(deploy_dir)/var/run
   mkdir -p $(deploy_dir)/var/tmp

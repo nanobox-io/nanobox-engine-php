@@ -82,12 +82,12 @@ FileETag Mtime Size
 #############################################
 # Logging Configuration                     #
 #############################################
-ErrorLog {{deploy_dir}}/var/log/httpd/error.log
+ErrorLog {{deploy_dir}}/var/log/apache/error.log
 
 LogLevel {{log_level}}
 LogFormat "%{X-Forwarded-For}i %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
 {{#access_log}}
-CustomLog {{deploy_dir}}/var/log/httpd/access.log combined
+CustomLog {{deploy_dir}}/var/log/apache/access.log combined
 {{/access_log}}
 
 #############################################
