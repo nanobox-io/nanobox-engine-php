@@ -1,0 +1,37 @@
+web1:
+  ports:
+    - 80:8080
+    - 443:8080
+{{#apache}}
+{{#fpm}}
+  exec:
+    fpm: {{deploy_dir}}/sbin/php-fpm -y {{etc_dir}}/php/php-fpm.conf -c {{etc_dir}}/php/php.ini
+    apache: {{deploy_dir}}/sbin/httpd -DNO_DETACH
+{{/fpm}}
+{{#mod_php}}
+  exec: {{deploy_dir}}/sbin/httpd -DNO_DETACH
+{{/mod_php}}
+  log_watch:
+    apache[access]: {{deploy_dir}}/var/log/apache/access.log
+    apache[error]: {{deploy_dir}}/var/log/apache/error.log
+    php[error]: {{deploy_dir}}/var/log/php/php_error.log
+{{#fpm}}
+    php[fpm]: {{deploy_dir}}/var/log/php/php_fpm.log
+{{/fpm}}
+{{/apache}}
+{{#nginx}}
+  exec:
+    fpm: {{deploy_dir}}/sbin/php-fpm -y {{etc_dir}}/php/php-fpm.conf -c {{etc_dir}}/php/php.ini
+    nginx: {{deploy_dir}}/sbin/nginx
+  log_watch:
+    nginx[access]: {{deploy_dir}}/var/log/nginx/access.log
+    nginx[error]: {{deploy_dir}}/var/log/nginx/error.log
+    php[error]: {{deploy_dir}}/var/log/php/php_error.log
+    php[fpm]: {{deploy_dir}}/var/log/php/php_fpm.log
+{{/nginx}}
+{{#builtin}}
+  exec: {{deploy_dir}}/bin/php -S 0.0.0.0:{{port}} -c {{etc_dir}}/php/php.ini -t {{live_dir}}{{document_root}}/
+  log_watch:
+    php[access]: {{deploy_dir}}/var/log/php/access.log
+    php[error]: {{deploy_dir}}/var/log/php/php_error.log
+{{/builtin}}

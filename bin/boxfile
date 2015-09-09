@@ -3,60 +3,56 @@
 # source the Nos framework
 . /opt/nos/common.sh
 
+# source php common lib
+. ../lib/php_common.sh
+
 # initialize Nos with the original arguments
 nos_init $@
 
-# find webserver
-if [[ -n "$(payload boxfile_webserver)" ]]; then
-  webserver=$(payload boxfile_webserver)
-else
-  webserver="apache"
-fi
-
-# extract php interpreter
-if [[ -n "$(payload 'boxfile_httpd_php_interpreter')" ]]; then
-  httpd_php_interpreter=$(payload 'boxfile_httpd_php_interpreter')
-else
-  httpd_php_interpreter="fpm"
-fi
-
-deploy_dir=$(payload 'deploy_dir')
-etc_dir=$(payload 'etc_dir')
-live_dir=$(payload 'live_dir')
-port=$(payload 'port')
-
-echo "web1:"
-
-if [[ "${webserver}" = "apache" ]]; then
-  # echo out the exec command
-  echo "  webserver: apache"
-  if [[ "${httpd_php_interpreter}" = "fpm" ]]; then
-    echo "  exec:"
-    echo "    fpm: \"${deploy_dir}/sbin/php-fpm -y ${etc_dir}/php/php-fpm.conf -c ${etc_dir}/php/php.ini\""
-    echo "    apache: \"${deploy_dir}/sbin/httpd -DNO_DETACH\""
-  elif [[ "${httpd_php_interpreter}" = "mod_php" ]]; then
-    echo "  exec: \"${deploy_dir}/sbin/httpd -DNO_DETACH\""
+is_webserver() {
+  # find webserver
+  webserver='apache'
+  if [[ -n "$(payload 'boxfile_webserver')" ]]; then
+    webserver=$(payload 'boxfile_webserver')
   fi
-  # echo out the logs to watch
-  echo "  log_watch:"
-  echo "    apache[access]: ${deploy_dir}/var/log/apache/access.log"
-  echo "    apache[error]: ${deploy_dir}/var/log/apache/error.log"
-  echo "    php[error]: ${deploy_dir}/var/log/php/php_error.log"
-  if [[ "${httpd_php_interpreter}" = "fpm" ]]; then
-    echo "    php[fpm]: ${deploy_dir}/var/log/php/php_fpm.log"
+  if [[ "$webserver" = "$1" ]]; then
+    echo "true"
+  else
+    echo "false"
   fi
-elif [[ "${webserver}" = "nginx" ]]; then
-  echo "  exec:"
-  echo "    fpm: \"${deploy_dir}/sbin/php-fpm -y ${etc_dir}/php/php-fpm.conf -c ${etc_dir}/php/php.ini\""
-  echo "    nginx: \"${deploy_dir}/sbin/nginx\""
-  echo "  log_watch:"
-  echo "    nginx[access]: ${deploy_dir}/var/log/nginx/access.log"
-  echo "    nginx[error]: ${deploy_dir}/var/log/nginx/error.log"
-  echo "    php[error]: ${deploy_dir}/var/log/php/php_error.log"
-  echo "    php[fpm]: ${deploy_dir}/var/log/php/php_fpm.log"
-elif [[ "${webserver}" = "builtin" ]]; then
-  echo "  exec: \"${deploy_dir}/bin/php -S 0.0.0.0:${port} -c ${etc_dir}/php/php.ini -t ${live_dir}/\""
-  echo "  log_watch:"
-  echo "    php[access]: ${deploy_dir}/var/log/php/access.log"
-  echo "    php[error]: ${deploy_dir}/var/log/php/php_error.log"
-fi
+}
+
+is_interpreter() {
+  # extract php interpreter
+  interpreter="fpm"
+  if [[ -n "$(payload 'boxfile_apache_php_interpreter')" ]]; then
+    interpreter=$(payload 'boxfile_apache_php_interpreter')
+  fi
+  if [[ "$interpreter" = "$1" ]]; then
+    echo "true"
+  else
+    echo "false"
+  fi
+}
+
+boxfile_json() {
+  cat <<-END
+{
+  "apache": $(is_webserver 'apache'),
+  "fpm": $(is_interpreter 'fpm'),
+  "mod_php": $(is_interpreter 'mod_php'),
+  "nginx": $(is_webserver 'nginx'),
+  "builtin": $(is_webserver 'builtin'),
+  "etc_dir": "$(payload 'etc_dir')",
+  "deploy_dir": "$(payload 'deploy_dir')",
+  "port": "$(payload 'port')",
+  "live_dir": "$(payload 'live_dir')",
+  "document_root": "$(builtin_document_root)"
+}
+END
+}
+
+template \
+  "boxfile.mustache" \
+  "-" \
+  "${boxfile_json}"
