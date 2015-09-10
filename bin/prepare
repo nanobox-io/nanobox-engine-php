@@ -20,3 +20,5 @@ configure_webserver
 configure_php_fpm
 configure_php
 configure_newrelic
+
+composer_install
