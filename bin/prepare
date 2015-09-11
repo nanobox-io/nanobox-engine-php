@@ -9,7 +9,7 @@ nos_init $@
 # source common lib
 . ${engine_lib_dir}/common.sh
 
-install_php
+install_runtime
 install_php_extensions
 install_webserver
 install_composer

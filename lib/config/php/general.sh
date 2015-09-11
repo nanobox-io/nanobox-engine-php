@@ -284,8 +284,8 @@ condensed_runtime() {
   echo "${version//[.-]/}"
 }
 
-install_php() {
-  install "php-$(runtime)"
+install_runtime() {
+  install "$(runtime)"
 }
 
 install_php_extensions() {
