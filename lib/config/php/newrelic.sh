@@ -36,7 +36,7 @@ END
 
 newrelic_license() {
   # payload newrelic_license
-  echo "$(payload newrelic_license)"
+  echo "$(payload newrelic_key)"
 }
 
 newrelic_capture_params() {

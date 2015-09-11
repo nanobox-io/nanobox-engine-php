@@ -3,7 +3,7 @@ version: '0.1.0'
 summary: 'Nanobox engine for generic PHP deployments'
 language: 'php'
 stability: 'stable'
-license: 'MIT'
+license: 'MPL'
 generic: true
 
 authors:
