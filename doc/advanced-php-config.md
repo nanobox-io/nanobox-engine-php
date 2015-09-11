@@ -1,6 +1,6 @@
 # Advanced PHP Configuration Options
 
-This engine exposes configuration option through the [Boxfile](http://docs.nanobox.io/boxfile/), a yaml config file used to provision and configure your app's infrastructure when using Nanobox. Being a generic PHP engine, there are a lot of configuration options to try to allow compatibility with as many PHP apps as possible. This engine makes the following options available.
+This engine exposes configuration options through the [Boxfile](http://docs.nanobox.io/boxfile/), a yaml config file used to provision and configure your app's infrastructure when using Nanobox. Being a generic PHP engine, there are a lot of configuration options to try to allow compatibility with as many PHP apps as possible. This engine makes the following options available.
 
 #### Overview of Boxfile Configuration Options
 ```yaml
@@ -518,7 +518,7 @@ build:
 ---
 
 ### JS Runtime Settings
-Many PHP applications utilize Javascript tools in some way. The most common use is static asset compilation. This engine allows you to specify which JS runtime you'l like to use.
+Many PHP applications utilize Javascript tools in some way. The most common use is static asset compilation. This engine allows you to specify which JS runtime you'd like to use.
 
 ---
 

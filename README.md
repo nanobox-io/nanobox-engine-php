@@ -4,7 +4,7 @@ This is a generic PHP engine used to launch PHP web and worker services when usi
 
 ## Basic Configuration Options
 
-This engine exposes configuration option through the [Boxfile](http://docs.nanobox.io/boxfile/), a yaml config file used to provision and configure your app's infrastructure when using Nanobox. 
+This engine exposes configuration options through the [Boxfile](http://docs.nanobox.io/boxfile/), a yaml config file used to provision and configure your app's infrastructure when using Nanobox. 
 
 ##### *Advanced Configuration Options*
 This Readme outlines only the most basic and commonly used settings. For the full list of available configuration options, view the **[Advanced PHP Configuration options](https://github.com/pagodabox/nanobox-engine-php/blob/master/doc/advanced-php-config.md)**.
