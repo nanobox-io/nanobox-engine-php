@@ -49,6 +49,9 @@ build:
   php_date_timezone: 'US/central'
   php_iconv_internal_encoding: 'UTF-8'
 
+  # JS Runtime Settings
+  js_runtime: 'nodejs-0.12'
+
   # Apache Settings
   apache_document_root: '/'
   apache_index_list:
@@ -152,6 +155,7 @@ build:
 ##### Quick Links
 [Web Server Settings](#web-server-settings)  
 [PHP Settings](#php-settings)  
+[JS Runtime Settings](#js-runtime-settings)
 [Apache Settings](#apache-settings)  
 [Nginx Settings](#nginx-settings)  
 [Built-In PHP Web Server Settings](#built-in-php-web-server-settings)  
@@ -509,6 +513,26 @@ Sets the [`iconv.internal_encoding` PHP setting](http://www.php.net/manual/en/ic
 ```yaml
 build:
   php_iconv_internal_encoding: 'UTF-8'
+```
+
+---
+
+### JS Runtime Settings
+Many PHP applications utilize Javascript tools in some way. The most common use is static asset compilation. This engine allows you to specify which JS runtime you'l like to use.
+
+---
+
+##### `js_runtime`
+Specifies which JS runtime and version to use. The following runtimes are available:
+
+- nodejs-0.8
+- nodejs-0.10
+- nodejs-0.12
+- iojs-2.3
+
+```yaml
+build:
+  js_runtime: 'nodejs-0.12'
 ```
 
 ---
