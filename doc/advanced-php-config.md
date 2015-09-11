@@ -10,7 +10,7 @@ build:
   document_root: '/'
 
   # PHP Settings
-  php_version: 5.6
+  runtime: 'php-5.6'
   php_extensions:
     - curl
     - gd
@@ -201,7 +201,7 @@ build:
 ### PHP Settings
 The following settings are typically configured in the php.ini. When using Nanobox, these are configured in the Boxfile.
 
-- [php_version](#php_version)
+- [runtime](#runtime)
 - [php_extensions](#php_extensions)
 - [php_zend_extensions](#php_zend_extensions)
 - [php_short_open_tag](#php_short_open_tag)
@@ -233,8 +233,8 @@ The following settings are typically configured in the php.ini. When using Nanob
 
 ---
 
-##### `php_version`
-Specifies which version of PHP to use. The following versions are available:
+##### `runtime`
+Specifies which PHP runtime and version to use. The following runtimes are available:
 
 - 5.3
 - 5.4
@@ -243,7 +243,7 @@ Specifies which version of PHP to use. The following versions are available:
 
 ```yaml
 build:
-  php_version: 5.6
+  runtime: 'php-5.6'
 ```
 
 ---
