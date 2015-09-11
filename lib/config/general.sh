@@ -1,3 +1,55 @@
+# -*- mode: bash; tab-width: 2; -*-
+# vim: ts=2 sw=2 ft=bash noet
+
+create_boxfile() {
+  template \
+    "boxfile.mustache" \
+    "-" \
+    "$(boxfile_json)"
+}
+
+boxfile_json() {
+  cat <<-END
+{
+  "apache": $(is_webserver 'apache'),
+  "fpm": $(is_interpreter 'fpm'),
+  "mod_php": $(is_interpreter 'mod_php'),
+  "nginx": $(is_webserver 'nginx'),
+  "builtin": $(is_webserver 'builtin'),
+  "etc_dir": "$(payload 'etc_dir')",
+  "deploy_dir": "$(payload 'deploy_dir')",
+  "port": "$(payload 'port')",
+  "live_dir": "$(payload 'live_dir')",
+  "document_root": "$(builtin_document_root)"
+}
+END
+}
+
+is_webserver() {
+  # find webserver
+  webserver='apache'
+  if [[ -n "$(payload 'boxfile_webserver')" ]]; then
+    webserver=$(payload 'boxfile_webserver')
+  fi
+  if [[ "$webserver" = "$1" ]]; then
+    echo "true"
+  else
+    echo "false"
+  fi
+}
+
+is_interpreter() {
+  # extract php interpreter
+  interpreter="fpm"
+  if [[ -n "$(payload 'boxfile_apache_php_interpreter')" ]]; then
+    interpreter=$(payload 'boxfile_apache_php_interpreter')
+  fi
+  if [[ "${interpreter}" = "$1" ]]; then
+    echo "true"
+  else
+    echo "false"
+  fi
+}
 
 app_name() {
   # payload app
@@ -102,7 +154,7 @@ composer_install() {
     if [[ ! -f $(code_dir)/composer.lock ]]; then
       print_warning "No 'composer.lock' file detected. This may cause a slow or failed build. To avoid this issue, commit the 'composer.lock' file to your git repo."
     fi
-    (cd $(payload 'code_dir'); run_process "composer install" "composer install --no-interaction --prefer-source")
+    (cd $(payload 'code_dir'); run_subprocess "composer install" "composer install --no-interaction --prefer-source")
   fi
 }
 

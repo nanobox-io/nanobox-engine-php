@@ -1,3 +1,5 @@
+# -*- mode: bash; tab-width: 2; -*-
+# vim: ts=2 sw=2 ft=bash noet
 
 create_php_eaccelerator_ini() {
   template \

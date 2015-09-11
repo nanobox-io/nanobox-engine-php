@@ -1,3 +1,5 @@
+# -*- mode: bash; tab-width: 2; -*-
+# vim: ts=2 sw=2 ft=bash noet
 
 create_php_ini() {
   template \
@@ -284,8 +286,8 @@ condensed_runtime() {
   echo "${version//[.-]/}"
 }
 
-install_php() {
-  install "php-$(runtime)"
+install_runtime() {
+  install "$(runtime)"
 }
 
 install_php_extensions() {
