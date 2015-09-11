@@ -132,7 +132,7 @@ install_apache() {
   if [[ "$(use_fastcgi)" = "true" ]]; then
     install "ap22-fastcgi"
   else
-    install "ap22-php$(php_condensed_version)"
+    install "ap22-$(condensed_runtime)"
   fi
 }
 

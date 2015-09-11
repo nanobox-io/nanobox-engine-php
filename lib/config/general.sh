@@ -71,6 +71,14 @@ domains() {
   fi
 }
 
+js_runtime() {
+  echo $(validate "$(payload "boxfile_js_runtime")" "string" "nodejs-0.12")
+}
+
+install_js_runtime() {
+  install "$(js_runtime)"
+}
+
 webserver() {
   echo $(validate "$(payload boxfile_webserver)" "string" "apache")
 }

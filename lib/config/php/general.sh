@@ -274,18 +274,18 @@ date_timezone() {
   echo "$php_date_timezone"
 }
 
-php_version() {
-  version=$(validate "$(payload boxfile_php_version)" "string" "5.6")
+runtime() {
+  version=$(validate "$(payload boxfile_runtime)" "string" "php-5.6")
   echo "${version}"
 }
 
-php_condensed_version() {
-  version="$(php_version)"
-  echo "${version//./}"
+condensed_runtime() {
+  version="$(runtime)"
+  echo "${version//[.-]/}"
 }
 
 install_php() {
-  install "php-$(php_version)"
+  install "php-$(runtime)"
 }
 
 install_php_extensions() {
@@ -294,7 +294,7 @@ install_php_extensions() {
       type=PL_boxfile_php_extensions_${i}_type
       value=PL_boxfile_php_extensions_${i}_value
       if [[ ${!type} = "string" ]]; then
-        install php$(php_condensed_version)-${!value}
+        install $(condensed_runtime)-${!value}
       fi
     done
   fi
@@ -304,7 +304,7 @@ install_php_extensions() {
       type=PL_boxfile_php_zend_extensions_${i}_type
       value=PL_boxfile_php_zend_extensions_${i}_value
       if [[ ${!type} = "string" ]]; then
-        install php$(php_condensed_version)-${!value}
+        install $(condensed_runtime)-${!value}
       fi
     done
   fi
