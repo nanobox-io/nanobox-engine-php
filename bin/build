@@ -1,4 +1,6 @@
 #!/bin/bash
+# -*- mode: bash; tab-width: 2; -*-
+# vim: ts=2 sw=2 ft=bash noet
 
 # source the Nos framework
 . /opt/nos/common.sh
@@ -9,11 +11,15 @@ nos_init $@
 # source common lib
 . ${engine_lib_dir}/common.sh
 
+# run Boxfile hooks defined in the "before" node
 run_hooks "before"
 
+# run Boxfile hooks defined in the "exec" node
 run_hooks "exec"
 
+# run Boxfile hooks defined in the "after" node
 run_hooks "after"
 
+# copy the source code into the live directory
 print_bullet "Copying release into live code directory..."
 rsync -a $(payload 'code_dir')/ $(payload 'live_dir')

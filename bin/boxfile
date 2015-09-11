@@ -1,4 +1,6 @@
 #!/bin/bash
+# -*- mode: bash; tab-width: 2; -*-
+# vim: ts=2 sw=2 ft=bash noet
 
 # source the Nos framework
 . /opt/nos/common.sh
@@ -9,50 +11,6 @@ nos_init $@
 # source common lib
 . ${engine_lib_dir}/common.sh
 
-is_webserver() {
-  # find webserver
-  webserver='apache'
-  if [[ -n "$(payload 'boxfile_webserver')" ]]; then
-    webserver=$(payload 'boxfile_webserver')
-  fi
-  if [[ "$webserver" = "$1" ]]; then
-    echo "true"
-  else
-    echo "false"
-  fi
-}
-
-is_interpreter() {
-  # extract php interpreter
-  interpreter="fpm"
-  if [[ -n "$(payload 'boxfile_apache_php_interpreter')" ]]; then
-    interpreter=$(payload 'boxfile_apache_php_interpreter')
-  fi
-  if [[ "${interpreter}" = "$1" ]]; then
-    echo "true"
-  else
-    echo "false"
-  fi
-}
-
-boxfile_json() {
-  cat <<-END
-{
-  "apache": $(is_webserver 'apache'),
-  "fpm": $(is_interpreter 'fpm'),
-  "mod_php": $(is_interpreter 'mod_php'),
-  "nginx": $(is_webserver 'nginx'),
-  "builtin": $(is_webserver 'builtin'),
-  "etc_dir": "$(payload 'etc_dir')",
-  "deploy_dir": "$(payload 'deploy_dir')",
-  "port": "$(payload 'port')",
-  "live_dir": "$(payload 'live_dir')",
-  "document_root": "$(builtin_document_root)"
-}
-END
-}
-
-template \
-  "boxfile.mustache" \
-  "-" \
-  "$(boxfile_json)"
+# dynamically generate a Boxfile from a template,
+# and print to stdout
+create_boxfile
