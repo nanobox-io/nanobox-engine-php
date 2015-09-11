@@ -14,3 +14,4 @@ nos_init $@
 # dynamically generate a Boxfile from a template,
 # and print to stdout
 create_boxfile
+

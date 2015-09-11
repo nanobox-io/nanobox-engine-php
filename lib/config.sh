@@ -2,6 +2,7 @@
 # vim: ts=2 sw=2 ft=bash noet
 
 . ${engine_lib_dir}/config/apache.sh
+. ${engine_lib_dir}/config/bower.sh
 . ${engine_lib_dir}/config/builtin.sh
 . ${engine_lib_dir}/config/fpm.sh
 . ${engine_lib_dir}/config/general.sh

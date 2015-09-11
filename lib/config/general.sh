@@ -11,6 +11,7 @@ create_boxfile() {
 boxfile_json() {
   cat <<-END
 {
+  "has_bower": $(has_bower),
   "apache": $(is_webserver 'apache'),
   "fpm": $(is_interpreter 'fpm'),
   "mod_php": $(is_interpreter 'mod_php'),
@@ -141,6 +142,19 @@ install_webserver() {
   elif [[ "$(webserver)" = 'nginx' ]]; then
     install_nginx
   fi
+}
+
+set_js_runtime() {
+  [[ -d $(code_dir)/node_modules ]] && echo "$(js_runtime)" > $(code_dir)/node_modules/runtime
+}
+
+check_js_runtime() {
+  [[ ! -d $(code_dir)/node_modules ]] && echo "true" && return
+  [[ "$(cat $(code_dir)/node_modules/runtime)" =~ ^$(js_runtime)$ ]] && echo "true" || echo "false"
+}
+
+npm_rebuild() {
+  [[ "$(check_js_runtime)" = "false" ]] && (cd $(code_dir); run_process "npm rebuild" "npm rebuild")
 }
 
 install_composer() {
