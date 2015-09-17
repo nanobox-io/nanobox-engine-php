@@ -2,6 +2,12 @@
 
 This is a generic PHP engine used to launch PHP web and worker services when using [Nanobox](http://nanobox.io). It exposes has a wide collection configuration options generally handled in the php.ini and other configuration files. Both PHP settings and web server settings are available. In theory, anything that can be done with a PHP framework engine can be done with this engine.
 
+## App Detection
+- To detect a PHP app, this engine looks for files with a `.php` extension.
+
+## Build Process
+- `composer install`
+
 ## Basic Configuration Options
 
 This engine exposes configuration options through the [Boxfile](http://docs.nanobox.io/boxfile/), a yaml config file used to provision and configure your app's infrastructure when using Nanobox. 
@@ -52,7 +58,7 @@ The following setting is used to select which web server to use in your applicat
 
 ---
 
-##### `webserver`
+#### webserver
 The following web servers are available:
 
 - apache *(default)*
@@ -72,7 +78,7 @@ build:
 
 ---
 
-##### `document_root`
+#### document_root
 The public root of your web application. For instance, if you like to house your app in `/public` for security or organizational purposes, you can specify that here. The default is the `/`.
 ```yaml
 build:
@@ -98,7 +104,7 @@ The following settings are typically configured in the php.ini. When using Nanob
 
 ---
 
-##### `runtime`
+#### runtime
 Specifies which PHP runtime and version to use. The following runtimes are available:
 
 - php-5.3
@@ -113,7 +119,7 @@ build:
 
 ---
 
-##### `php_extensions`
+#### php_extensions
 Specifies what PHP extensions should be included in your app's environment. To see what PHP extensions are available, view the [full list of available PHP extensions](https://github.com/pagodabox/nanobox-engine-php/blob/master/doc/php-extensions.md).
 
 ```yaml
@@ -127,7 +133,7 @@ build:
 
 ---
 
-##### `php_zend_extensions`
+#### php_zend_extensions
 Specifies what Zend extensions should be included in your app's environment. To see what Zend extensions are available, view the [Zend Extensions section of the PHP extensions list](https://github.com/pagodabox/nanobox-engine-php/blob/master/doc/php-extensions.md#zend-extensions).
 ```yaml
 build:
@@ -138,7 +144,7 @@ build:
 
 ---
 
-##### `php_max_execution_time`
+#### php_max_execution_time
 Sets the [`max_execution_time` PHP setting](http://www.php.net/manual/en/info.configuration.php#ini.max-execution-time).
 ```yaml
 build:
@@ -147,7 +153,7 @@ build:
 
 ---
 
-##### `php_max_input_time`
+#### php_max_input_time
 Sets the [`max_input_time` PHP setting](http://www.php.net/manual/en/info.configuration.php#ini.max-input-time).
 ```yaml
 build:
@@ -156,7 +162,7 @@ build:
 
 ---
 
-##### `php_error_reporting`
+#### php_error_reporting
 Sets the [`error_reporting` PHP setting](http://www.php.net/manual/en/errorfunc.configuration.php#ini.error-reporting).
 ```yaml
 build:
@@ -165,7 +171,7 @@ build:
 
 ---
 
-##### `php_display_errors`
+#### php_display_errors
 Sets the [`display_errors` PHP setting](http://us3.php.net/manual/en/errorfunc.configuration.php#ini.display-errors).
 ```yaml
 build:
@@ -174,7 +180,7 @@ build:
 
 ---
 
-##### `php_post_max_size`
+#### php_post_max_size
 Sets the [`post_max_size` PHP setting](http://www.php.net/manual/en/ini.core.php#ini.post-max-size).
 ```yaml
 build:
@@ -183,7 +189,7 @@ build:
 
 ---
 
-##### `php_upload_max_filesize`
+#### php_upload_max_filesize
 Sets the [`upload_max_filesize` PHP setting](http://php.net/manual/en/ini.core.php#ini.upload-max-filesize).
 ```yaml
 build:
@@ -192,7 +198,7 @@ build:
 
 ---
 
-##### `php_file_uploads`
+#### php_file_uploads
 Sets the [`file_uploads` PHP setting](http://php.net/manual/en/ini.core.php#ini.file-uploads).
 ```yaml
 build:
@@ -201,7 +207,7 @@ build:
 
 ---
 
-##### `php_date_timezone`
+#### php_date_timezone
 Sets the [`date.timezone` PHP setting](http://php.net/manual/en/datetime.configuration.php#ini.date.timezone).
 ```yaml
 build:
@@ -218,7 +224,7 @@ The following settings are used to configure Apache. These only apply when using
 
 ---
 
-##### `apache_php_interpreter`
+#### apache_php_interpreter
 
 Specify which PHP interpreter you would like Apache to use.
 
@@ -232,7 +238,7 @@ build:
 
 ---
 
-##### `apache_access_log`
+#### apache_access_log
 Enables or disables the Apache Access log.
 ```yaml
 build:
