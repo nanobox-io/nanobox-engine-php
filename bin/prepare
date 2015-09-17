@@ -25,6 +25,8 @@ install_composer
 
 # install nodejs for static assets
 install_js_runtime
+npm_rebuild
+install_bower
 
 # persist all environment variables 
 persist_evars
@@ -43,3 +45,8 @@ configure_newrelic
 
 # if a composer.json file is present, run composer install
 composer_install
+bower_install
+
+set_js_runtime
+
+exit 0
