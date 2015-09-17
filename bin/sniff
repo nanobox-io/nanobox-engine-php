@@ -4,6 +4,8 @@
 
 # $1 = code_dir
 
-if [ ! -f ${1}/index.php ]
-  exit 1
-fi
+[[ -n "$(ls ${1}/*.php 2>/dev/null)" ]] && exit 0
+for subdir in $(find ${1} -type d); do
+	[[ -n "$(ls ${subdir}/*.php 2>/dev/null)" ]] && exit 0
+done
+exit 1
