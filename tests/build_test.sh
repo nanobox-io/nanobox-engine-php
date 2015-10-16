@@ -5,4 +5,4 @@ pass "unable to start the $VERSION container" docker run --privileged=true -d --
 
 defer docker kill $UUID
 
-pass "Failed to run build script" docker exec $UUID /opt/engines/php/bin/build "$(payload default-build)"
+pass "Failed to run build script" docker exec $UUID bash -c "cd /opt/engines/php/bin; ./build \"$(payload default-build)\""
