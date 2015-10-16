@@ -1,10 +1,10 @@
 build:
     webserver: apache
     apache_php_interpreter: mod_php
-    stability: alpha
+    stability: stable
     engine: ../../../../nanobox-engine-php
     php_extensions: 
         - filter
         - curl
 web1:
-    stability: alpha
+    stability: stable
