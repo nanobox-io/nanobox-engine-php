@@ -5,4 +5,4 @@ pass "unable to start the $VERSION container" docker run --privileged=true -d --
 
 defer docker kill $UUID
 
-pass "Failed to run prepare script" docker exec $UUID bash -c "cd /opt/engines/php/bin; ./prepare \"$(payload default-prepare)\""
+pass "Failed to run prepare script" docker exec $UUID bash -c "cd /opt/engines/php/bin; ./prepare '$(payload default-prepare)'"
