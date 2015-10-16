@@ -12,7 +12,7 @@ function defer() {
 function pass() {
   msg=$1
   shift
-  if ! $@; then
+  if ! "$@"; then
     echo $msg
     exit 1
   fi
@@ -21,7 +21,7 @@ function pass() {
 function fail() {
   msg=$1
   shift
-  if $@; then
+  if "$@"; then
     echo $msg
     exit 1
   fi
