@@ -28,7 +28,7 @@ function fail() {
 }
 
 function payload() {
-  cat payloads/${1}.json
+  cat tests/payloads/${1}.json
 }
 
 function finish {
