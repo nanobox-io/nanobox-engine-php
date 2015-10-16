@@ -7,8 +7,8 @@ defer docker kill $UUID
 
 pass "unable to create code folder" docker exec $UUID mkdir -p /opt/code
 
-fail "Detected something when there shouldn't be anything" docker exec $UUID /opt/bin/default-detect $(payload default-detect)
+fail "Detected something when there shouldn't be anything" docker exec $UUID /opt/engines/php/bin/sniff /opt/code
 
 pass "Failed to inject php file" docker exec $UUID touch /opt/code/index.php
 
-pass "Failed to detect PHP" docker exec $UUID /opt/bin/default-detect $(payload default-detect)
+pass "Failed to detect PHP" docker exec $UUID /opt/engines/php/bin/sniff /opt/code
