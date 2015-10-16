@@ -10,7 +10,7 @@ RUN mkdir -p /opt/engines/php/bin && \
     mkdir -p /opt/engines/php/templates
 
 # Add in this engine's files
-ADD bin/bin/. /opt/engines/php/bin
-ADD bin/files/. /opt/engines/php/files
-ADD bin/lib/. /opt/engines/php/lib
-ADD bin/templates/. /opt/engines/php/templates
+ADD bin/. /opt/engines/php/bin
+ADD files/. /opt/engines/php/files
+ADD lib/. /opt/engines/php/lib
+ADD templates/. /opt/engines/php/templates
