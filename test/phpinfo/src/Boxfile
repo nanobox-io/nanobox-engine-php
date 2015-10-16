@@ -1,10 +1,19 @@
 build:
-    webserver: apache
-    apache_php_interpreter: mod_php
-    stability: stable
-    engine: ../../../../nanobox-engine-php
-    php_extensions: 
-        - filter
-        - curl
+  webserver: apache
+  apache_php_interpreter: mod_php
+  stability: alpha
+  engine: ../../../../nanobox-engine-php
+  php_extensions: 
+    - filter
+    - curl
+    - redis
+
 web1:
-    stability: stable
+  stability: alpha
+
+mysql1:
+  name: mysql
+  version: 5.5
+
+redis1:
+  name: sessions
