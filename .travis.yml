@@ -1,0 +1,9 @@
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - docker build -t nanobox/build-php -f tests/Dockerfile .
+
+script: sudo tests/run.sh
