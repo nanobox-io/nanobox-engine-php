@@ -19,6 +19,6 @@ END
 geoip_custom_directory() {
   # boxfile php_geoip_custom_directory
   php_geoip_custom_directory=$(validate "$(payload boxfile_php_geoip_custom_directory)" "folder" "")
-  >&2 echo "Using ${php_geoip_custom_directory} as GeoIP custom directory"
+  >&2 echo "   Using ${php_geoip_custom_directory} as GeoIP custom directory"
   echo "$php_geoip_custom_directory"
 }

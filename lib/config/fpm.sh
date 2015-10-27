@@ -26,28 +26,28 @@ events_mechanism() {
   uname=$(uname)
   [[ "$uname" =~ "Linux" ]] && default=epoll
   php_fpm_events_mechanism=$(validate "$(payload php_fpm_events_mechanism)" "string" "$default")
-  >&2 echo "Using ${php_fpm_events_mechanism} as PHP-FPM events mechanism"
+  >&2 echo "   Using ${php_fpm_events_mechanism} as PHP-FPM events mechanism"
   echo $php_fpm_events_mechanism
 }
 
 max_children() {
   # boxfile php_fpm_max_children
   php_fpm_max_children=$(validate "$(payload boxfile_php_fpm_max_children)" "integer" "20")
-  >&2 echo "Using ${php_fpm_max_children} as PHP-FPM max children"
+  >&2 echo "   Using ${php_fpm_max_children} as PHP-FPM max children"
   echo "$php_fpm_max_children"
 }
 
 max_spare_servers() {
   # boxfile php_fpm_max_spare_servers
   php_fpm_max_spare_servers=$(validate "$(payload boxfile_php_fpm_max_spare_servers)" "integer" "1")
-  >&2 echo "Using ${php_fpm_max_spare_servers} as PHP-FPM max spare servers"
+  >&2 echo "   Using ${php_fpm_max_spare_servers} as PHP-FPM max spare servers"
   echo "$php_fpm_max_spare_servers"
 }
 
 max_requests() {
   # boxfile php_fpm_max_requests
   php_fpm_max_requests=$(validate "$(payload boxfile_php_fpm_max_requests)" "integer" "128")
-  >&2 echo "Using ${php_fpm_max_requests} as PHP-FPM max requests"
+  >&2 echo "   Using ${php_fpm_max_requests} as PHP-FPM max requests"
   echo "$php_fpm_max_requests"
 }
 

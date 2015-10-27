@@ -126,7 +126,7 @@ domains() {
 
 js_runtime() {
   _js_runtime=$(validate "$(payload "boxfile_js_runtime")" "string" "nodejs-0.12")
-  >&2 echo "Using ${_js_runtime} as Node.js runtime"
+  >&2 echo "   Using ${_js_runtime} as Node.js runtime"
   echo ${_js_runtime}
 }
 
@@ -136,7 +136,7 @@ install_js_runtime() {
 
 webserver() {
   _webserver=$(validate "$(payload boxfile_webserver)" "string" "apache")
-  >&2 echo "Using ${_webserver} as the webserver"
+  >&2 echo "   Using ${_webserver} as the webserver"
   echo "${_webserver}"
 }
 

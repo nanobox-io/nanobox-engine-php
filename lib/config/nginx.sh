@@ -27,10 +27,10 @@ nginx_document_root() {
   document_root=$(validate "$(payload boxfile_nginx_document_root)" "folder" "$(validate "$(payload boxfile_document_root)" "folder" "/")")
 
   if [[ ${document_root:0:1} = '/' ]]; then
-    >&2 echo "Using $document_root as the Nginx document root" 
+    >&2 echo "   Using $document_root as the Nginx document root" 
     echo $document_root
   else
-    >&2 echo "Using /$document_root as the Nginx document root" 
+    >&2 echo "   Using /$document_root as the Nginx document root" 
     echo /$document_root
   fi
 }
@@ -41,14 +41,14 @@ nginx_directory_index() {
   for i in $index_list; do
     ignore=$(validate "$i" "file" "")
   done
-  >&2 echo "Using ${index_list} as the index list"
+  >&2 echo "   Using ${index_list} as the index list"
   echo "$index_list"
 }
 
 nginx_default_gateway() {
   # boxfile nginx_default_gateway
   default_gateway=$(validate "$(payload boxfile_nginx_default_gateway)" "file" "index.php")
-  >&2 echo "Using ${default_gateway} as the default application gateway"
+  >&2 echo "   Using ${default_gateway} as the default application gateway"
   echo "$default_gateway"
 }
 
