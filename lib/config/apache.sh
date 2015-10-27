@@ -84,7 +84,7 @@ modules() {
     for i in ${modules_list[@]}; do
       [[ ! -f ${prefix}/lib/httpd/mod_${i}.so ]] && >&2 echo "Error: Can't find file for module ${i}." && exit 1
     done
-    >&2 echo "Using $(join '","' ${modules_list[@]}) as Apache modules"
+    >&2 echo "Using $(join ', ' ${modules_list[@]}) as Apache modules"
     echo "[ \"$(join '","' ${modules_list[@]})\" ]"
 
   fi
