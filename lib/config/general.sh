@@ -126,7 +126,7 @@ domains() {
 
 js_runtime() {
   _js_runtime=$(validate "$(payload "boxfile_js_runtime")" "string" "nodejs-0.12")
-  >&2 "Using ${_js_runtime} as Node.js runtime"
+  >&2 echo "Using ${_js_runtime} as Node.js runtime"
   echo ${_js_runtime}
 }
 

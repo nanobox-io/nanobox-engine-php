@@ -7,5 +7,5 @@ install_bower() {
 }
 
 bower_install() {
-  [[ "$(has_bower)" = "true" ]] && (cd $(code_dir); print_bullet_info "Found bower.json, running 'bower install'";run_process "bower install" "node_modules/.bin/bower --config.interactive=false install") || print_bullet_info "Did not find bower.json, not running bower install"
+  [[ "$(has_bower)" = "true" ]] && (cd $(code_dir); print_bullet_info "Found bower.json, running 'bower install'";run_process "bower install" "node_modules/.bin/bower --config.interactive=false install") || print_bullet_info "Did not find bower.json, skipping 'bower install'"
 }
