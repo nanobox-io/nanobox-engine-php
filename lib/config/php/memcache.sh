@@ -20,11 +20,13 @@ END
 memcache_chunk_size() {
   # boxfile php_memcache_chunk_size
   php_memcache_chunk_size=$(validate "$(payload boxfile_php_memcache_chunk_size)" "integer" "32768")
+  >&2 echo "Using ${php_memcache_chunk_size} as Memcache chunk size"
   echo "$php_memcache_chunk_size"
 }
 
 memcache_hash_strategy() {
   # boxfile php_memcache_hash_strategy
   php_memcache_hash_strategy=$(validate "$(payload boxfile_php_memcache_hash_strategy)" "string" "standard")
+  >&2 echo "Using ${php_memcache_hash_strategy} as Memcache hash strategy"
   echo "$php_memcache_hash_strategy"
 }

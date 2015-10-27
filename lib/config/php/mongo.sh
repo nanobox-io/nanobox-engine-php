@@ -22,23 +22,27 @@ END
 mongo_native_long() {
   # boxfile php_mongo_native_long
   php_mongo_native_long=$(validate "$(payload boxfile_php_mongo_native_long)" "integer" "1")
+  >&2 echo "Using ${php_mongo_native_long} as Mongo native long"
   echo "$php_mongo_native_long"
 }
 
 mongo_allow_empty_keys() {
   # boxfile php_mongo_allow_empty_keys
   php_mongo_allow_empty_keys=$(validate "$(payload boxfile_php_mongo_allow_empty_keys)" "integer" "0")
+  >&2 echo "Using ${php_mongo_allow_empty_keys} as Mongo allow empty keys"
   echo "$php_mongo_allow_empty_keys"
 }
 
 mongo_cmd() {
   # boxfile php_mongo_cmd
   php_mongo_cmd=$(validate "$(payload boxfile_php_mongo_cmd)" "string" "\$")
+  >&2 echo "Using ${php_mongo_cmd} as Mongo cmd"
   echo "$php_mongo_cmd"
 }
 
 mongo_long_as_object() {
   # boxfile php_mongo_long_as_object
   php_mongo_long_as_object=$(validate "$(payload boxfile_php_mongo_long_as_object)" "integer" "0")
+  >&2 echo "Using ${php_mongo_long_as_object} as Mongo long as object"
   echo "$php_mongo_long_as_object"
 }

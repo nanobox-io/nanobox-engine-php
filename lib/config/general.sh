@@ -125,7 +125,9 @@ domains() {
 }
 
 js_runtime() {
-  echo $(validate "$(payload "boxfile_js_runtime")" "string" "nodejs-0.12")
+  _js_runtime=$(validate "$(payload "boxfile_js_runtime")" "string" "nodejs-0.12")
+  >&2 "Using ${_js_runtime} as Node.js runtime"
+  echo ${_js_runtime}
 }
 
 install_js_runtime() {
@@ -133,7 +135,9 @@ install_js_runtime() {
 }
 
 webserver() {
-  echo $(validate "$(payload boxfile_webserver)" "string" "apache")
+  _webserver=$(validate "$(payload boxfile_webserver)" "string" "apache")
+  >&2 echo "Using ${_webserver} as the webserver"
+  echo "${_webserver}"
 }
 
 install_webserver() {
@@ -160,6 +164,8 @@ npm_rebuild() {
 install_composer() {
   if [[ -f $(code_dir)/composer.json ]]; then
     install "composer"
+  else
+    print_bullet_info "No composer.json found, skipping installation of composer"
   fi
 }
 
@@ -169,6 +175,8 @@ composer_install() {
       print_warning "No 'composer.lock' file detected. This may cause a slow or failed build. To avoid this issue, commit the 'composer.lock' file to your git repo."
     fi
     (cd $(payload 'code_dir'); run_subprocess "composer install" "composer install --no-interaction --prefer-source")
+  else
+    print_bullet_info "No composer.json found, skipping 'composer install'"
   fi
 }
 
