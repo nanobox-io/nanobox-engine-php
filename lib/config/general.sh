@@ -9,6 +9,25 @@ create_boxfile() {
 }
 
 boxfile_json() {
+  _has_bower=$(has_bower)
+  _webserver=$(webserver)
+  print_bullet "Detecting settings"
+  if [[ "$_webserver" = "apache" ]]; then
+    print_bullet_sub "Using Apache HTTP Server as the webserver"
+    if [[ "$(is_interpreter 'fpm')" = "true" ]]; then
+      print_bullet_sub "Using PHP-FPM as PHP interpreter"
+    elif [[ "$(is_interpreter 'mod_php')" = "true" ]]; then
+      print_bullet_sub "Using mod_php as PHP interpreter"
+    fi
+  elif [[ "$_webserver" = "nginx" ]]; then
+    print_bullet_sub "Using NGINX as the webserver"
+    print_bullet_sub "Using PHP-FPM as PHP interpreter"
+  elif [[ "$_webserver" = "builtin" ]]; then
+    print_bullet_sub "Using the built-in PHP webserver"
+  fi
+  if [[ "$_has_bower" = "true" ]]; then
+    print_bullet_sub "Adding lib_dirs for bower"
+  fi
   cat <<-END
 {
   "has_bower": $(has_bower),
@@ -126,17 +145,21 @@ domains() {
 
 js_runtime() {
   _js_runtime=$(validate "$(payload "boxfile_js_runtime")" "string" "nodejs-0.12")
-  >&2 echo "   Using ${_js_runtime} as Node.js runtime"
   echo ${_js_runtime}
 }
 
+need_js_runtime() {
+  [[ -f $(code_dir)/package.json ]] && echo "true" && return
+  [[ -f $(code_dir)/bower.json ]] && echo "true" && return
+  echo "false"
+}
+
 install_js_runtime() {
-  install "$(js_runtime)"
+  [[ "$(need_js_runtime)" = "true" ]] && install "$(js_runtime)"
 }
 
 webserver() {
   _webserver=$(validate "$(payload boxfile_webserver)" "string" "apache")
-  >&2 echo "   Using ${_webserver} as the webserver"
   echo "${_webserver}"
 }
 
@@ -164,8 +187,6 @@ npm_rebuild() {
 install_composer() {
   if [[ -f $(code_dir)/composer.json ]]; then
     install "composer"
-  else
-    print_bullet_info "No composer.json found, skipping installation of composer"
   fi
 }
 
@@ -175,8 +196,6 @@ composer_install() {
       print_warning "No 'composer.lock' file detected. This may cause a slow or failed build. To avoid this issue, commit the 'composer.lock' file to your git repo."
     fi
     (cd $(payload 'code_dir'); run_subprocess "composer install" "composer install --no-interaction --prefer-source")
-  else
-    print_bullet_info "No composer.json found, skipping 'composer install'"
   fi
 }
 

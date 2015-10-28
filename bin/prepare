@@ -11,6 +11,8 @@ nos_init $@
 # source common lib, where the helpers are defined
 . ${engine_lib_dir}/common.sh
 
+print_process_start "Installing packages"
+
 # install php interpreter
 install_runtime
 
@@ -25,6 +27,7 @@ install_composer
 
 # install nodejs for static assets
 install_js_runtime
+
 npm_rebuild
 install_bower
 

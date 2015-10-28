@@ -50,6 +50,6 @@ validate() {
   [[ -z $1 ]] && echo $3 && return
   $(eval valid_$2 $1)
   [[ $? -eq 1 ]] && echo $1 && return
-  >&2 echo "Error: value \"$1\" is invalid $2"
+  print_fatal "Failed ot validate Boxfile value:" "Error: value \"$1\" is an invalid $2"
   exit 1
 }
