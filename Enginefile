@@ -5,6 +5,8 @@ language: 'php'
 stability: 'stable'
 license: 'MPL'
 generic: true
+overlays:
+  - nodejs
 
 authors:
   - braxton@nanobox.io
