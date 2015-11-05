@@ -2,8 +2,8 @@
 # vim: ts=2 sw=2 ft=bash noet
 
 php_create_php_xcache_ini() {
-  print_bullet "Generating xcache.ini"
-  template \
+  nos_print_bullet "Generating xcache.ini"
+  nos_template \
     "php/php.d/xcache.ini.mustache" \
     "$(nos_etc_dir)/php.d/xcache.ini" \
     "$(php_xcache_ini_payload)"
@@ -14,10 +14,10 @@ php_xcache_ini_payload() {
   _xcache_var_size=$(php_xcache_var_size)
   _xcache_admin_user=$(php_xcache_admin_user)
   _xcache_admin_pass=$(php_xcache_admin_pass)
-  print_bullet_sub "Size: ${_xcache_size}"
-  print_bullet_sub "Var size: ${_xcache_var_size}"
-  print_bullet_sub "Admin user: ${_xcache_admin_user}"
-  print_bullet_sub "Admin password: ${_xcache_admin_pass}"
+  nos_print_bullet_sub "Size: ${_xcache_size}"
+  nos_print_bullet_sub "Var size: ${_xcache_var_size}"
+  nos_print_bullet_sub "Admin user: ${_xcache_admin_user}"
+  nos_print_bullet_sub "Admin password: ${_xcache_admin_pass}"
   cat <<-END
 {
   "xcache_size": "${_xcache_size}",

@@ -3,7 +3,7 @@
 
 php_fpm_create_php_fpm_conf() {
   nos_print_bullet "Generating php-fpm.conf"
-  template \
+  nos_template \
     "php/php-fpm.conf.mustache" \
     "$(nos_etc_dir)/php/php-fpm.conf" \
     "$(php_fpm_conf_payload)"
