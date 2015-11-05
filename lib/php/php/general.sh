@@ -86,7 +86,7 @@ php_php_ini_payload() {
   "max_file_uploads": "${_max_file_uploads}",
   "extensions": $(php_extensions),
   "zend_extensions": $(php_zend_extensions),
-  "extension_folder": "$(php_extension_folder)",
+  "extension_dir": "$(php_extension_dir)",
   "session_length": "${_session_length}",
   "default_locale": "${_default_locale}",
   "session_autostart": "${_session_autostart}",

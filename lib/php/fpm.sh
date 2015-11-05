@@ -74,6 +74,6 @@ php_configure_php_fpm() {
     mkdir -p $(nos_etc_dir)/php
     mkdir -p $(nos_deploy_dir)/var/run
     mkdir -p $(nos_deploy_dir)/var/tmp
-    _php_fpm_create_php_fpm_conf
+    php_fpm_create_php_fpm_conf
   fi
 }

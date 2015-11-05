@@ -63,7 +63,7 @@ default_socket_timeout = 60
 extension={{.}}.so
 {{/extensions}}
 {{#zend_extensions}}
-zend_extension={{extension_folder}}/{{.}}.so
+zend_extension={{extension_dir}}/{{.}}.so
 {{/zend_extensions}}
 session.gc_maxlifetime = {{session_length}}
 {{#default_locale}}
