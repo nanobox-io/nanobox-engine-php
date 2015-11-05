@@ -9,9 +9,10 @@
 nos_init $@
 
 # source common lib
-. ${engine_lib_dir}/common.sh
+. ${engine_lib_dir}/php.sh
 
 # dynamically generate a Boxfile from a template,
 # and print to stdout
-create_boxfile
+nos_print_process_start "Generating Engine Boxfile"
+php_create_boxfile
 
