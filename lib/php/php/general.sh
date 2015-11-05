@@ -263,7 +263,7 @@ php_extensions() {
   if [[ -z "php_extensions_list[@]" ]]; then
     echo "[]"
   else
-    echo "[ \"$(join '","' ${php_extensions_list[@]})\" ]"
+    echo "[ \"$(nos_join '","' ${php_extensions_list[@]})\" ]"
   fi
 }
 
@@ -287,7 +287,7 @@ php_zend_extensions() {
   if [[ -z "${php_zend_extensions_list[@]}" ]]; then
     echo "[]"
   else
-    echo "[ \"$(join '","' ${php_zend_extensions_list[@]})\" ]"
+    echo "[ \"$(nos_join '","' ${php_zend_extensions_list[@]})\" ]"
   fi
 }
 

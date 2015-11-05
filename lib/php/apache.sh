@@ -104,7 +104,7 @@ php_apache_modules() {
     for i in ${modules_list[@]}; do
       [[ ! -f ${prefix}/lib/httpd/mod_${i}.so ]] &
     done
-    echo "[ \"$(join '","' ${modules_list[@]})\" ]"
+    echo "[ \"$(nos_join '","' ${modules_list[@]})\" ]"
 
   fi
 }
@@ -157,7 +157,7 @@ php_install_apache() {
   nos_install "apache-2.2"
   nos_install "ap22-cloudflare"
   nos_install "ap22-xsendfile"
-  if [[ "$(php_use_fastcgi)" = "true" ]]; then
+  if [[ "$(php_fpm_use_fastcgi)" = "true" ]]; then
     nos_install "ap22-fastcgi"
   else
     nos_install "ap22-$(php_condensed_runtime)"

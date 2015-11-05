@@ -93,7 +93,7 @@ php_env_vars() {
   if [[ -z "${envlist[@]}" ]]; then
     echo "[]"
   else
-    echo "[ $(join "," ${envlist[@]}) ]"
+    echo "[ $(nos_join "," ${envlist[@]}) ]"
   fi
 }
 
@@ -114,7 +114,7 @@ php_domains() {
   if [[ -z "dns[@]" ]]; then
     echo "[]"
   else
-    echo "[ \"$(join '","' ${dns[@]})\" ]"
+    echo "[ \"$(nos_join '","' ${dns[@]})\" ]"
   fi
 }
 
