@@ -2,7 +2,7 @@
 # vim: ts=2 sw=2 ft=bash noet
 
 php_create_boxfile() {
-  template \
+  nos_template \
     "boxfile.mustache" \
     "-" \
     "$(php_boxfile_json)"
@@ -14,9 +14,9 @@ php_boxfile_json() {
   nos_print_bullet "Detecting settings"
   if [[ "$_webserver" = "apache" ]]; then
     nos_print_bullet_sub "Using Apache HTTP Server as the webserver"
-    if [[ "$(is_interpreter 'fpm')" = "true" ]]; then
+    if [[ "$(php_is_interpreter 'fpm')" = "true" ]]; then
       nos_print_bullet_sub "Using PHP-FPM as PHP interpreter"
-    elif [[ "$(is_interpreter 'mod_php')" = "true" ]]; then
+    elif [[ "$(php_is_interpreter 'mod_php')" = "true" ]]; then
       nos_print_bullet_sub "Using mod_php as PHP interpreter"
     fi
   elif [[ "$_webserver" = "nginx" ]]; then

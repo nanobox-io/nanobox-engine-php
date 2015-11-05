@@ -157,10 +157,10 @@ php_install_apache() {
   nos_install "apache-2.2"
   nos_install "ap22-cloudflare"
   nos_install "ap22-xsendfile"
-  if [[ "$(use_fastcgi)" = "true" ]]; then
+  if [[ "$(php_use_fastcgi)" = "true" ]]; then
     nos_install "ap22-fastcgi"
   else
-    nos_install "ap22-$(condensed_runtime)"
+    nos_install "ap22-$(php_condensed_runtime)"
   fi
 }
 
