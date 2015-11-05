@@ -78,15 +78,15 @@ php_php_ini_payload() {
   "register_argc_argv": "${_register_argc_argv}",
   "post_max_size": "${_post_max_size}",
   "default_mimetype": "${_default_mimetype}",
-  "live_dir": "$(live_dir)",
+  "live_dir": "$(nos_live_dir)",
   "browscap": ${_browscap},
   "file_uploads": "${_file_uploads}",
   "max_input_vars": "${_max_input_vars}",
   "upload_max_filesize": "${_upload_max_filesize}",
   "max_file_uploads": "${_max_file_uploads}",
-  "extensions": $(extensions),
-  "zend_extensions": $(zend_extensions),
-  "extension_folder": "$(extension_folder)",
+  "extensions": $(php_extensions),
+  "zend_extensions": $(php_zend_extensions),
+  "extension_folder": "$(php_extension_folder)",
   "session_length": "${_session_length}",
   "default_locale": "${_default_locale}",
   "session_autostart": "${_session_autostart}",
@@ -365,10 +365,10 @@ php_install_php_extensions() {
 
 php_configure_php() {
   nos_print_process_start "Configuring PHP"
-  mkdir -p $(etc_dir)/php
-  mkdir -p $(deploy_dir)/var/log/php
-  mkdir -p $(deploy_dir)/var/run
-  mkdir -p $(deploy_dir)/var/tmp
+  mkdir -p $(nos_etc_dir)/php
+  mkdir -p $(nos_deploy_dir)/var/log/php
+  mkdir -p $(nos_deploy_dir)/var/run
+  mkdir -p $(nos_deploy_dir)/var/tmp
   php_create_php_ini
 }
 

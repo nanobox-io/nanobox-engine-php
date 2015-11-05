@@ -26,7 +26,7 @@ php_install_webserver
 php_install_composer
 
 # install nodejs for static assets
-nodejs_install_nodejs_runtime
+nodejs_install_runtime
 
 nodejs_npm_rebuild
 nodejs_install_bower
@@ -50,6 +50,6 @@ php_configure_newrelic
 php_composer_install
 nodejs_bower_install
 
-nodejs_set_js_runtime
+nodejs_set_runtime
 
 exit 0

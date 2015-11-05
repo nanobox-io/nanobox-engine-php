@@ -204,9 +204,9 @@ php_newrelic_webtransaction_name_remove_trailing_path() {
 }
 
 php_configure_newrelic() {
-  if [[ -n "$(newrelic_license)" ]]; then
+  if [[ -n "$(php_newrelic_license)" ]]; then
     nos_print_bullet_info "Configuring PHP New Relic extension"
-    mkdir -p $(etc_dir)/php.d
+    mkdir -p $(nos_etc_dir)/php.d
     create_php_newrelic_ini
   fi
 }

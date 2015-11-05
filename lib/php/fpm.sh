@@ -69,11 +69,11 @@ php_fpm_use_fastcgi() {
 }
 
 php_configure_php_fpm() {
-  if [[ "$(use_fastcgi)" = "true" ]]; then
+  if [[ "$(php_fpm_use_fastcgi)" = "true" ]]; then
     nos_print_bullet "Configuring PHP-FPM"
-    mkdir -p $(etc_dir)/php
-    mkdir -p $(deploy_dir)/var/run
-    mkdir -p $(deploy_dir)/var/tmp
+    mkdir -p $(nos_etc_dir)/php
+    mkdir -p $(nos_deploy_dir)/var/run
+    mkdir -p $(nos_deploy_dir)/var/tmp
     _php_fpm_create_php_fpm_conf
   fi
 }

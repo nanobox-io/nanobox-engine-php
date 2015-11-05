@@ -6,7 +6,7 @@ php_create_apache_conf() {
   nos_template \
     "apache/apache.conf.mustache" \
     "$(nos_etc_dir)/httpd/httpd.conf" \
-    "$(apache_conf_payload)"
+    "$(php_apache_conf_payload)"
 }
 
 php_apache_conf_payload() {
@@ -165,11 +165,11 @@ php_install_apache() {
 }
 
 php_configure_apache() {
-  nos-print_process_start "Configuring Apache"
-  mkdir -p $(etc_dir)/httpd
-  mkdir -p $(deploy_dir)/var/log/apache
-  mkdir -p $(deploy_dir)/libexec/cgi-bin/
-  mkdir -p $(deploy_dir)/var/run
-  mkdir -p $(deploy_dir)/var/tmp
+  nos_print_process_start "Configuring Apache"
+  mkdir -p $(nos_etc_dir)/httpd
+  mkdir -p $(nos_deploy_dir)/var/log/apache
+  mkdir -p $(nos_deploy_dir)/libexec/cgi-bin/
+  mkdir -p $(nos_deploy_dir)/var/run
+  mkdir -p $(nos_deploy_dir)/var/tmp
   php_create_apache_conf
 }
