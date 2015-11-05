@@ -8,7 +8,7 @@ RUN mkdir -p /opt/engines/php/bin && \
     mkdir -p /opt/engines/php/lib && \
     mkdir -p /opt/engines/php/templates
 
-RUN curl https://github.com/nanobox-io/nanobox-engine-nodejs/archive/master.tar.gz | tar -xzC /opt/engines/php
+RUN curl https://codeload.github.com/nanobox-io/nanobox-engine-nodejs/tar.gz/master | tar -xzC /opt/engines/php
 
 # Add in this engine's files
 ADD bin/. /opt/engines/php/bin
