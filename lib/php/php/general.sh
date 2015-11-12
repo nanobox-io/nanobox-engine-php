@@ -347,7 +347,7 @@ php_install_php_extensions() {
       type=PL_boxfile_php_extensions_${i}_type
       value=PL_boxfile_php_extensions_${i}_value
       if [[ ${!type} = "string" ]]; then
-        nos_install $(condensed_runtime)-${!value}
+        nos_install $(php_condensed_runtime)-${!value}
       fi
     done
   fi
@@ -357,7 +357,7 @@ php_install_php_extensions() {
       type=PL_boxfile_php_zend_extensions_${i}_type
       value=PL_boxfile_php_zend_extensions_${i}_value
       if [[ ${!type} = "string" ]]; then
-        nos_install $(condensed_runtime)-${!value}
+        nos_install $(php_condensed_runtime)-${!value}
       fi
     done
   fi
