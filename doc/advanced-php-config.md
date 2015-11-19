@@ -10,7 +10,7 @@ build:
   document_root: '/'
 
   # PHP Settings
-  runtime: 'php-5.6'
+  php_runtime: 'php-5.6'
   php_extensions:
     - curl
     - gd
@@ -49,8 +49,8 @@ build:
   php_date_timezone: 'US/central'
   php_iconv_internal_encoding: 'UTF-8'
 
-  # JS Runtime Settings
-  js_runtime: 'nodejs-0.12'
+  # Node.js Runtime Settings
+  nodejs_runtime: 'nodejs-4.2'
 
   # Apache Settings
   apache_document_root: '/'
@@ -205,7 +205,7 @@ build:
 ### PHP Settings
 The following settings are typically configured in the php.ini. When using Nanobox, these are configured in the Boxfile.
 
-- [runtime](#runtime)
+- [php_runtime](#php_runtime)
 - [php_extensions](#php_extensions)
 - [php_zend_extensions](#php_zend_extensions)
 - [php_short_open_tag](#php_short_open_tag)
@@ -237,7 +237,7 @@ The following settings are typically configured in the php.ini. When using Nanob
 
 ---
 
-#### runtime
+#### php_runtime
 Specifies which PHP runtime and version to use. The following runtimes are available:
 
 - 5.3
@@ -247,13 +247,13 @@ Specifies which PHP runtime and version to use. The following runtimes are avail
 
 ```yaml
 build:
-  runtime: 'php-5.6'
+  php_runtime: 'php-5.6'
 ```
 
 ---
 
 #### php_extensions
-Specifies what PHP extensions should be included in your app's environment. To see what PHP extensions are available, view the [full list of available PHP extensions](https://github.com/pagodabox/nanobox-engine-php/blob/master/doc/php-extensions.md).
+Specifies what PHP extensions should be included in your app's environment. To see what PHP extensions are available, view the [full list of available PHP extensions](https://github.com/nanobox-io/nanobox-engine-php/blob/master/doc/php-extensions.md).
 
 ```yaml
 build:
@@ -267,7 +267,7 @@ build:
 ---
 
 #### php_zend_extensions
-Specifies what Zend extensions should be included in your app's environment. To see what Zend extensions are available, view the [Zend Extensions section of the PHP extensions list](https://github.com/pagodabox/nanobox-engine-php/blob/master/doc/php-extensions.md#zend-extensions).
+Specifies what Zend extensions should be included in your app's environment. To see what Zend extensions are available, view the [Zend Extensions section of the PHP extensions list](https://github.com/nanobox-io/nanobox-engine-php/blob/master/doc/php-extensions.md#zend-extensions).
 ```yaml
 build:
   php_zend_extensions:
@@ -517,22 +517,23 @@ build:
 
 ---
 
-### JS Runtime Settings
-Many PHP applications utilize Javascript tools in some way. The most common use is static asset compilation. This engine allows you to specify which JS runtime you'd like to use.
+### Node.js Runtime Settings
+Many PHP applications utilize Javascript tools in some way. The most common use is static asset compilation. This engine allows you to specify which Node.js runtime you'd like to use.
 
 ---
 
-#### js_runtime
-Specifies which JS runtime and version to use. The following runtimes are available:
+#### nodejs_runtime
+Specifies which Node.js runtime and version to use. The following runtimes are available:
 
 - nodejs-0.8
 - nodejs-0.10
 - nodejs-0.12
+- nodejs-4.2
 - iojs-2.3
 
 ```yaml
 build:
-  js_runtime: 'nodejs-0.12'
+  nodejs_runtime: 'nodejs-0.12'
 ```
 
 ---
@@ -603,7 +604,7 @@ build:
 
 #### apache_modules
 
-Specify which Apache modules to enable or disable. View the [full list of available Apache Modules](https://github.com/pagodabox/nanobox-engine-php/blob/master/doc/apache-modules.md). By default, all modules are enabled.
+Specify which Apache modules to enable or disable. View the [full list of available Apache Modules](https://github.com/nanobox-io/nanobox-engine-php/blob/master/doc/apache-modules.md). By default, all modules are enabled.
 ```yaml
 build:
   apache_modules
@@ -1306,4 +1307,4 @@ build:
 ---
 
 ## Help & Support
-This is a generic (non-framework-specific) PHP engine provided by [Nanobox](http://nanobox.io). If you need help with this engine, you can reach out to us in the [#nanobox IRC channel](http://webchat.freenode.net/?channels=nanobox). If you are running into an issue with the engine, feel free to [create a new issue on this project](https://github.com/pagodabox/nanobox-engine-php/issues/new).
+This is a generic (non-framework-specific) PHP engine provided by [Nanobox](http://nanobox.io). If you need help with this engine, you can reach out to us in the [#nanobox IRC channel](http://webchat.freenode.net/?channels=nanobox). If you are running into an issue with the engine, feel free to [create a new issue on this project](https://github.com/nanobox-io/nanobox-engine-php/issues/new).
