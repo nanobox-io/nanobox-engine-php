@@ -1,5 +1,5 @@
 name: 'php'
-version: '0.2.5'
+version: '0.2.6'
 summary: 'Nanobox engine for generic PHP deployments'
 language: 'php'
 stability: 'stable'
