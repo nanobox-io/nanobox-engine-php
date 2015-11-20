@@ -155,7 +155,7 @@ build:
 ##### Quick Links
 [Web Server Settings](#web-server-settings)  
 [PHP Settings](#php-settings)  
-[JS Runtime Settings](#js-runtime-settings)  
+[Node.js Runtime Settings](#nodejs-runtime-settings)  
 [Apache Settings](#apache-settings)  
 [Nginx Settings](#nginx-settings)  
 [Built-In PHP Web Server Settings](#built-in-php-web-server-settings)  
