@@ -6,7 +6,7 @@
 . /opt/nos/common.sh
 
 # initialize Nos with the original arguments
-nos_init $@
+nos_init "$@"
 
 # source common lib, where the helpers are defined
 . ${engine_lib_dir}/php.sh
