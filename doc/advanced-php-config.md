@@ -240,10 +240,11 @@ The following settings are typically configured in the php.ini. When using Nanob
 #### php_runtime
 Specifies which PHP runtime and version to use. The following runtimes are available:
 
-- 5.3
-- 5.4
-- 5.5
-- 5.6
+- php-5.3
+- php-5.4
+- php-5.5
+- php-5.6
+- php-7.0
 
 ```yaml
 build:
@@ -523,17 +524,11 @@ Many PHP applications utilize Javascript tools in some way. The most common use 
 ---
 
 #### nodejs_runtime
-Specifies which Node.js runtime and version to use. The following runtimes are available:
-
-- nodejs-0.8
-- nodejs-0.10
-- nodejs-0.12
-- nodejs-4.2
-- iojs-2.3
+Specifies which Node.js runtime and version to use. This engine overlays the Node.js engine. You can view the available Node.js runtimes in the [Node.js engine documentation](https://github.com/nanobox-io/nanobox-engine-nodejs#nodejs_runtime).
 
 ```yaml
 build:
-  nodejs_runtime: 'nodejs-0.12'
+  nodejs_runtime: 'nodejs-4.2'
 ```
 
 ---
