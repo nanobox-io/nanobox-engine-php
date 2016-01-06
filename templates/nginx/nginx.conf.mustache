@@ -36,14 +36,14 @@ http {
         server_name {{#domains}} {{.}} *.{{.}}{{/domains}};
 
         location / {
-            root   {{live_dir}}{{document_root}};
+            root   {{code_dir}}{{document_root}};
             index  {{directory_index}} {{default_gateway}};
         }
 
         # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
 
         location ~ [^/]\.php(/|$) {
-            root   {{live_dir}}{{document_root}};
+            root   {{code_dir}}{{document_root}};
             fastcgi_split_path_info ^(.+?\.php)(/.*)$;
             if (!-f $document_root$fastcgi_script_name) {
                     return 404;
@@ -85,7 +85,7 @@ http {
         }
         
         # location ~ \.php$ {
-        #     root           {{live_dir}}{{document_root}};
+        #     root           {{code_dir}}{{document_root}};
         #     fastcgi_pass   unix:{{deploy_dir}}/var/tmp/php.sock;
         #     fastcgi_index  {{default_gateway}};
         #     include        {{deploy_dir}}/etc/nginx/fastcgi_params;

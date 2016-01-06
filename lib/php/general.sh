@@ -38,7 +38,7 @@ php_boxfile_json() {
   "builtin": $(php_is_webserver 'builtin'),
   "etc_dir": "$(nos_etc_dir)",
   "deploy_dir": "$(nos_deploy_dir)",
-  "live_dir": "$(nos_live_dir)",
+  "code_dir": "$(nos_code_dir)",
   "document_root": "$(php_builtin_document_root)"
 }
 END

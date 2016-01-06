@@ -42,7 +42,7 @@ LoadModule {{.}}_module lib/httpd/mod_{{.}}.so
 # Default Server Configuration              #
 #############################################
 UseCanonicalName On
-DocumentRoot "{{live_dir}}{{document_root}}"
+DocumentRoot "{{code_dir}}{{document_root}}"
 DirectoryIndex {{directory_index}} {{default_gateway}} 
 AccessFileName .htaccess
 TypesConfig {{etc_dir}}/httpd/mime.types
@@ -171,7 +171,7 @@ NameVirtualHost 0.0.0.0:8080
 
 {{#domains}}
 <VirtualHost 0.0.0.0:8080>
-    DocumentRoot "{{live_dir}}{{document_root}}"
+    DocumentRoot "{{code_dir}}{{document_root}}"
     ServerName {{.}}
     ServerAlias *.{{.}}
     DirectoryIndex {{directory_index}} {{default_gateway}}

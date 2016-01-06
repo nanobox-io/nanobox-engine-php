@@ -20,7 +20,7 @@ php_nginx_conf_payload() {
 {
   "deploy_dir": "$(nos_deploy_dir)",
   "domains": $(php_domains),
-  "live_dir": "$(nos_live_dir)",
+  "code_dir": "$(nos_code_dir)",
   "document_root": "${_nginx_document_root}",
   "directory_index": "${_nginx_directory_index}",
   "default_gateway": "${_nginx_default_gateway}",

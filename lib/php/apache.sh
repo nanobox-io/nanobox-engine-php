@@ -47,7 +47,7 @@ php_apache_conf_payload() {
   "mod_php": ${_mod_php},
   "fastcgi": ${_use_fastcgi},
   "modules": $(php_apache_modules),
-  "live_dir": "$(nos_live_dir)",
+  "code_dir": "$(nos_code_dir)",
   "document_root": "${_apache_document_root}",
   "directory_index": "${_apache_directory_index}",
   "default_gateway": "${_apache_default_gateway}",

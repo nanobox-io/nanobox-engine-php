@@ -36,7 +36,7 @@ web1:
     php[fpm]: {{deploy_dir}}/var/log/php/php_fpm.log
 {{/nginx}}
 {{#builtin}}
-  exec: {{deploy_dir}}/bin/php -S 0.0.0.0:8080 -c {{etc_dir}}/php/php.ini -t {{live_dir}}{{document_root}}/
+  exec: {{deploy_dir}}/bin/php -S 0.0.0.0:8080 -c {{etc_dir}}/php/php.ini -t {{code_dir}}{{document_root}}/
   log_watch:
     php[access]: {{deploy_dir}}/var/log/php/access.log
     php[error]: {{deploy_dir}}/var/log/php/php_error.log
