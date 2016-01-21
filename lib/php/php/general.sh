@@ -79,6 +79,7 @@ php_php_ini_payload() {
   "post_max_size": "${_post_max_size}",
   "default_mimetype": "${_default_mimetype}",
   "live_dir": "$(nos_live_dir)",
+  "deploy_dir": "$(nos_deploy_dir)",
   "browscap": ${_browscap},
   "file_uploads": "${_file_uploads}",
   "max_input_vars": "${_max_input_vars}",
@@ -238,7 +239,7 @@ php_max_file_uploads() {
 
 php_extension_dir() {
   # folder in lib/php/???
-  for i in $(nos_payload deploy_dir)/lib/php/*; do [[ "$i" =~ /[0-9]+$ ]] && echo $i && return; done
+  for i in $(nos_deploy_dir)/lib/php/*; do [[ "$i" =~ /[0-9]+$ ]] && echo $i && return; done
 }
 
 php_extensions() {
@@ -311,7 +312,7 @@ php_session_autostart() {
 
 php_session_save_path() {
   # boxfile php_session_save_path
-  _php_session_save_path=$(nos_validate "$(nos_payload boxfile_php_session_save_path)" "string" "/var/php/sessions")
+  _php_session_save_path=$(nos_validate "$(nos_payload boxfile_php_session_save_path)" "string" "$(nos_deploy_dir)/var/php/sessions")
   echo "$_php_session_save_path"
 }
 
