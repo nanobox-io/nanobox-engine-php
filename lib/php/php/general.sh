@@ -79,7 +79,7 @@ php_php_ini_payload() {
   "post_max_size": "${_post_max_size}",
   "default_mimetype": "${_default_mimetype}",
   "live_dir": "$(nos_live_dir)",
-  "deploy_dir": "$(nos_deploy_dir)"
+  "deploy_dir": "$(nos_deploy_dir)",
   "browscap": ${_browscap},
   "file_uploads": "${_file_uploads}",
   "max_input_vars": "${_max_input_vars}",
