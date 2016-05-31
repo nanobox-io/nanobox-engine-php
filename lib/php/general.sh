@@ -1,22 +1,22 @@
 # -*- mode: bash; tab-width: 2; -*-
 # vim: ts=2 sw=2 ft=bash noet
 
-php_create_boxfile() {
+create_boxfile() {
   nos_template \
     "boxfile.mustache" \
     "-" \
-    "$(php_boxfile_json)"
+    "$(boxfile_json)"
 }
 
-php_boxfile_json() {
+boxfile_json() {
   _has_bower=$(nodejs_has_bower)
-  _webserver=$(php_webserver)
+  _webserver=$(webserver)
   nos_print_bullet "Detecting settings"
   if [[ "$_webserver" = "apache" ]]; then
     nos_print_bullet_sub "Using Apache HTTP Server as the webserver"
-    if [[ "$(php_is_interpreter 'fpm')" = "true" ]]; then
+    if [[ "$(is_interpreter 'fpm')" = "true" ]]; then
       nos_print_bullet_sub "Using PHP-FPM as PHP interpreter"
-    elif [[ "$(php_is_interpreter 'mod_php')" = "true" ]]; then
+    elif [[ "$(is_interpreter 'mod_php')" = "true" ]]; then
       nos_print_bullet_sub "Using mod_php as PHP interpreter"
     fi
   elif [[ "$_webserver" = "nginx" ]]; then
@@ -31,20 +31,20 @@ php_boxfile_json() {
   cat <<-END
 {
   "has_bower": ${_has_bower},
-  "apache": $(php_is_webserver 'apache'),
-  "fpm": $(php_is_interpreter 'fpm'),
-  "mod_php": $(php_is_interpreter 'mod_php'),
-  "nginx": $(php_is_webserver 'nginx'),
-  "builtin": $(php_is_webserver 'builtin'),
+  "apache": $(is_webserver 'apache'),
+  "fpm": $(is_interpreter 'fpm'),
+  "mod_php": $(is_interpreter 'mod_php'),
+  "nginx": $(is_webserver 'nginx'),
+  "builtin": $(is_webserver 'builtin'),
   "etc_dir": "$(nos_etc_dir)",
   "deploy_dir": "$(nos_deploy_dir)",
   "code_dir": "$(nos_code_dir)",
-  "document_root": "$(php_builtin_document_root)"
+  "document_root": "$(builtin_document_root)"
 }
 END
 }
 
-php_is_webserver() {
+is_webserver() {
   # find webserver
   webserver='apache'
   if [[ -n "$(nos_payload 'boxfile_webserver')" ]]; then
@@ -57,7 +57,7 @@ php_is_webserver() {
   fi
 }
 
-php_is_interpreter() {
+is_interpreter() {
   # extract php interpreter
   interpreter="fpm"
   if [[ -n "$(nos_payload 'boxfile_apache_php_interpreter')" ]]; then
@@ -70,17 +70,17 @@ php_is_interpreter() {
   fi
 }
 
-php_app_name() {
+app_name() {
   # payload app
   echo "$(nos_payload app)"
 }
 
-php_hostname() {
+hostname() {
   # app.gonano.io
-  echo $(php_app_name).gonano.io
+  echo $(app_name).gonano.io
 }
 
-php_env_vars() {
+env_vars() {
   # filtered payload env
   declare -a envlist
   if [[ "${PL_env_type}" = "map" ]]; then
@@ -97,7 +97,7 @@ php_env_vars() {
   fi
 }
 
-php_domains() {
+domains() {
   # payload dns
   declare -a dns
   if [[ "${PL_dns_type}" = "array" ]]; then
@@ -118,26 +118,26 @@ php_domains() {
   fi
 }
 
-php_webserver() {
+webserver() {
   _webserver=$(nos_validate "$(nos_payload boxfile_webserver)" "string" "apache")
   echo "${_webserver}"
 }
 
-php_install_webserver() {
-  if [[ "$(php_webserver)" = 'apache' ]]; then
+install_webserver() {
+  if [[ "$(webserver)" = 'apache' ]]; then
     php_install_apache
-  elif [[ "$(php_webserver)" = 'nginx' ]]; then
+  elif [[ "$(webserver)" = 'nginx' ]]; then
     php_install_nginx
   fi
 }
 
-php_install_composer() {
+install_composer() {
   if [[ -f $(nos_code_dir)/composer.json ]]; then
     nos_install "composer"
   fi
 }
 
-php_composer_install() {
+composer_install() {
   if [[ -f $(nos_code_dir)/composer.json ]]; then
     if [[ ! -f $(nos_code_dir)/composer.lock ]]; then
       nos_print_warning "No 'composer.lock' file detected. This may cause a slow or failed build. To avoid this issue, commit the 'composer.lock' file to your git repo."
@@ -146,10 +146,10 @@ php_composer_install() {
   fi
 }
 
-php_configure_webserver() {
-  if [[ "$(php_webserver)" = 'apache' ]]; then
+configure_webserver() {
+  if [[ "$(webserver)" = 'apache' ]]; then
     php_configure_apache
-  elif [[ "$(php_webserver)" = 'nginx' ]]; then
+  elif [[ "$(webserver)" = 'nginx' ]]; then
     php_configure_nginx
   fi
 }

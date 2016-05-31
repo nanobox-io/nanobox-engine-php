@@ -3,7 +3,7 @@
 # vim: ts=2 sw=2 ft=bash noet
 
 # source the Nos framework
-. /opt/nos/common.sh
+. /opt/nanobox/nos/common.sh
 
 # initialize Nos with the original arguments
 nos_init "$@"
@@ -14,42 +14,33 @@ nos_init "$@"
 nos_print_process_start "Installing packages"
 
 # install php interpreter
-php_install_runtime
+install_runtime
 
 # install php and zend extensions
-php_install_php_extensions
+install_php_extensions
 
 # install apache or nginx
-php_install_webserver
+install_webserver
 
 # install composer binary
-php_install_composer
-
-# install nodejs for static assets
-nodejs_install_runtime
-
-nodejs_npm_rebuild
-nodejs_install_bower
+install_composer
 
 # persist all environment variables 
 nos_persist_evars
 
 # configure apache or nginx
-php_configure_webserver
+configure_webserver
 
 # configure php-fpm settings
-php_configure_php_fpm
+configure_php_fpm
 
 # configure php.ini and php extensions' ini files
-php_configure_php
+configure_php
 
 # configure the newrelic monitoring agent
-php_configure_newrelic
+configure_newrelic
 
 # if a composer.json file is present, run composer install
-php_composer_install
-nodejs_bower_install
-
-nodejs_set_runtime
+composer_install
 
 exit 0

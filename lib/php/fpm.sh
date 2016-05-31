@@ -61,14 +61,14 @@ php_fpm_use_fastcgi() {
   # use fastcgi when the webserver is nginx
   # don't use fastcgi if webserver is builtin
   # don't use fastcgi if apache is using mod_php
-  [[ "$(php_webserver)" = 'nginx' ]] && echo 'true' && return
-  [[ "$(php_webserver)" = 'builtin' ]] && echo 'false' && return
-  [[ "$(php_webserver)" = 'apache' && "$(nos_validate "$(nos_payload boxfile_apache_php_interpreter)" "string" "fpm")" = 'fpm' ]] && echo "true" && return
-  [[ "$(php_webserver)" = 'apache' && "$(nos_validate "$(nos_payload boxfile_apache_php_interpreter)" "string" "fpm")" = 'mod_php' ]] && echo "false" && return
+  [[ "$(webserver)" = 'nginx' ]] && echo 'true' && return
+  [[ "$(webserver)" = 'builtin' ]] && echo 'false' && return
+  [[ "$(webserver)" = 'apache' && "$(nos_validate "$(nos_payload boxfile_apache_php_interpreter)" "string" "fpm")" = 'fpm' ]] && echo "true" && return
+  [[ "$(webserver)" = 'apache' && "$(nos_validate "$(nos_payload boxfile_apache_php_interpreter)" "string" "fpm")" = 'mod_php' ]] && echo "false" && return
   echo "false"
 }
 
-php_configure_php_fpm() {
+configure_php_fpm() {
   if [[ "$(php_fpm_use_fastcgi)" = "true" ]]; then
     nos_print_process_start "Configuring PHP-FPM"
     mkdir -p $(nos_etc_dir)/php
