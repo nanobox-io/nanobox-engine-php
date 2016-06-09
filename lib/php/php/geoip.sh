@@ -21,6 +21,6 @@ END
 
 geoip_custom_directory() {
   # boxfile geoip_custom_directory
-  _geoip_custom_directory=$(nos_validate "$(nos_payload boxfile_geoip_custom_directory)" "folder" "")
+  _geoip_custom_directory=$(nos_validate "$(nos_payload config_geoip_custom_directory)" "folder" "")
   echo "$_geoip_custom_directory"
 }

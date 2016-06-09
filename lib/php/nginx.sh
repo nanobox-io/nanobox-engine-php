@@ -18,7 +18,7 @@ nginx_conf_payload() {
   nos_print_bullet_sub "Default application gateway: ${_nginx_default_gateway}"
   cat <<-END
 {
-  "deploy_dir": "$(nos_deploy_dir)",
+  "data_dir": "$(nos_data_dir)",
   "domains": $(domains),
   "code_dir": "$(nos_code_dir)",
   "document_root": "${_nginx_document_root}",
@@ -31,7 +31,7 @@ END
 
 nginx_document_root() {
   # boxfile nginx_document_root
-  document_root=$(nos_validate "$(nos_payload boxfile_nginx_document_root)" "folder" "$(nos_validate "$(nos_payload boxfile_document_root)" "folder" "/")")
+  document_root=$(nos_validate "$(nos_payload config_nginx_document_root)" "folder" "$(nos_validate "$(nos_payload config_document_root)" "folder" "/")")
 
   if [[ ${document_root:0:1} = '/' ]]; then
     echo $document_root
@@ -42,7 +42,7 @@ nginx_document_root() {
 
 nginx_directory_index() {
   # boxfile nginx_index_list
-  index_list=$(nos_validate "$(nos_payload boxfile_nginx_index_list)" "string" "index.html index.php")
+  index_list=$(nos_validate "$(nos_payload config_nginx_index_list)" "string" "index.html index.php")
   for i in $index_list; do
     ignore=$(nos_validate "$i" "file" "")
   done
@@ -51,7 +51,7 @@ nginx_directory_index() {
 
 nginx_default_gateway() {
   # boxfile nginx_default_gateway
-  default_gateway=$(nos_validate "$(nos_payload boxfile_nginx_default_gateway)" "file" "index.php")
+  default_gateway=$(nos_validate "$(nos_payload config_nginx_default_gateway)" "file" "index.php")
   echo "$default_gateway"
 }
 
@@ -62,9 +62,9 @@ install_nginx() {
 configure_nginx() {
   nos_print_process_start "Configuring Nginx"
   mkdir -p $(etc_dir)/nginx
-  mkdir -p $(deploy_dir)/var/log/nginx
-  mkdir -p $(deploy_dir)/var/tmp/nginx/client_body_temp
-  mkdir -p $(deploy_dir)/var/run
-  mkdir -p $(deploy_dir)/var/tmp
-  php_nginx_create_ngnix_conf
+  mkdir -p $(data_dir)/var/log/nginx
+  mkdir -p $(data_dir)/var/tmp/nginx/client_body_temp
+  mkdir -p $(data_dir)/var/run
+  mkdir -p $(data_dir)/var/tmp
+  nginx_create_ngnix_conf
 }

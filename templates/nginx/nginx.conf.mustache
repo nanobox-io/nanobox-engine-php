@@ -3,25 +3,25 @@ user     gonano;
 worker_processes  4;
 daemon off;
 
-error_log  {{deploy_dir}}/var/log/nginx/error.log;
+error_log  {{data_dir}}/var/log/nginx/error.log;
 
-pid        {{deploy_dir}}/var/run/nginx.pid;
+pid        {{data_dir}}/var/run/nginx.pid;
 
 events {
     worker_connections  1024;
 }
 
 http {
-    include       {{deploy_dir}}/etc/nginx/mime.types;
+    include       {{data_dir}}/etc/nginx/mime.types;
     default_type  text/plain;
 
     log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
                       '$status $body_bytes_sent "$http_referer" '
                       '"$http_user_agent" "$http_x_forwarded_for"';
 
-    access_log  {{deploy_dir}}/var/log/nginx/access.log  main;
+    access_log  {{data_dir}}/var/log/nginx/access.log  main;
 
-    client_body_temp_path {{deploy_dir}}/var/tmp/nginx/client_body_temp;
+    client_body_temp_path {{data_dir}}/var/tmp/nginx/client_body_temp;
 
     sendfile        on;
     keepalive_timeout  15;
@@ -49,7 +49,7 @@ http {
                     return 404;
             }
 
-            fastcgi_pass unix:{{deploy_dir}}/var/tmp/php.sock;
+            fastcgi_pass unix:{{data_dir}}/var/tmp/php.sock;
             fastcgi_index {{default_gateway}};
             # include fastcgi_params;
             {{#env_vars}}
@@ -86,9 +86,9 @@ http {
         
         # location ~ \.php$ {
         #     root           {{code_dir}}{{document_root}};
-        #     fastcgi_pass   unix:{{deploy_dir}}/var/tmp/php.sock;
+        #     fastcgi_pass   unix:{{data_dir}}/var/tmp/php.sock;
         #     fastcgi_index  {{default_gateway}};
-        #     include        {{deploy_dir}}/etc/nginx/fastcgi_params;
+        #     include        {{data_dir}}/etc/nginx/fastcgi_params;
         #     {{#env_vars}}
         #     fastcgi_param  "{{key}}" "{{value}}";
         #     {{/env_vars}}

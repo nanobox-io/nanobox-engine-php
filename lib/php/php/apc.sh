@@ -30,24 +30,24 @@ END
 
 apc_shm_size() {
   # boxfile php_apc_shm_size
-  _apc_shm_size=$(nos_validate "$(nos_payload boxfile_apc_shm_size)" "byte" "128M")
+  _apc_shm_size=$(nos_validate "$(nos_payload config_apc_shm_size)" "byte" "128M")
   echo "$_apc_shm_size"
 }
 
 apc_num_files_hint() {
   # boxfile php_apc_num_files_hint
-  _apc_num_files_hint=$(nos_validate "$(nos_payload boxfile_apc_num_files_hint)" "integer" "0")
+  _apc_num_files_hint=$(nos_validate "$(nos_payload config_apc_num_files_hint)" "integer" "0")
   echo "$_apc_num_files_hint"
 }
 
 apc_user_entries_hint() {
   # boxfile php_apc_user_entries_hint
-  _apc_user_entries_hint=$(nos_validate "$(nos_payload boxfile_apc_user_entries_hint)" "integer" "0")
+  _apc_user_entries_hint=$(nos_validate "$(nos_payload config_apc_user_entries_hint)" "integer" "0")
   echo "$_apc_user_entries_hint"
 }
 
 apc_filters() {
   # boxfile php_apc_filters
-  _apc_filters=$(nos_validate "$(nos_payload boxfile_apc_filters)" "string" "")
+  _apc_filters=$(nos_validate "$(nos_payload config_apc_filters)" "string" "")
   echo "$_apc_filters"
 }

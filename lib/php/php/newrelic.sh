@@ -82,19 +82,19 @@ newrelic_license() {
 
 newrelic_capture_params() {
   # boxfile newrelic_capture_params
-  _newrelic_capture_params=$(nos_validate "$(nos_payload boxfile_newrelic_capture_params)" "boolean" "Off")
+  _newrelic_capture_params=$(nos_validate "$(nos_payload config_newrelic_capture_params)" "boolean" "Off")
   echo "$_newrelic_capture_params"
 }
 
 newrelic_ignored_params() {
   # boxfile newrelic_ignored_params
-  _newrelic_ignored_params=$(nos_validate "$(nos_payload boxfile_newrelic_ignored_params)" "string" "")
+  _newrelic_ignored_params=$(nos_validate "$(nos_payload config_newrelic_ignored_params)" "string" "")
   echo "$_newrelic_ignored_params"
 }
 
 newrelic_loglevel() {
   # boxfile newrelic_loglevel
-  _newrelic_loglevel=$(nos_validate "$(nos_payload boxfile_newrelic_loglevel)" "string" "info")
+  _newrelic_loglevel=$(nos_validate "$(nos_payload config_newrelic_loglevel)" "string" "info")
   [[ "$_newrelic_loglevel" = 'error' ]] && echo "$_newrelic_loglevel" && return
   [[ "$_newrelic_loglevel" = 'warning' ]] && echo "$_newrelic_loglevel" && return
   [[ "$_newrelic_loglevel" = 'info' ]] && echo "$_newrelic_loglevel" && return
@@ -106,37 +106,37 @@ newrelic_loglevel() {
 
 newrelic_framework() {
   # boxfile newrelic_framework
-  _newrelic_framework=$(nos_validate "$(nos_payload boxfile_newrelic_framework)" "string" "")
+  _newrelic_framework=$(nos_validate "$(nos_payload config_newrelic_framework)" "string" "")
   echo "$_newrelic_framework"
 }
 
 newrelic_browser_monitoring_auto_instrument() {
   # boxfile newrelic_browser_monitoring_auto_instrument
-  _newrelic_browser_monitoring_auto_instrument=$(nos_validate "$(nos_payload boxfile_newrelic_browser_monitoring_auto_instrument)" "boolean" "On")
+  _newrelic_browser_monitoring_auto_instrument=$(nos_validate "$(nos_payload config_newrelic_browser_monitoring_auto_instrument)" "boolean" "On")
   echo "$_newrelic_browser_monitoring_auto_instrument"
 }
 
 newrelic_framework_drupal_modules() {
   # boxfile newrelic_framework_drupal_modules
-  _newrelic_framework_drupal_modules=$(nos_validate "$(nos_payload boxfile_newrelic_framework_drupal_modules)" "boolean" "On")
+  _newrelic_framework_drupal_modules=$(nos_validate "$(nos_payload config_newrelic_framework_drupal_modules)" "boolean" "On")
   echo "$_newrelic_framework_drupal_modules"
 }
 
 newrelic_transaction_tracer_detail() {
   # boxfile newrelic_transaction_tracer_detail
-  _newrelic_transaction_tracer_detail=$(nos_validate "$(nos_payload boxfile_newrelic_transaction_tracer_detail)" "integer" "1")
+  _newrelic_transaction_tracer_detail=$(nos_validate "$(nos_payload config_newrelic_transaction_tracer_detail)" "integer" "1")
   echo "$_newrelic_transaction_tracer_detail"
 }
 
 newrelic_transaction_tracer_enabled() {
   # boxfile newrelic_transaction_tracer_enabled
-  _newrelic_transaction_tracer_enabled=$(nos_validate "$(nos_payload boxfile_newrelic_transaction_tracer_enabled)" "boolean" "On")
+  _newrelic_transaction_tracer_enabled=$(nos_validate "$(nos_payload config_newrelic_transaction_tracer_enabled)" "boolean" "On")
   echo "$_newrelic_transaction_tracer_enabled"
 }
 
 newrelic_transaction_tracer_record_sql() {
   # boxfile newrelic_transaction_tracer_record_sql
-  _newrelic_transaction_tracer_record_sql=$(nos_validate "$(nos_payload boxfile_newrelic_transaction_tracer_record_sql)" "string" "obfuscated")
+  _newrelic_transaction_tracer_record_sql=$(nos_validate "$(nos_payload config_newrelic_transaction_tracer_record_sql)" "string" "obfuscated")
   [[ "$_newrelic_transaction_tracer_record_sql" = "off" ]] && echo "$_newrelic_transaction_tracer_record_sql" && return
   [[ "$_newrelic_transaction_tracer_record_sql" = "raw" ]] && echo "$_newrelic_transaction_tracer_record_sql" && return
   [[ "$_newrelic_transaction_tracer_record_sql" = "obfuscated" ]] && echo "$_newrelic_transaction_tracer_record_sql" && return
@@ -145,61 +145,61 @@ newrelic_transaction_tracer_record_sql() {
 
 newrelic_transaction_tracer_threshold() {
   # boxfile newrelic_transaction_tracer_threshold
-  _newrelic_transaction_tracer_threshold=$(nos_validate "$(nos_payload boxfile_newrelic_transaction_tracer_threshold)" "string" "apdex_f")
+  _newrelic_transaction_tracer_threshold=$(nos_validate "$(nos_payload config_newrelic_transaction_tracer_threshold)" "string" "apdex_f")
   echo "$_newrelic_transaction_tracer_threshold"
 }
 
 newrelic_transaction_tracer_stack_trace_threshold() {
   # boxfile newrelic_transaction_tracer_stack_trace_threshold
-  _newrelic_transaction_tracer_stack_trace_threshold=$(nos_validate "$(nos_payload boxfile_newrelic_transaction_tracer_stack_trace_threshold)" "integer" "500")
+  _newrelic_transaction_tracer_stack_trace_threshold=$(nos_validate "$(nos_payload config_newrelic_transaction_tracer_stack_trace_threshold)" "integer" "500")
   echo "$_newrelic_transaction_tracer_stack_trace_threshold"
 }
 
 newrelic_transaction_tracer_explain_threshold() {
   # boxfile newrelic_transaction_tracer_explain_threshold
-  _newrelic_transaction_tracer_explain_threshold=$(nos_validate "$(nos_payload boxfile_newrelic_transaction_tracer_explain_threshold)" "integer" "500")
+  _newrelic_transaction_tracer_explain_threshold=$(nos_validate "$(nos_payload config_newrelic_transaction_tracer_explain_threshold)" "integer" "500")
   echo "$_newrelic_transaction_tracer_explain_threshold"
 }
 
 newrelic_transaction_tracer_slow_sql() {
   # boxfile newrelic_transaction_tracer_slow_sql
-  _newrelic_transaction_tracer_slow_sql=$(nos_validate "$(nos_payload boxfile_newrelic_transaction_tracer_slow_sql)" "boolean" "On")
+  _newrelic_transaction_tracer_slow_sql=$(nos_validate "$(nos_payload config_newrelic_transaction_tracer_slow_sql)" "boolean" "On")
   echo "$_newrelic_transaction_tracer_slow_sql"
 }
 
 newrelic_transaction_tracer_custom() {
   # boxfile newrelic_transaction_tracer_custom
-  _newrelic_transaction_tracer_custom=$(nos_validate "$(nos_payload boxfile_newrelic_transaction_tracer_custom)" "string" "")
+  _newrelic_transaction_tracer_custom=$(nos_validate "$(nos_payload config_newrelic_transaction_tracer_custom)" "string" "")
   echo "$_newrelic_transaction_tracer_custom"
 }
 
 newrelic_error_collector_enabled() {
   # boxfile newrelic_error_collector_enabled
-  _newrelic_error_collector_enabled=$(nos_validate "$(nos_payload boxfile_newrelic_error_collector_enabled)" "boolean" "On")
+  _newrelic_error_collector_enabled=$(nos_validate "$(nos_payload config_newrelic_error_collector_enabled)" "boolean" "On")
   echo "$_newrelic_error_collector_enabled"
 }
 
 newrelic_error_collector_record_database_errors() {
   # boxfile newrelic_error_collector_record_database_errors
-  _newrelic_error_collector_record_database_errors=$(nos_validate "$(nos_payload boxfile_newrelic_error_collector_record_database_errors)" "boolean" "On")
+  _newrelic_error_collector_record_database_errors=$(nos_validate "$(nos_payload config_newrelic_error_collector_record_database_errors)" "boolean" "On")
   echo "$_newrelic_error_collector_record_database_errors"
 }
 
 newrelic_webtransaction_name_functions() {
   # boxfile newrelic_webtransaction_name_functions
-  _newrelic_webtransaction_name_functions=$(nos_validate "$(nos_payload boxfile_newrelic_webtransaction_name_functions)" "string" "")
+  _newrelic_webtransaction_name_functions=$(nos_validate "$(nos_payload config_newrelic_webtransaction_name_functions)" "string" "")
   echo "$_newrelic_webtransaction_name_functions"
 }
 
 newrelic_webtransaction_name_files() {
   # boxfile newrelic_webtransaction_name_files
-  _newrelic_webtransaction_name_files=$(nos_validate "$(nos_payload boxfile_newrelic_webtransaction_name_files)" "string" "")
+  _newrelic_webtransaction_name_files=$(nos_validate "$(nos_payload config_newrelic_webtransaction_name_files)" "string" "")
   echo "$_newrelic_webtransaction_name_files"
 }
 
 newrelic_webtransaction_name_remove_trailing_path() {
   # boxfile newrelic_webtransaction_name_remove_trailing_path
-  _newrelic_webtransaction_name_remove_trailing_path=$(nos_validate "$(nos_payload boxfile_newrelic_webtransaction_name_remove_trailing_path)" "boolean" "Off")
+  _newrelic_webtransaction_name_remove_trailing_path=$(nos_validate "$(nos_payload config_newrelic_webtransaction_name_remove_trailing_path)" "boolean" "Off")
   echo "$_newrelic_webtransaction_name_remove_trailing_path"
 }
 

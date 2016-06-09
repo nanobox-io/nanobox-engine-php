@@ -24,12 +24,12 @@ END
 
 memcache_chunk_size() {
   # boxfile memcache_chunk_size
-  _memcache_chunk_size=$(nos_validate "$(nos_payload boxfile_memcache_chunk_size)" "integer" "32768")
+  _memcache_chunk_size=$(nos_validate "$(nos_payload config_memcache_chunk_size)" "integer" "32768")
   echo "$_memcache_chunk_size"
 }
 
 memcache_hash_strategy() {
   # boxfile memcache_hash_strategy
-  _memcache_hash_strategy=$(nos_validate "$(nos_payload boxfile_memcache_hash_strategy)" "string" "standard")
+  _memcache_hash_strategy=$(nos_validate "$(nos_payload config_memcache_hash_strategy)" "string" "standard")
   echo "$_memcache_hash_strategy"
 }

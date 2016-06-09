@@ -9,7 +9,6 @@ create_boxfile() {
 }
 
 boxfile_json() {
-  _has_bower=$(nodejs_has_bower)
   _webserver=$(webserver)
   nos_print_bullet "Detecting settings"
   if [[ "$_webserver" = "apache" ]]; then
@@ -30,25 +29,30 @@ boxfile_json() {
   fi
   cat <<-END
 {
-  "has_bower": ${_has_bower},
   "apache": $(is_webserver 'apache'),
   "fpm": $(is_interpreter 'fpm'),
   "mod_php": $(is_interpreter 'mod_php'),
   "nginx": $(is_webserver 'nginx'),
   "builtin": $(is_webserver 'builtin'),
   "etc_dir": "$(nos_etc_dir)",
-  "deploy_dir": "$(nos_deploy_dir)",
+  "data_dir": "$(nos_data_dir)",
   "code_dir": "$(nos_code_dir)",
   "document_root": "$(builtin_document_root)"
 }
 END
 }
 
+# Copy the code into the live directory which will be used to run the app
+publish_release() {
+  nos_print_bullet "Moving build into live code directory..."
+  rsync -a $(nos_code_dir)/ $(nos_app_dir)
+}
+
 is_webserver() {
   # find webserver
   webserver='apache'
-  if [[ -n "$(nos_payload 'boxfile_webserver')" ]]; then
-    webserver=$(nos_payload 'boxfile_webserver')
+  if [[ -n "$(nos_payload 'config_webserver')" ]]; then
+    webserver=$(nos_payload 'config_webserver')
   fi
   if [[ "$webserver" = "$1" ]]; then
     echo "true"
@@ -60,8 +64,8 @@ is_webserver() {
 is_interpreter() {
   # extract php interpreter
   interpreter="fpm"
-  if [[ -n "$(nos_payload 'boxfile_apache_php_interpreter')" ]]; then
-    interpreter=$(nos_payload 'boxfile_apache_php_interpreter')
+  if [[ -n "$(nos_payload 'config_apache_php_interpreter')" ]]; then
+    interpreter=$(nos_payload 'config_apache_php_interpreter')
   fi
   if [[ "${interpreter}" = "$1" ]]; then
     echo "true"
@@ -119,15 +123,15 @@ domains() {
 }
 
 webserver() {
-  _webserver=$(nos_validate "$(nos_payload boxfile_webserver)" "string" "apache")
+  _webserver=$(nos_validate "$(nos_payload config_webserver)" "string" "apache")
   echo "${_webserver}"
 }
 
 install_webserver() {
   if [[ "$(webserver)" = 'apache' ]]; then
-    php_install_apache
+    install_apache
   elif [[ "$(webserver)" = 'nginx' ]]; then
-    php_install_nginx
+    install_nginx
   fi
 }
 
@@ -148,8 +152,8 @@ composer_install() {
 
 configure_webserver() {
   if [[ "$(webserver)" = 'apache' ]]; then
-    php_configure_apache
+    configure_apache
   elif [[ "$(webserver)" = 'nginx' ]]; then
-    php_configure_nginx
+    configure_nginx
   fi
 }

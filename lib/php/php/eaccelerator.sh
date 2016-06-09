@@ -27,18 +27,18 @@ END
 
 eaccelerator_shm_max() {
   # boxfile eaccelerator_shm_max
-  _eaccelerator_shm_max=$(nos_validate "$(nos_payload boxfile_eaccelerator_shm_max)" "integer" "128")
+  _eaccelerator_shm_max=$(nos_validate "$(nos_payload config_eaccelerator_shm_max)" "integer" "128")
   echo "$_eaccelerator_shm_max"
 }
 
 eaccelerator_shm_size() {
   # boxfile eaccelerator_shm_size
-  _eaccelerator_shm_size=$(nos_validate "$(nos_payload boxfile_eaccelerator_shm_size)" "integer" "128")
+  _eaccelerator_shm_size=$(nos_validate "$(nos_payload config_eaccelerator_shm_size)" "integer" "128")
   echo "$_eaccelerator_shm_size"
 }
 
 eaccelerator_filter() {
   # boxfile eaccelerator_filter
-  _eaccelerator_filter=$(nos_validate "$(nos_payload boxfile_eaccelerator_filter)" "string" "")
+  _eaccelerator_filter=$(nos_validate "$(nos_payload config_eaccelerator_filter)" "string" "")
   echo "$_eaccelerator_filter"
 }

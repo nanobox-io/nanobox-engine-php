@@ -6,8 +6,8 @@ User gonano
 Group gonano
 ServerSignature Off
 ServerTokens Prod
-ServerRoot "{{deploy_dir}}"
-PidFile {{deploy_dir}}/var/run/httpd.pid
+ServerRoot "{{data_dir}}"
+PidFile {{data_dir}}/var/run/httpd.pid
 Timeout {{timeout}}
 KeepAlive On
 MaxKeepAliveRequests 100
@@ -82,12 +82,12 @@ FileETag Mtime Size
 #############################################
 # Logging Configuration                     #
 #############################################
-ErrorLog {{deploy_dir}}/var/log/apache/error.log
+ErrorLog {{data_dir}}/var/log/apache/error.log
 
 LogLevel {{log_level}}
 LogFormat "%{X-Forwarded-For}i %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
 {{#access_log}}
-CustomLog {{deploy_dir}}/var/log/apache/access.log combined
+CustomLog {{data_dir}}/var/log/apache/access.log combined
 {{/access_log}}
 
 #############################################
@@ -132,8 +132,8 @@ AddType application/x-gzip .gz .tgz
 AddType application/x-httpd-php .php
 AddHandler type-map var
 {{#fastcgi}}
-ScriptAlias /cgi-bin/ "{{deploy_dir}}/libexec/cgi-bin/"
-FastCgiExternalServer {{deploy_dir}}/libexec/cgi-bin/php-cgi -idle-timeout {{timeout}} -socket {{deploy_dir}}/var/tmp/php.sock -pass-header Authorization
+ScriptAlias /cgi-bin/ "{{data_dir}}/libexec/cgi-bin/"
+FastCgiExternalServer {{data_dir}}/libexec/cgi-bin/php-cgi -idle-timeout {{timeout}} -socket {{data_dir}}/var/tmp/php.sock -pass-header Authorization
 AddHandler php-fastcgi .php
 Action php-fastcgi /cgi-bin/php-cgi
 {{/fastcgi}}

@@ -20,7 +20,7 @@ php_fpm_conf_payload() {
   nos_print_bullet_sub "Max requests: ${_max_requests}"
   cat <<-END
 {
-  "deploy_dir": "$(nos_deploy_dir)",
+  "data_dir": "$(nos_data_dir)",
   "events_mechanism": "${_events_mechanism}",
   "max_children": "${_max_children}",
   "max_spare_servers": "${_max_spare_servers}",
@@ -40,19 +40,19 @@ php_fpm_events_mechanism() {
 
 php_fpm_max_children() {
   # boxfile php_fpm_max_children
-  _php_fpm_max_children=$(nos_validate "$(nos_payload boxfile_php_fpm_max_children)" "integer" "20")
+  _php_fpm_max_children=$(nos_validate "$(nos_payload config_php_fpm_max_children)" "integer" "20")
   echo "$_php_fpm_max_children"
 }
 
 php_fpm_max_spare_servers() {
   # boxfile php_fpm_max_spare_servers
-  _php_fpm_max_spare_servers=$(nos_validate "$(nos_payload boxfile_php_fpm_max_spare_servers)" "integer" "1")
+  _php_fpm_max_spare_servers=$(nos_validate "$(nos_payload config_php_fpm_max_spare_servers)" "integer" "1")
   echo "$_php_fpm_max_spare_servers"
 }
 
 php_fpm_max_requests() {
   # boxfile php_fpm_max_requests
-  _php_fpm_max_requests=$(nos_validate "$(nos_payload boxfile_php_fpm_max_requests)" "integer" "128")
+  _php_fpm_max_requests=$(nos_validate "$(nos_payload config_php_fpm_max_requests)" "integer" "128")
   echo "$_php_fpm_max_requests"
 }
 
@@ -63,8 +63,8 @@ php_fpm_use_fastcgi() {
   # don't use fastcgi if apache is using mod_php
   [[ "$(webserver)" = 'nginx' ]] && echo 'true' && return
   [[ "$(webserver)" = 'builtin' ]] && echo 'false' && return
-  [[ "$(webserver)" = 'apache' && "$(nos_validate "$(nos_payload boxfile_apache_php_interpreter)" "string" "fpm")" = 'fpm' ]] && echo "true" && return
-  [[ "$(webserver)" = 'apache' && "$(nos_validate "$(nos_payload boxfile_apache_php_interpreter)" "string" "fpm")" = 'mod_php' ]] && echo "false" && return
+  [[ "$(webserver)" = 'apache' && "$(nos_validate "$(nos_payload config_apache_php_interpreter)" "string" "fpm")" = 'fpm' ]] && echo "true" && return
+  [[ "$(webserver)" = 'apache' && "$(nos_validate "$(nos_payload config_apache_php_interpreter)" "string" "fpm")" = 'mod_php' ]] && echo "false" && return
   echo "false"
 }
 
@@ -72,8 +72,8 @@ configure_php_fpm() {
   if [[ "$(php_fpm_use_fastcgi)" = "true" ]]; then
     nos_print_process_start "Configuring PHP-FPM"
     mkdir -p $(nos_etc_dir)/php
-    mkdir -p $(nos_deploy_dir)/var/run
-    mkdir -p $(nos_deploy_dir)/var/tmp
+    mkdir -p $(nos_data_dir)/var/run
+    mkdir -p $(nos_data_dir)/var/tmp
     php_fpm_create_php_fpm_conf
   fi
 }

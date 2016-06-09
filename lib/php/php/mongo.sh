@@ -30,24 +30,24 @@ END
 
 mongo_native_long() {
   # boxfile mongo_native_long
-  _mongo_native_long=$(nos_validate "$(nos_payload boxfile_mongo_native_long)" "integer" "1")
+  _mongo_native_long=$(nos_validate "$(nos_payload config_mongo_native_long)" "integer" "1")
   echo "$_mongo_native_long"
 }
 
 mongo_allow_empty_keys() {
   # boxfile mongo_allow_empty_keys
-  _mongo_allow_empty_keys=$(nos_validate "$(nos_payload boxfile_mongo_allow_empty_keys)" "integer" "0")
+  _mongo_allow_empty_keys=$(nos_validate "$(nos_payload config_mongo_allow_empty_keys)" "integer" "0")
   echo "$_mongo_allow_empty_keys"
 }
 
 mongo_cmd() {
   # boxfile mongo_cmd
-  _mongo_cmd=$(nos_validate "$(nos_payload boxfile_mongo_cmd)" "string" "\$")
+  _mongo_cmd=$(nos_validate "$(nos_payload config_mongo_cmd)" "string" "\$")
   echo "$_mongo_cmd"
 }
 
 mongo_long_as_object() {
   # boxfile mongo_long_as_object
-  _mongo_long_as_object=$(nos_validate "$(nos_payload boxfile_mongo_long_as_object)" "integer" "0")
+  _mongo_long_as_object=$(nos_validate "$(nos_payload config_mongo_long_as_object)" "integer" "0")
   echo "$_mongo_long_as_object"
 }

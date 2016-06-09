@@ -80,34 +80,41 @@ setup() {
   [ "$status" -eq 0 ]
 }
 
-# @test "verify" {
-  # # remove the code dir
-  # rm -rf /tmp/code
+@test "verify" {
+  # remove the code dir
+  rm -rf /tmp/code
 
-  # # mv the app_dir to code_dir
-  # mv /tmp/app /tmp/code
+  # mv the app_dir to code_dir
+  mv /tmp/app /tmp/code
 
-  # # cd into the app code_dir
-  # cd /tmp/code
+  # cd into the app code_dir
+  cd /tmp/code
 
-  # # start the server in the background
-  # ./simple-go &
+  # start php-fpm
+  /data/sbin/php-fpm -y /data/etc/php/php-fpm.conf -c /data/etc/php/php.ini &
 
-  # # grab the pid
-  # pid=$!
+  # grab the pid
+  fpm_pid=$!
 
-  # # sleep a few seconds so the server can start
-  # sleep 3
+  # start apache
+  /data/sbin/httpd -DNO_DETACH &
 
-  # # curl the index
-  # run curl -s 127.0.0.1:8080 2>/dev/null
+  # grab the pid
+  httpd_pid=$!
 
-  # expected="Hello world!"
+  # sleep a few seconds so the server can start
+  sleep 3
 
-  # # kill the server
-  # kill -9 $pid > /dev/null 2>&1
+  # curl the index
+  run curl -s 127.0.0.1:8080 2>/dev/null
 
-  # echo "$output"
+  expected="Hello world!"
 
-  # [ "$output" = "$expected" ]
-# }
+  # kill the server
+  pkill php-fpm
+  pkill httpd
+
+  echo "$output"
+
+  [[ "$output" =~ "phpinfo()" ]]
+}

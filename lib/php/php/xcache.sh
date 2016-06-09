@@ -30,24 +30,24 @@ END
 
 xcache_size() {
   # boxfile xcache_size
-  _xcache_size=$(nos_validate "$(nos_payload boxfile_xcache_size)" "byte" "64M")
+  _xcache_size=$(nos_validate "$(nos_payload config_xcache_size)" "byte" "64M")
   echo "$_xcache_size"
 }
 
 xcache_var_size() {
   # boxfile xcache_var_size
-  _xcache_var_size=$(nos_validate "$(nos_payload boxfile_xcache_var_size)" "byte" "64M")
+  _xcache_var_size=$(nos_validate "$(nos_payload config_xcache_var_size)" "byte" "64M")
   echo "$_xcache_var_size"
 }
 
 xcache_admin_user() {
   # boxfile xcache_admin_user
-  _xcache_admin_user=$(nos_validate "$(nos_payload boxfile_xcache_admin_user)" "string" "")
+  _xcache_admin_user=$(nos_validate "$(nos_payload config_xcache_admin_user)" "string" "")
   echo "$_xcache_admin_user"
 }
 
 xcache_admin_pass() {
   # boxfile xcache_admin_pass
-  _xcache_admin_pass=$(nos_validate "$(nos_payload boxfile_xcache_admin_pass)" "string" "e0817d5307b3e779a428ea10b50f4441")
+  _xcache_admin_pass=$(nos_validate "$(nos_payload config_xcache_admin_pass)" "string" "e0817d5307b3e779a428ea10b50f4441")
   echo "$_xcache_admin_pass"
 }
