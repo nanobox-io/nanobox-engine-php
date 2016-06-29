@@ -1,4 +1,3 @@
-
 user     gonano;
 worker_processes  4;
 daemon off;
@@ -33,7 +32,7 @@ http {
 
     server {
         listen       8080;
-        server_name {{#domains}} {{.}} *.{{.}}{{/domains}};
+        server_name localhost
 
         location / {
             root   {{code_dir}}{{document_root}};
@@ -52,9 +51,9 @@ http {
             fastcgi_pass unix:{{data_dir}}/var/tmp/php.sock;
             fastcgi_index {{default_gateway}};
             # include fastcgi_params;
-            {{#env_vars}}
-            fastcgi_param  "{{key}}" "{{value}}";
-            {{/env_vars}}
+            
+            # todo: figure out how/when to inject env vars
+            
             fastcgi_param   QUERY_STRING            $query_string;
             fastcgi_param   REQUEST_METHOD          $request_method;
             fastcgi_param   CONTENT_TYPE            $content_type;
@@ -63,7 +62,7 @@ http {
             fastcgi_param   SCRIPT_FILENAME         $document_root$fastcgi_script_name;
             fastcgi_param   SCRIPT_NAME             $fastcgi_script_name;
             fastcgi_param   PATH_INFO               $fastcgi_path_info;
-            fastcgi_param   PATH_TRANSLATED     $document_root$fastcgi_path_info;
+            fastcgi_param   PATH_TRANSLATED         $document_root$fastcgi_path_info;
             fastcgi_param   REQUEST_URI             $request_uri;
             fastcgi_param   DOCUMENT_URI            $document_uri;
             fastcgi_param   DOCUMENT_ROOT           $document_root;
@@ -84,16 +83,6 @@ http {
             fastcgi_param   REDIRECT_STATUS         200;
         }
         
-        # location ~ \.php$ {
-        #     root           {{code_dir}}{{document_root}};
-        #     fastcgi_pass   unix:{{data_dir}}/var/tmp/php.sock;
-        #     fastcgi_index  {{default_gateway}};
-        #     include        {{data_dir}}/etc/nginx/fastcgi_params;
-        #     {{#env_vars}}
-        #     fastcgi_param  "{{key}}" "{{value}}";
-        #     {{/env_vars}}
-        # }
-
         # deny access to .htaccess files, if Apache's document root
         # concurs with nginx's one
         

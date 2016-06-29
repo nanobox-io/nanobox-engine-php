@@ -12,9 +12,6 @@ nos_init "$@"
 . ${engine_lib_dir}/php.sh
 
 # Remove build dependencies to ensure the build env is small
-uninstall_build_dependencies
-
-# Clean the build cruft out of the environment
-clean_env
+uninstall_build_packages
 
 exit 0

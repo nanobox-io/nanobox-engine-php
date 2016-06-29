@@ -1,24 +1,20 @@
 #############################################
 # Base Apache Server Configuration          #
 #############################################
-ServerName {{hostname}}
 User gonano
 Group gonano
-ServerSignature Off
-ServerTokens Prod
-ServerRoot "{{data_dir}}"
 PidFile {{data_dir}}/var/run/httpd.pid
 Timeout {{timeout}}
 KeepAlive On
 MaxKeepAliveRequests 100
 KeepAliveTimeout 15
 
-StartServers     1
-MinSpareServers  1
-MaxSpareServers  {{max_spares}}
-MaxClients       {{max_clients}}
-MaxRequestsPerChild  {{max_requests_per_child}}
-ServerLimit      {{server_limit}}
+StartServers          1
+MinSpareServers       1
+MaxSpareServers       {{max_spares}}
+MaxClients            {{max_clients}}
+MaxRequestsPerChild   {{max_requests_per_child}}
+ServerLimit           {{server_limit}}
 
 Listen 0.0.0.0:8080
 
@@ -41,13 +37,14 @@ LoadModule {{.}}_module lib/httpd/mod_{{.}}.so
 #############################################
 # Default Server Configuration              #
 #############################################
-UseCanonicalName On
+UseCanonicalName Off
+HostnameLookups Off
 DocumentRoot "{{code_dir}}{{document_root}}"
 DirectoryIndex {{directory_index}} {{default_gateway}} 
 AccessFileName .htaccess
 TypesConfig {{etc_dir}}/httpd/mime.types
 DefaultType text/plain
-HostnameLookups Off
+
 # add gzip compression
 AddOutputFilterByType DEFLATE text/plain text/html text/xml text/css application/x-javascript application/javascript
 # add far future expires to header
@@ -138,46 +135,22 @@ AddHandler php-fastcgi .php
 Action php-fastcgi /cgi-bin/php-cgi
 {{/fastcgi}}
 
-
-#############################################
-# Browser Response Configuration            #
-#############################################
-BrowserMatch "Mozilla/2" nokeepalive
-BrowserMatch "MSIE 4\.0b2;" nokeepalive downgrade-1.0 force-response-1.0
-BrowserMatch "RealPlayer 4\.0" force-response-1.0
-BrowserMatch "Java/1\.0" force-response-1.0
-BrowserMatch "JDK/1\.0" force-response-1.0
-BrowserMatch "Microsoft Data Access Internet Publishing Provider" redirect-carefully
-BrowserMatch "MS FrontPage" redirect-carefully
-BrowserMatch "^WebDrive" redirect-carefully
-BrowserMatch "^WebDAVFS/1.[0123]" redirect-carefully
-BrowserMatch "^gnome-vfs/1.0" redirect-carefully
-BrowserMatch "^XML Spy" redirect-carefully
-BrowserMatch "^Dreamweaver-WebDAV-SCM1" redirect-carefully
-
 #############################################
 # Server Variables                          #
 #############################################
-{{#env_vars}}
-SetEnv "{{key}}" "{{value}}"
-{{/env_vars}}
+# todo: figure out how to inject variables when it's run
+# PassEnv EVAR
 
 #############################################
 # VirtualHost Configuration                 #
 #############################################
-{{#domains}}
-NameVirtualHost 0.0.0.0:8080
-{{/domains}}
 
-{{#domains}}
-<VirtualHost 0.0.0.0:8080>
+<VirtualHost *:8080>
     DocumentRoot "{{code_dir}}{{document_root}}"
-    ServerName {{.}}
-    ServerAlias *.{{.}}
+    ServerName localhost
     DirectoryIndex {{directory_index}} {{default_gateway}}
     UnsetEnv USER HOME
     SetEnvifNoCase X-Forwarded-Proto "https" HTTPS=on
     RewriteEngine on
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization},L]
 </VirtualHost>
-{{/domains}}

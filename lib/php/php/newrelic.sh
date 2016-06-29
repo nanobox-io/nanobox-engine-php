@@ -1,76 +1,63 @@
 # -*- mode: bash; tab-width: 2; -*-
 # vim: ts=2 sw=2 ft=bash noet
 
-create_newrelic_ini() {
-  nos_print_bullet "Generating newrelic.ini"
+generate_newrelic_ini() {
+  
+  # Report back to the user
+  report_newrelic_settings
+  
   nos_template \
     "php/php.d/newrelic.ini.mustache" \
     "$(nos_etc_dir)/php.d/newrelic.ini" \
     "$(newrelic_ini_payload)"
 }
 
+report_newrelic_settings() {
+  nos_print_bullet_sub "Caputure params: $(newrelic_capture_params)"
+  nos_print_bullet_sub "Ignored params: $(newrelic_ignored_params)"
+  nos_print_bullet_sub "Log level: $(newrelic_loglevel)"
+  nos_print_bullet_sub "Framework: $(newrelic_framework)"
+  nos_print_bullet_sub "Browser monitoring auto instrument: $(newrelic_browser_monitoring_auto_instrument)"
+  nos_print_bullet_sub "Framework drupal modules: $(newrelic_framework_drupal_modules)"
+  nos_print_bullet_sub "Transaction tracer detail: $(newrelic_transaction_tracer_detail)"
+  nos_print_bullet_sub "Transaction tracer enabled: $(newrelic_transaction_tracer_enabled)"
+  nos_print_bullet_sub "Transaction tracer record sql: $(newrelic_transaction_tracer_record_sql)"
+  nos_print_bullet_sub "Transaction tracer threshold: $(newrelic_transaction_tracer_threshold)"
+  nos_print_bullet_sub "Transaction tracer stack trace threshold: $(newrelic_transaction_tracer_stack_trace_threshold)"
+  nos_print_bullet_sub "Transaction tracer explain threshold: $(newrelic_transaction_tracer_explain_threshold)"
+  nos_print_bullet_sub "Transaction tracer slow sql: $(newrelic_transaction_tracer_slow_sql)"
+  nos_print_bullet_sub "Transaction tracer custom: $(newrelic_transaction_tracer_custom)"
+  nos_print_bullet_sub "Error collector enabled: $(newrelic_error_collector_enabled)"
+  nos_print_bullet_sub "Error collector record database errors: $(newrelic_error_collector_record_database_errors)"
+  nos_print_bullet_sub "Eebtransaction name functions: $(newrelic_webtransaction_name_functions)"
+  nos_print_bullet_sub "Webtransaction name files: $(newrelic_webtransaction_name_files)"
+  nos_print_bullet_sub "Webtransaction name remove trailing pathprint bullet sub: $(newrelic_webtransaction_name_remove_trailing_pathnos_print_bullet_sub)"  
+}
+
 newrelic_ini_payload() {
-  _newrelic_capture_params=$(newrelic_capture_params)
-  _newrelic_ignored_params=$(newrelic_ignored_params)
-  _newrelic_loglevel=$(newrelic_loglevel)
-  _newrelic_framework=$(newrelic_framework)
-  _newrelic_browser_monitoring_auto_instrument=$(newrelic_browser_monitoring_auto_instrument)
-  _newrelic_framework_drupal_modules=$(newrelic_framework_drupal_modules)
-  _newrelic_transaction_tracer_detail=$(newrelic_transaction_tracer_detail)
-  _newrelic_transaction_tracer_enabled=$(newrelic_transaction_tracer_enabled)
-  _newrelic_transaction_tracer_record_sql=$(newrelic_transaction_tracer_record_sql)
-  _newrelic_transaction_tracer_threshold=$(newrelic_transaction_tracer_threshold)
-  _newrelic_transaction_tracer_stack_trace_threshold=$(newrelic_transaction_tracer_stack_trace_threshold)
-  _newrelic_transaction_tracer_explain_threshold=$(newrelic_transaction_tracer_explain_threshold)
-  _newrelic_transaction_tracer_slow_sql=$(newrelic_transaction_tracer_slow_sql)
-  _newrelic_transaction_tracer_custom=$(newrelic_transaction_tracer_custom)
-  _newrelic_error_collector_enabled=$(newrelic_error_collector_enabled)
-  _newrelic_error_collector_record_database_errors=$(newrelic_error_collector_record_database_errors)
-  _newrelic_webtransaction_name_functions=$(newrelic_webtransaction_name_functions)
-  _newrelic_webtransaction_name_files=$(newrelic_webtransaction_name_files)
-  _newrelic_webtransaction_name_remove_trailing_path=$(newrelic_webtransaction_name_remove_trailing_path)
-  nos_print_bullet_sub "Caputure params: ${_newrelic_capture_params}"
-  nos_print_bullet_sub "Ignored params: ${_newrelic_ignored_params}"
-  nos_print_bullet_sub "Log level: ${_newrelic_loglevel}"
-  nos_print_bullet_sub "Framework: ${_newrelic_framework}"
-  nos_print_bullet_sub "Browser monitoring auto instrument: ${_newrelic_browser_monitoring_auto_instrument}"
-  nos_print_bullet_sub "Framework drupal modules: ${_newrelic_framework_drupal_modules}"
-  nos_print_bullet_sub "Transaction tracer detail: ${_newrelic_transaction_tracer_detail}"
-  nos_print_bullet_sub "Transaction tracer enabled: ${_newrelic_transaction_tracer_enabled}"
-  nos_print_bullet_sub "Transaction tracer record sql: ${_newrelic_transaction_tracer_record_sql}"
-  nos_print_bullet_sub "Transaction tracer threshold: ${_newrelic_transaction_tracer_threshold}"
-  nos_print_bullet_sub "Transaction tracer stack trace threshold: ${_newrelic_transaction_tracer_stack_trace_threshold}"
-  nos_print_bullet_sub "Transaction tracer explain threshold: ${_newrelic_transaction_tracer_explain_threshold}"
-  nos_print_bullet_sub "Transaction tracer slow sql: ${_newrelic_transaction_tracer_slow_sql}"
-  nos_print_bullet_sub "Transaction tracer custom: ${_newrelic_transaction_tracer_custom}"
-  nos_print_bullet_sub "Error collector enabled: ${_newrelic_error_collector_enabled}"
-  nos_print_bullet_sub "Error collector record database errors: ${_newrelic_error_collector_record_database_errors}"
-  nos_print_bullet_sub "Eebtransaction name functions: ${_newrelic_webtransaction_name_functions}"
-  nos_print_bullet_sub "Webtransaction name files: ${_newrelic_webtransaction_name_files}"
-  nos_print_bullet_sub "Webtransaction name remove trailing pathprint bullet sub: ${_newrelic_webtransaction_name_remove_trailing_pathnos_print_bullet_sub}"
   cat <<-END
 {
   "app_name": "$(app_name)",
   "newrelic_license": "$(newrelic_license)",
-  "newrelic_capture_params": "${_newrelic_capture_params}",
-  "newrelic_ignored_params": "${_newrelic_ignored_params}",
-  "newrelic_loglevel": "${_newrelic_loglevel}",
-  "newrelic_framework": "${_newrelic_framework}",
-  "newrelic_browser_monitoring_auto_instrument": "${_newrelic_browser_monitoring_auto_instrument}",
-  "newrelic_framework_drupal_modules": "${_newrelic_framework_drupal_modules}",
-  "newrelic_transaction_tracer_detail": "${_newrelic_transaction_tracer_detail}",
-  "newrelic_transaction_tracer_enabled": "${_newrelic_transaction_tracer_enabled}",
-  "newrelic_transaction_tracer_record_sql": "${_newrelic_transaction_tracer_record_sql}",
-  "newrelic_transaction_tracer_threshold": "${_newrelic_transaction_tracer_threshold}",
-  "newrelic_transaction_tracer_stack_trace_threshold": "${_newrelic_transaction_tracer_stack_trace_threshold}",
-  "newrelic_transaction_tracer_explain_threshold": "${_newrelic_transaction_tracer_explain_threshold}",
-  "newrelic_transaction_tracer_slow_sql": "${_newrelic_transaction_tracer_slow_sql}",
-  "newrelic_transaction_tracer_custom": "${_newrelic_transaction_tracer_custom}",
-  "newrelic_error_collector_enabled": "${_newrelic_error_collector_enabled}",
-  "newrelic_error_collector_record_database_errors": "${_newrelic_error_collector_record_database_errors}",
-  "newrelic_webtransaction_name_functions": "${_newrelic_webtransaction_name_functions}",
-  "newrelic_webtransaction_name_files": "${_newrelic_webtransaction_name_files}",
-  "newrelic_webtransaction_name_remove_trailing_path": "${_newrelic_webtransaction_name_remove_trailing_path}"
+  "newrelic_capture_params": "$(newrelic_capture_params)",
+  "newrelic_ignored_params": "$(newrelic_ignored_params)",
+  "newrelic_loglevel": "$(newrelic_loglevel)",
+  "newrelic_framework": "$(newrelic_framework)",
+  "newrelic_browser_monitoring_auto_instrument": "$(newrelic_browser_monitoring_auto_instrument)",
+  "newrelic_framework_drupal_modules": "$(newrelic_framework_drupal_modules)",
+  "newrelic_transaction_tracer_detail": "$(newrelic_transaction_tracer_detail)",
+  "newrelic_transaction_tracer_enabled": "$(newrelic_transaction_tracer_enabled)",
+  "newrelic_transaction_tracer_record_sql": "$(newrelic_transaction_tracer_record_sql)",
+  "newrelic_transaction_tracer_threshold": "$(newrelic_transaction_tracer_threshold)",
+  "newrelic_transaction_tracer_stack_trace_threshold": "$(newrelic_transaction_tracer_stack_trace_threshold)",
+  "newrelic_transaction_tracer_explain_threshold": "$(newrelic_transaction_tracer_explain_threshold)",
+  "newrelic_transaction_tracer_slow_sql": "$(newrelic_transaction_tracer_slow_sql)",
+  "newrelic_transaction_tracer_custom": "$(newrelic_transaction_tracer_custom)",
+  "newrelic_error_collector_enabled": "$(newrelic_error_collector_enabled)",
+  "newrelic_error_collector_record_database_errors": "$(newrelic_error_collector_record_database_errors)",
+  "newrelic_webtransaction_name_functions": "$(newrelic_webtransaction_name_functions)",
+  "newrelic_webtransaction_name_files": "$(newrelic_webtransaction_name_files)",
+  "newrelic_webtransaction_name_remove_trailing_path": "$(newrelic_webtransaction_name_remove_trailing_path)"
 }
 END
 }

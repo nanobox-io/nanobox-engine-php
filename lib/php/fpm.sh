@@ -1,30 +1,32 @@
 # -*- mode: bash; tab-width: 2; -*-
 # vim: ts=2 sw=2 ft=bash noet
 
-php_fpm_create_php_fpm_conf() {
-  nos_print_bullet "Generating php-fpm.conf"
+generate_php_fpm_conf() {
+  
+  # Report back to the user
+  report_php_fpm_settings
+  
   nos_template \
     "php/php-fpm.conf.mustache" \
     "$(nos_etc_dir)/php/php-fpm.conf" \
     "$(php_fpm_conf_payload)"
 }
 
+report_php_fpm_settings() {
+  nos_print_bullet_sub "Events mechanism: $(php_fpm_events_mechanism)"
+  nos_print_bullet_sub "Max children: $(php_fpm_max_children)"
+  nos_print_bullet_sub "Max spare servers: $(php_fpm_max_spare_servers)"
+  nos_print_bullet_sub "Max requests: $(php_fpm_max_requests)"
+}
+
 php_fpm_conf_payload() {
-  _events_mechanism=$(php_fpm_events_mechanism)
-  _max_children=$(php_fpm_max_children)
-  _max_spare_servers=$(php_fpm_max_spare_servers)
-  _max_requests=$(php_fpm_max_requests)
-  nos_print_bullet_sub "Events mechanism: ${_events_mechanism}"
-  nos_print_bullet_sub "Max children: ${_max_children}"
-  nos_print_bullet_sub "Max spare servers: ${_max_spare_servers}"
-  nos_print_bullet_sub "Max requests: ${_max_requests}"
   cat <<-END
 {
   "data_dir": "$(nos_data_dir)",
-  "events_mechanism": "${_events_mechanism}",
-  "max_children": "${_max_children}",
-  "max_spare_servers": "${_max_spare_servers}",
-  "max_requests": "${_max_requests}",
+  "events_mechanism": "$(php_fpm_events_mechanism)",
+  "max_children": "$(php_fpm_max_children)",
+  "max_spare_servers": "$(php_fpm_max_spare_servers)",
+  "max_requests": "$(php_fpm_max_requests)",
   "php53": "$(php_php53)"
 }
 END
@@ -69,11 +71,9 @@ php_fpm_use_fastcgi() {
 }
 
 configure_php_fpm() {
-  if [[ "$(php_fpm_use_fastcgi)" = "true" ]]; then
-    nos_print_process_start "Configuring PHP-FPM"
-    mkdir -p $(nos_etc_dir)/php
-    mkdir -p $(nos_data_dir)/var/run
-    mkdir -p $(nos_data_dir)/var/tmp
-    php_fpm_create_php_fpm_conf
-  fi
+  nos_print_bullet "Configuring php-fpm..."
+  mkdir -p $(nos_etc_dir)/php
+  mkdir -p $(nos_data_dir)/var/run
+  mkdir -p $(nos_data_dir)/var/tmp
+  generate_php_fpm_conf
 }

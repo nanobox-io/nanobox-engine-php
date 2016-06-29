@@ -1,34 +1,32 @@
 # -*- mode: bash; tab-width: 2; -*-
 # vim: ts=2 sw=2 ft=bash noet
 
-create_boxfile() {
+generate_boxfile() {
+  
+  # Report back to the user
+  report_boxfile
+  
   nos_template \
     "boxfile.mustache" \
     "-" \
-    "$(boxfile_json)"
+    "$(boxfile_payload)"
 }
 
-boxfile_json() {
-  _webserver=$(webserver)
-  nos_print_bullet "Detecting settings"
-  if [[ "$_webserver" = "apache" ]]; then
-    nos_print_bullet_sub "Using Apache HTTP Server as the webserver"
-    if [[ "$(is_interpreter 'fpm')" = "true" ]]; then
-      nos_print_bullet_sub "Using PHP-FPM as PHP interpreter"
-    elif [[ "$(is_interpreter 'mod_php')" = "true" ]]; then
-      nos_print_bullet_sub "Using mod_php as PHP interpreter"
-    fi
-  elif [[ "$_webserver" = "nginx" ]]; then
-    nos_print_bullet_sub "Using NGINX as the webserver"
-    nos_print_bullet_sub "Using PHP-FPM as PHP interpreter"
-  elif [[ "$_webserver" = "builtin" ]]; then
-    nos_print_bullet_sub "Using the built-in PHP webserver"
+report_boxfile() {
+  
+  # Inform the user if we're auto-generating the web configuration
+  if [[ "$(is_web_needed)" = "true" ]]; then
+    nos_print_bullet "The boxfile.yml does not contain custom web configuration, using sensible defaults..."
   fi
-  if [[ "$_has_bower" = "true" ]]; then
-    nos_print_bullet_sub "Adding lib_dirs for bower"
-  fi
+}
+
+boxfile_payload() {
   cat <<-END
 {
+  "lib_dirs": $(are_lib_dirs_needed),
+  "nodejs": $(is_nodejs_required),
+  "composer": $(is_composer_required),
+  "web": $(is_web_needed),
   "apache": $(is_webserver 'apache'),
   "fpm": $(is_interpreter 'fpm'),
   "mod_php": $(is_interpreter 'mod_php'),
@@ -42,18 +40,50 @@ boxfile_json() {
 END
 }
 
+# Detect if the user has already specified a web. 
+# If not we should generate one.
+is_web_needed() {
+  grep "^web." $(nos_code_dir)/boxfile.yml > /dev/null 2>&1
+  if [ $? -eq 0 ]; then
+    echo "false"
+  else
+    echo "true"
+  fi
+}
+
+# Detect it lib_dirs will be needed
+are_lib_dirs_needed() {
+  
+  # check if composer is required
+  if [[ "$(is_composer_required)" = "true" ]]; then
+    echo "true"
+    return
+  fi
+  
+  # check if nodejs is required
+  if [[ "$(is_nodejs_required)" = "true" ]]; then
+    echo "true"
+    return
+  fi
+  
+  echo "false"
+}
+
 # Copy the code into the live directory which will be used to run the app
 publish_release() {
   nos_print_bullet "Moving build into live code directory..."
   rsync -a $(nos_code_dir)/ $(nos_app_dir)
 }
 
+# Takes an argument as the webserver and returns true if it's configured
 is_webserver() {
-  # find webserver
+  # set the default webserver to apache
   webserver='apache'
+  
   if [[ -n "$(nos_payload 'config_webserver')" ]]; then
     webserver=$(nos_payload 'config_webserver')
   fi
+  
   if [[ "$webserver" = "$1" ]]; then
     echo "true"
   else
@@ -61,12 +91,15 @@ is_webserver() {
   fi
 }
 
+# Takes an argument as the interpreter and returns true if it's configured
 is_interpreter() {
   # extract php interpreter
   interpreter="fpm"
+  
   if [[ -n "$(nos_payload 'config_apache_php_interpreter')" ]]; then
     interpreter=$(nos_payload 'config_apache_php_interpreter')
   fi
+  
   if [[ "${interpreter}" = "$1" ]]; then
     echo "true"
   else
@@ -79,11 +112,7 @@ app_name() {
   echo "$(nos_payload app)"
 }
 
-hostname() {
-  # app.gonano.io
-  echo $(app_name).gonano.io
-}
-
+# todo: find a better way to do this for apache
 env_vars() {
   # filtered payload env
   declare -a envlist
@@ -101,46 +130,26 @@ env_vars() {
   fi
 }
 
-domains() {
-  # payload dns
-  declare -a dns
-  if [[ "${PL_dns_type}" = "array" ]]; then
-    for ((i=0; i < PL_dns_length ; i++)); do
-      type=PL_dns_${i}_type
-      value=PL_dns_${i}_value
-      if [[ ${!type} = "string" ]]; then
-        dns+=(${!value})
-      fi
-    done
-  else
-    dns+=("localhost")
-  fi
-  if [[ -z "dns[@]" ]]; then
-    echo "[]"
-  else
-    echo "[ \"$(nos_join '","' ${dns[@]})\" ]"
-  fi
-}
-
-webserver() {
-  _webserver=$(nos_validate "$(nos_payload config_webserver)" "string" "apache")
-  echo "${_webserver}"
-}
-
-install_webserver() {
-  if [[ "$(webserver)" = 'apache' ]]; then
-    install_apache
-  elif [[ "$(webserver)" = 'nginx' ]]; then
-    install_nginx
-  fi
-}
-
-install_composer() {
+# Simple check to see if a composer.json file is present
+is_composer_required() {
+  
+  # check for composer.json
   if [[ -f $(nos_code_dir)/composer.json ]]; then
-    nos_install "composer"
+    echo "true"
+    return
   fi
+  
+  echo "false"
+  return
 }
 
+# Packages required to install composer
+composer_packages() {
+  pkgs=("composer")
+  echo "${pkgs[@]}"
+}
+
+# Runs composer install
 composer_install() {
   if [[ -f $(nos_code_dir)/composer.json ]]; then
     if [[ ! -f $(nos_code_dir)/composer.lock ]]; then
@@ -150,10 +159,103 @@ composer_install() {
   fi
 }
 
+
+webserver() {
+  _webserver=$(nos_validate "$(nos_payload config_webserver)" "string" "apache")
+  echo "${_webserver}"
+}
+
 configure_webserver() {
+  
   if [[ "$(webserver)" = 'apache' ]]; then
     configure_apache
   elif [[ "$(webserver)" = 'nginx' ]]; then
     configure_nginx
+  fi
+  
+  if [[ "$(php_fpm_use_fastcgi)" = "true" ]]; then
+    configure_php_fpm
+  fi
+}
+
+runtime() {
+  version=$(nos_validate "$(nos_payload config_runtime)" "string" "php-5.6")
+  echo "${version}"
+}
+
+condensed_runtime() {
+  version="$(runtime)"
+  echo "${version//[.-]/}"
+}
+
+extension_packages() {
+  pkgs=()
+  
+  if [[ "${PL_config_extensions_type}" = "array" ]]; then
+    for ((i=0; i < PL_config_extensions_length ; i++)); do
+      type=PL_config_extensions_${i}_type
+      value=PL_config_extensions_${i}_value
+      if [[ ${!type} = "string" ]]; then
+        pkgs+=("$(condensed_runtime)-${!value}")
+      fi
+    done
+  fi
+
+  if [[ "${PL_config_zend_extensions_type}" = "array" ]]; then
+    for ((i=0; i < PL_config_zend_extensions_length ; i++)); do
+      type=PL_config_zend_extensions_${i}_type
+      value=PL_config_zend_extensions_${i}_value
+      if [[ ${!type} = "string" ]]; then
+        pkgs+=("$(condensed_runtime)-${!value}")
+      fi
+    done
+  fi
+  
+  echo "${pkgs[@]}"
+}
+
+# Install php runtime, webservers, and any additional dependencies
+install_runtime_packages() {
+  pkgs=("$(runtime)")
+  
+  # add php/zend extensions
+  pkgs+=("$(extension_packages)")
+  
+  # add apache packages
+  if [[ "$(webserver)" = "apache" ]]; then
+    pkgs+=("$(apache_packages)")
+  fi
+  
+  # add nginx packages
+  if [[ "$(webserver)" = "nginx" ]]; then
+    pkgs+=("$(nginx_packages)")
+  fi
+  
+  # if composer is required, install composer
+  if [[ "$(is_composer_required)" = "true" ]]; then
+    pkgs+=("$(composer_packages)")
+  fi
+  
+  # if nodejs is required, let's fetch any node build deps
+  if [[ "$(is_nodejs_required)" = "true" ]]; then
+    pkgs+=("$(nodejs_build_dependencies)")
+  fi
+  
+  nos_install ${pkgs[@]}
+}
+
+# Uninstall build dependencies
+uninstall_build_packages() {
+  # currently php doesn't install any build-only deps... I think
+  pkgs=()
+
+  # if nodejs is required, let's fetch any node build deps
+  if [[ "$(is_nodejs_required)" = "true" ]]; then
+    pkgs+=("$(nodejs_build_dependencies)")
+  fi
+
+  # if pkgs isn't empty, let's uninstall what we don't need
+  if [[ ${#pkgs[@]} -gt 0 ]]; then
+    nos_uninstall ${pkgs[@]}
   fi
 }

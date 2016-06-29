@@ -11,36 +11,19 @@ nos_init "$@"
 # source common lib, where the helpers are defined
 . ${engine_lib_dir}/php.sh
 
-nos_print_process_start "Installing packages"
+# install php interpreter, webservers, extensions, etc
+install_runtime_packages
 
-# install php interpreter
-install_runtime
+# configure php.ini
+configure_php
 
-# install php and zend extensions
-install_php_extensions
-
-# install apache or nginx
-install_webserver
-
-# install composer binary
-install_composer
-
-# persist all environment variables 
-nos_persist_evars
+# configure php extensions
+configure_extensions
 
 # configure apache or nginx
 configure_webserver
 
-# configure php-fpm settings
-configure_php_fpm
-
-# configure php.ini and php extensions' ini files
-configure_php
-
-# configure the newrelic monitoring agent
-configure_newrelic
-
-# if a composer.json file is present, run composer install
-composer_install
+# # configure the newrelic monitoring agent
+# configure_newrelic
 
 exit 0

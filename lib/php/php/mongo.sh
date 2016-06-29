@@ -1,29 +1,31 @@
 # -*- mode: bash; tab-width: 2; -*-
 # vim: ts=2 sw=2 ft=bash noet
 
-create_mongo_ini() {
-  nos_print_bullet "Generating mongo.ini"
+generate_mongo_ini() {
+  
+  # Report back to the user
+  report_mongo_settings
+  
   nos_template \
     "php/php.d/mongo.ini.mustache" \
     "$(nos_etc_dir)/php.d/mongo.ini" \
     "$(mongo_ini_payload)"
 }
 
+report_mongo_settings() {
+  nos_print_bullet_sub "Native long: $(mongo_native_long)"
+  nos_print_bullet_sub "Allow empty keys: $(mongo_allow_empty_keys)"
+  nos_print_bullet_sub "Cmd: $(mongo_cmd)"
+  nos_print_bullet_sub "Long as object: $(mongo_long_as_object)"  
+}
+
 mongo_ini_payload() {
-  _mongo_native_long=$(mongo_native_long)
-  _mongo_allow_empty_keys=$(mongo_allow_empty_keys)
-  _mongo_cmd=$(mongo_cmd)
-  _mongo_long_as_object=$(mongo_long_as_object)
-  nos_print_bullet_sub "Native long: ${_mongo_native_long}"
-  nos_print_bullet_sub "Allow empty keys: ${_mongo_allow_empty_keys}"
-  nos_print_bullet_sub "Cmd: ${_mongo_cmd}"
-  nos_print_bullet_sub "Long as object: ${_mongo_long_as_object}"
   cat <<-END
 {
-  "mongo_native_long": "${_mongo_native_long}",
-  "mongo_allow_empty_keys": "${_mongo_allow_empty_keys}",
-  "mongo_cmd": "${_mongo_cmd}",
-  "mongo_long_as_object": "${_mongo_long_as_object}"
+  "mongo_native_long": "$(mongo_native_long)",
+  "mongo_allow_empty_keys": "$(mongo_allow_empty_keys)",
+  "mongo_cmd": "$(mongo_cmd)",
+  "mongo_long_as_object": "$(mongo_long_as_object)"
 }
 END
 }

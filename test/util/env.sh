@@ -6,6 +6,7 @@ directories=(
   "/data"
   "/data/etc"
   "/data/etc/env.d"
+  "/data/etc/profile.d"
 )
 
 prepare_environment() {

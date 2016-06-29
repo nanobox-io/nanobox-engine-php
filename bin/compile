@@ -11,3 +11,17 @@ nos_init "$@"
 # source common lib
 . ${engine_lib_dir}/php.sh
 
+# # if a composer.json file is present, run composer install
+composer_install
+
+# if nodejs is required, we have a bit more compiling to do
+if [[ "$(is_nodejs_required)" = "true" ]]; then
+  # run npm rebuild only if the runtime has changed
+  npm_rebuild
+
+  # run npm install
+  npm_install
+
+  # run npm prune
+  npm_prune
+fi
