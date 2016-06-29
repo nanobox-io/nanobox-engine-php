@@ -108,8 +108,6 @@ setup() {
   # curl the index
   run curl -s 127.0.0.1:8080 2>/dev/null
 
-  expected="Hello world!"
-
   # kill the server
   pkill php-fpm
   pkill httpd
