@@ -91,9 +91,7 @@ apache_mod_php() {
 apache_modules() {
   # boxfile apache_modules
   prefix=$(nos_payload "data_dir")
-  # default_apache_modules="authn_file,authn_default,authn_alias,authz_host,authz_groupfile,authz_user,authz_owner,authz_default,auth_basic,auth_digest,isapi,file_cache,cache,disk_cache,mem_cache,dbd,bucketeer,dumpio,echo,example,case_filter,case_filter_in,reqtimeout,ext_filter,include,filter,substitute,charset_lite,log_config,log_forensic,logio,env,mime_magic,cern_meta,expires,headers,ident,usertrack,setenvif,version,proxy,proxy_connect,proxy_ftp,proxy_http,proxy_scgi,proxy_ajp,proxy_balancer,mime,dav,status,autoindex,asis,info,cgi,cgid,dav_fs,dav_lock,vhost_alias,negotiation,dir,imagemap,actions,speling,userdir,alias,rewrite,deflate,cloudflare,xsendfile"
-  default_apache_modules="env,setenvif,dir,rewrite,mime,expires,log_config"
-  apache_modules=$(nos_validate "$(nos_payload config_apache_modules)" "string" "$default_apache_modules")
+  apache_modules=$(nos_validate "$(nos_payload config_apache_modules)" "string" "")
   if [[ -z "$apache_modules" ]]; then
     echo "[]"
   else
@@ -102,7 +100,6 @@ apache_modules() {
       [[ ! -f ${prefix}/lib/httpd/mod_${i}.so ]] &
     done
     echo "[ \"$(nos_join '","' ${modules_list[@]})\" ]"
-
   fi
 }
 

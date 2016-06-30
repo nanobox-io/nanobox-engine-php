@@ -112,24 +112,6 @@ app_name() {
   echo "$(nos_payload app)"
 }
 
-# todo: find a better way to do this for apache
-env_vars() {
-  # filtered payload env
-  declare -a envlist
-  if [[ "${PL_env_type}" = "map" ]]; then
-    for i in ${PL_env_nodes//,/ }; do
-      key=${i}
-      value=PL_env_${i}_value
-      envlist+=("{\"key\":\"${key}\",\"value\":\"${!value}\"}")
-    done
-  fi
-  if [[ -z "${envlist[@]}" ]]; then
-    echo "[]"
-  else
-    echo "[ $(nos_join "," ${envlist[@]}) ]"
-  fi
-}
-
 # Simple check to see if a composer.json file is present
 is_composer_required() {
   
@@ -158,7 +140,6 @@ composer_install() {
     (cd $(nos_code_dir); run_subprocess "composer install" "composer install --no-interaction --prefer-source")
   fi
 }
-
 
 webserver() {
   _webserver=$(nos_validate "$(nos_payload config_webserver)" "string" "apache")

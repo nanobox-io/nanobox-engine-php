@@ -1,8 +1,6 @@
 # Apache Modules Available in the Nanobox PHP Engine
 The apache modules listed below are available to the Nanobox PHP engine.
 
-**Note:** By default, all listed modules are enabled. If any are specified in your Boxfile, it will overwrite the default setting and disable any modules not listed in your Boxfile. 
-  
 - actions
 - alias
 - asis
