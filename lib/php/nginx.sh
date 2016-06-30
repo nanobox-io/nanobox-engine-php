@@ -63,10 +63,10 @@ nginx_packages() {
 
 configure_nginx() {
   nos_print_bullet "Configuring Nginx..."
-  mkdir -p $(etc_dir)/nginx
-  mkdir -p $(data_dir)/var/log/nginx
-  mkdir -p $(data_dir)/var/tmp/nginx/client_body_temp
-  mkdir -p $(data_dir)/var/run
-  mkdir -p $(data_dir)/var/tmp
-  generate_ngnix_conf
+  mkdir -p $(nos_etc_dir)/nginx
+  mkdir -p $(nos_data_dir)/var/log/nginx
+  mkdir -p $(nos_data_dir)/var/tmp/nginx/client_body_temp
+  mkdir -p $(nos_data_dir)/var/run
+  mkdir -p $(nos_data_dir)/var/tmp
+  generate_nginx_conf
 }

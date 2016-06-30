@@ -27,7 +27,7 @@ php_fpm_conf_payload() {
   "max_children": "$(php_fpm_max_children)",
   "max_spare_servers": "$(php_fpm_max_spare_servers)",
   "max_requests": "$(php_fpm_max_requests)",
-  "php53": "$(php53)"
+  "php53": $(php53)
 }
 END
 }

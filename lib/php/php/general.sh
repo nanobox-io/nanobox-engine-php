@@ -80,8 +80,7 @@ END
 
 php53() {
   # boxfile php_version = 5.3
-  version=$(nos_validate "$(nos_payload config_version)" "string" "5.6")
-  [[ ${version} = "5.3" ]] && echo "true" && return
+  [[ $(runtime) = "php-5.3" ]] && echo "true" && return
   echo "false"
 }
 
