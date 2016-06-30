@@ -21,13 +21,13 @@ Listen 0.0.0.0:8080
 #############################################
 # Dynamic Apache Modules                    #
 #############################################
-LoadModule env_module lib/httpd/mod_env.so
-LoadModule setenvif_module lib/httpd/mod_setenvif.so
 LoadModule dir_module lib/httpd/mod_dir.so
-LoadModule rewrite_module lib/httpd/mod_rewrite.so
-LoadModule mime_module lib/httpd/mod_mime.so
+LoadModule env_module lib/httpd/mod_env.so
 LoadModule expires_module lib/httpd/mod_expires.so
 LoadModule log_config_module lib/httpd/mod_log_config.so
+LoadModule mime_module lib/httpd/mod_mime.so
+LoadModule rewrite_module lib/httpd/mod_rewrite.so
+LoadModule setenvif_module lib/httpd/mod_setenvif.so
 {{#mod_php}}
 LoadModule php5_module lib/httpd/mod_php5.so
 {{/mod_php}}
