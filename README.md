@@ -1,4 +1,4 @@
-# PHP
+# PHP [![Build Status](https://travis-ci.org/nanobox-io/nanobox-engine-php.svg)](https://travis-ci.org/nanobox-io/nanobox-engine-php)
 
 This is a generic PHP engine used to launch PHP web and worker services on [Nanobox](http://nanobox.io). It exposes a wide collection configuration options generally handled in the php.ini and other configuration files. Both PHP settings and web server settings are available.
 
