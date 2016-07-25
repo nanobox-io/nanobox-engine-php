@@ -82,6 +82,9 @@ http {
              
             # PHP only, required if PHP was built with --enable-force-cgi-redirect
             fastcgi_param   REDIRECT_STATUS         200;
+
+            # https://httpoxy.org/
+            fastcgi_param   HTTP_PROXY              "";
         }
         
         # location ~ \.php$ {
