@@ -1,7 +1,7 @@
 # PHP/Zend Extension Availability in the Nanobox PHP Engine
 
 #### PHP Extensions
-| php_extensions      | PHP 5.3             | PHP 5.4             | PHP 5.5             | PHP 5.6             | PHP 7.0             |
+| extensions          | PHP 5.3             | PHP 5.4             | PHP 5.5             | PHP 5.6             | PHP 7.0             |
 | :------------------ | :-----------------: | :-----------------: | :-----------------: | :-----------------: | :-----------------: |
 | amqp                | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
 | apc                 | :white_check_mark:  | :white_check_mark:  | :x:                 | :x:                 | :x:                 |
