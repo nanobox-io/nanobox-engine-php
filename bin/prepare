@@ -26,4 +26,14 @@ configure_webserver
 # # configure the newrelic monitoring agent
 # configure_newrelic
 
+# if nodejs is required, we have a bit more setup to do
+if [[ "$(is_nodejs_required)" = "true" ]]; then
+
+  # add node_modules/.bin to the PATH
+  persist_npm_bin_to_path
+
+  # set the node.js runtime in cache
+  nodejs_persist_runtime
+fi
+
 exit 0
