@@ -1,43 +1,47 @@
-{{#has_bower}}
-build:
+{{#lib_dirs}}
+code.build:
   lib_dirs:
+{{#composer}}
+    - vendor
+{{/composer}}
+{{#nodejs}}
     - node_modules
-    - bower_components
-{{/has_bower}}
-web1:
-  ports:
-    - http:80:8080
-    - http:443:8080
+{{/nodejs}}
+
+{{/lib_dirs}}
+{{#web}}
+web.main:
 {{#apache}}
 {{#fpm}}
-  exec:
-    fpm: {{deploy_dir}}/sbin/php-fpm -y {{etc_dir}}/php/php-fpm.conf -c {{etc_dir}}/php/php.ini
-    apache: {{deploy_dir}}/sbin/httpd -DNO_DETACH
+  start:
+    fpm: {{data_dir}}/sbin/php-fpm -y {{etc_dir}}/php/php-fpm.conf -c {{etc_dir}}/php/php.ini
+    apache: {{data_dir}}/sbin/httpd -DNO_DETACH
 {{/fpm}}
 {{#mod_php}}
-  exec: {{deploy_dir}}/sbin/httpd -DNO_DETACH
+  start: {{data_dir}}/sbin/httpd -DNO_DETACH
 {{/mod_php}}
   log_watch:
-    apache[access]: {{deploy_dir}}/var/log/apache/access.log
-    apache[error]: {{deploy_dir}}/var/log/apache/error.log
-    php[error]: {{deploy_dir}}/var/log/php/php_error.log
+    apache[access]: {{data_dir}}/var/log/apache/access.log
+    apache[error]: {{data_dir}}/var/log/apache/error.log
+    php[error]: {{data_dir}}/var/log/php/php_error.log
 {{#fpm}}
-    php[fpm]: {{deploy_dir}}/var/log/php/php_fpm.log
+    php[fpm]: {{data_dir}}/var/log/php/php_fpm.log
 {{/fpm}}
 {{/apache}}
 {{#nginx}}
-  exec:
-    fpm: {{deploy_dir}}/sbin/php-fpm -y {{etc_dir}}/php/php-fpm.conf -c {{etc_dir}}/php/php.ini
-    nginx: {{deploy_dir}}/sbin/nginx
+  start:
+    fpm: {{data_dir}}/sbin/php-fpm -y {{etc_dir}}/php/php-fpm.conf -c {{etc_dir}}/php/php.ini
+    nginx: {{data_dir}}/sbin/nginx
   log_watch:
-    nginx[access]: {{deploy_dir}}/var/log/nginx/access.log
-    nginx[error]: {{deploy_dir}}/var/log/nginx/error.log
-    php[error]: {{deploy_dir}}/var/log/php/php_error.log
-    php[fpm]: {{deploy_dir}}/var/log/php/php_fpm.log
+    nginx[access]: {{data_dir}}/var/log/nginx/access.log
+    nginx[error]: {{data_dir}}/var/log/nginx/error.log
+    php[error]: {{data_dir}}/var/log/php/php_error.log
+    php[fpm]: {{data_dir}}/var/log/php/php_fpm.log
 {{/nginx}}
 {{#builtin}}
-  exec: {{deploy_dir}}/bin/php -S 0.0.0.0:8080 -c {{etc_dir}}/php/php.ini -t {{code_dir}}{{document_root}}/
+  start: {{data_dir}}/bin/php -S 0.0.0.0:8080 -c {{etc_dir}}/php/php.ini -t {{code_dir}}{{document_root}}/
   log_watch:
-    php[access]: {{deploy_dir}}/var/log/php/access.log
-    php[error]: {{deploy_dir}}/var/log/php/php_error.log
+    php[access]: {{data_dir}}/var/log/php/access.log
+    php[error]: {{data_dir}}/var/log/php/php_error.log
 {{/builtin}}
+{{/web}}

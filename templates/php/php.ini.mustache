@@ -33,7 +33,7 @@ ignore_repeated_source = Off
 report_memleaks = On
 track_errors = Off
 html_errors = Off
-error_log = {{deploy_dir}}/var/log/php/error.log
+error_log = {{data_dir}}/var/log/php/error.log
 variables_order = "EGPCS"
 request_order = "GP"
 register_globals = {{register_globals}}
@@ -51,7 +51,7 @@ doc_root =
 user_dir =
 enable_dl = Off
 {{#browscap}}
-browscap = {{live_dir}}{{browscap}}
+browscap = {{app_dir}}{{browscap}}
 {{/browscap}}
 file_uploads = {{file_uploads}}
 max_input_vars = {{max_input_vars}}
@@ -75,7 +75,7 @@ session.save_handler = {{session_save_handler}}
 date.timezone = {{date_timezone}}
 SMTP = localhost
 smtp_port = 25
-sendmail_path = {{deploy_dir}}/libexec/sendmail/sendmail
+sendmail_path = {{data_dir}}/libexec/sendmail/sendmail
 mail.add_x_header = On
 sql.safe_mode = Off
 iconv.internal_encoding = {{iconv_internal_encoding}}

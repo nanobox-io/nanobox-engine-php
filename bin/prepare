@@ -3,7 +3,7 @@
 # vim: ts=2 sw=2 ft=bash noet
 
 # source the Nos framework
-. /opt/nos/common.sh
+. /opt/nanobox/nos/common.sh
 
 # initialize Nos with the original arguments
 nos_init "$@"
@@ -11,45 +11,29 @@ nos_init "$@"
 # source common lib, where the helpers are defined
 . ${engine_lib_dir}/php.sh
 
-nos_print_process_start "Installing packages"
+# install php interpreter, webservers, extensions, etc
+install_runtime_packages
 
-# install php interpreter
-php_install_runtime
+# configure php.ini
+configure_php
 
-# install php and zend extensions
-php_install_php_extensions
-
-# install apache or nginx
-php_install_webserver
-
-# install composer binary
-php_install_composer
-
-# install nodejs for static assets
-nodejs_install_runtime
-
-nodejs_npm_rebuild
-nodejs_install_bower
-
-# persist all environment variables 
-nos_persist_evars
+# configure php extensions
+configure_extensions
 
 # configure apache or nginx
-php_configure_webserver
+configure_webserver
 
-# configure php-fpm settings
-php_configure_php_fpm
+# # configure the newrelic monitoring agent
+# configure_newrelic
 
-# configure php.ini and php extensions' ini files
-php_configure_php
+# if nodejs is required, we have a bit more setup to do
+if [[ "$(is_nodejs_required)" = "true" ]]; then
 
-# configure the newrelic monitoring agent
-php_configure_newrelic
+  # add node_modules/.bin to the PATH
+  persist_npm_bin_to_path
 
-# if a composer.json file is present, run composer install
-php_composer_install
-nodejs_bower_install
-
-nodejs_set_runtime
+  # set the node.js runtime in cache
+  nodejs_persist_runtime
+fi
 
 exit 0

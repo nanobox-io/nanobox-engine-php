@@ -1,13 +1,13 @@
 # PHP/Zend Extension Availability in the Nanobox PHP Engine
 
 #### PHP Extensions
-| php_extensions      | PHP 5.3             | PHP 5.4             | PHP 5.5             | PHP 5.6             | PHP 7.0             |
-| :------------------ | :-----------------: | :-----------------: | :-----------------: | :-----------------: | :-----------------: | 
-| amqp                | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :x:                 |
+| extensions          | PHP 5.3             | PHP 5.4             | PHP 5.5             | PHP 5.6             | PHP 7.0             |
+| :------------------ | :-----------------: | :-----------------: | :-----------------: | :-----------------: | :-----------------: |
+| amqp                | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
 | apc                 | :white_check_mark:  | :white_check_mark:  | :x:                 | :x:                 | :x:                 |
 | apcu                | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
 | apfd                | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| apm                 | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :x:                 |
+| apm                 | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
 | bcmath              | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
 | bcompiler           | :white_check_mark:  | :x:                 | :x:                 | :x:                 | :x:                 |
 | bz2                 | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
@@ -32,8 +32,8 @@
 | htscanner           | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :x:                 |
 | http                | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
 | iconv               | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| igbinary            | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :x:                 |
-| imagick             | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :x:                 |
+| igbinary            | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
+| imagick             | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
 | imap                | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
 | intl                | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
 | json                | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
@@ -44,7 +44,7 @@
 | mbstring            | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
 | mcrypt              | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
 | memcache            | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :x:                 |
-| memcached           | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :x:                 |
+| memcached           | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
 | mogilefs            | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
 | mongo               | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :x:                 |
 | mongodb             | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
@@ -52,7 +52,7 @@
 | mysql               | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :x:                 |
 | mysqli              | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
 | ncurses             | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :x:                 |
-| newrelic            | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :x:                 |
+| newrelic            | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
 | newt                | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :x:                 |
 | oauth               | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
 | parsekit            | :white_check_mark:  | :x:                 | :x:                 | :x:                 | :x:                 |
@@ -75,7 +75,7 @@
 | rar                 | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :x:                 |
 | readline            | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
 | recode              | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| redis               | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :x:                 |
+| redis               | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
 | session             | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
 | shmop               | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
 | simplexml           | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
@@ -86,14 +86,14 @@
 | sqlite              | :white_check_mark:  | :x:                 | :x:                 | :x:                 | :x:                 |
 | ssh2                | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :x:                 |
 | stats               | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| stomp               | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :x:                 |
+| stomp               | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
 | svn                 | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :x:                 |
 | sysvmsg             | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
 | sysvsem             | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
 | sysvshm             | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
 | tidy                | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
 | timezonedb          | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| tokenizer           | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :x:                 |
+| tokenizer           | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
 | txforward           | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :x:                 |
 | uploadprogress      | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :x:                 |
 | wddx                | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
@@ -110,8 +110,7 @@
 
 #### Zend Extensions
 | php_zend_extensions | PHP 5.3             | PHP 5.4             | PHP 5.5             | PHP 5.6             | PHP 7.0             |
-| :------------------ | :-----------------: | :-----------------: | :-----------------: | :-----------------: | :-----------------: | 
+| :------------------ | :-----------------: | :-----------------: | :-----------------: | :-----------------: | :-----------------: |
 | ioncube_loader      | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :x:                 |
 | opcache             | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| xdebug              | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :x:                 |
-
+| xdebug              | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |

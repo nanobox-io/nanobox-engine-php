@@ -1,30 +1,33 @@
 #############################################
 # Base Apache Server Configuration          #
 #############################################
-ServerName {{hostname}}
 User gonano
 Group gonano
-ServerSignature Off
-ServerTokens Prod
-ServerRoot "{{deploy_dir}}"
-PidFile {{deploy_dir}}/var/run/httpd.pid
+PidFile {{data_dir}}/var/run/httpd.pid
 Timeout {{timeout}}
 KeepAlive On
 MaxKeepAliveRequests 100
 KeepAliveTimeout 15
 
-StartServers     1
-MinSpareServers  1
-MaxSpareServers  {{max_spares}}
-MaxClients       {{max_clients}}
-MaxRequestsPerChild  {{max_requests_per_child}}
-ServerLimit      {{server_limit}}
+StartServers          1
+MinSpareServers       1
+MaxSpareServers       {{max_spares}}
+MaxClients            {{max_clients}}
+MaxRequestsPerChild   {{max_requests_per_child}}
+ServerLimit           {{server_limit}}
 
 Listen 0.0.0.0:8080
 
 #############################################
 # Dynamic Apache Modules                    #
 #############################################
+LoadModule dir_module lib/httpd/mod_dir.so
+LoadModule env_module lib/httpd/mod_env.so
+LoadModule expires_module lib/httpd/mod_expires.so
+LoadModule log_config_module lib/httpd/mod_log_config.so
+LoadModule mime_module lib/httpd/mod_mime.so
+LoadModule rewrite_module lib/httpd/mod_rewrite.so
+LoadModule setenvif_module lib/httpd/mod_setenvif.so
 {{#mod_php}}
 LoadModule php5_module lib/httpd/mod_php5.so
 {{/mod_php}}
@@ -33,7 +36,6 @@ LoadModule actions_module lib/httpd/mod_actions.so
 LoadModule alias_module lib/httpd/mod_alias.so
 LoadModule fastcgi_module lib/httpd/mod_fastcgi.so
 {{/fastcgi}}
-
 {{#modules}}
 LoadModule {{.}}_module lib/httpd/mod_{{.}}.so
 {{/modules}}
@@ -41,13 +43,14 @@ LoadModule {{.}}_module lib/httpd/mod_{{.}}.so
 #############################################
 # Default Server Configuration              #
 #############################################
-UseCanonicalName On
+UseCanonicalName Off
+HostnameLookups Off
 DocumentRoot "{{code_dir}}{{document_root}}"
 DirectoryIndex {{directory_index}} {{default_gateway}} 
 AccessFileName .htaccess
 TypesConfig {{etc_dir}}/httpd/mime.types
 DefaultType text/plain
-HostnameLookups Off
+
 # add gzip compression
 AddOutputFilterByType DEFLATE text/plain text/html text/xml text/css application/x-javascript application/javascript
 # add far future expires to header
@@ -68,8 +71,7 @@ FileETag Mtime Size
 </Directory>
 
 <Files ~ "^\.ht">
-    Order allow,deny
-    Deny from all
+   Require all denied
 </Files>
 
 <IfModule mod_userdir.c>
@@ -86,47 +88,13 @@ FileETag Mtime Size
 #############################################
 # Logging Configuration                     #
 #############################################
-ErrorLog {{deploy_dir}}/var/log/apache/error.log
+ErrorLog {{data_dir}}/var/log/apache/error.log
 
 LogLevel {{log_level}}
 LogFormat "%{X-Forwarded-For}i %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
 {{#access_log}}
-CustomLog {{deploy_dir}}/var/log/apache/access.log combined
+CustomLog {{data_dir}}/var/log/apache/access.log combined
 {{/access_log}}
-
-#############################################
-# Language/Charset Configuration            #
-#############################################
-AddLanguage ca .ca
-AddLanguage cs .cz .cs
-AddLanguage da .dk
-AddLanguage de .de
-AddLanguage el .el
-AddLanguage en .en
-AddLanguage eo .eo
-AddLanguage es .es
-AddLanguage et .et
-AddLanguage fr .fr
-AddLanguage he .he
-AddLanguage hr .hr
-AddLanguage it .it
-AddLanguage ja .ja
-AddLanguage ko .ko
-AddLanguage ltz .ltz
-AddLanguage nl .nl
-AddLanguage nn .nn
-AddLanguage no .no
-AddLanguage pl .po
-AddLanguage pt .pt
-AddLanguage pt-BR .pt-br
-AddLanguage ru .ru
-AddLanguage sv .sv
-AddLanguage zh-CN .zh-cn
-AddLanguage zh-TW .zh-tw
-
-LanguagePriority en ca cs da de el eo es et fr he hr it ja ko ltz nl nn no pl pt pt-BR ru sv zh-CN zh-TW
-ForceLanguagePriority Prefer Fallback
-AddDefaultCharset UTF-8
 
 #############################################
 # MIME Type/Handler Configuration           #
@@ -136,52 +104,22 @@ AddType application/x-gzip .gz .tgz
 AddType application/x-httpd-php .php
 AddHandler type-map var
 {{#fastcgi}}
-ScriptAlias /cgi-bin/ "{{deploy_dir}}/libexec/cgi-bin/"
-FastCgiExternalServer {{deploy_dir}}/libexec/cgi-bin/php-cgi -idle-timeout {{timeout}} -socket {{deploy_dir}}/var/tmp/php.sock -pass-header Authorization
+ScriptAlias /cgi-bin/ "{{data_dir}}/libexec/cgi-bin/"
+FastCgiExternalServer {{data_dir}}/libexec/cgi-bin/php-cgi -idle-timeout {{timeout}} -socket {{data_dir}}/var/tmp/php.sock -pass-header Authorization
 AddHandler php-fastcgi .php
 Action php-fastcgi /cgi-bin/php-cgi
 {{/fastcgi}}
 
-
-#############################################
-# Browser Response Configuration            #
-#############################################
-BrowserMatch "Mozilla/2" nokeepalive
-BrowserMatch "MSIE 4\.0b2;" nokeepalive downgrade-1.0 force-response-1.0
-BrowserMatch "RealPlayer 4\.0" force-response-1.0
-BrowserMatch "Java/1\.0" force-response-1.0
-BrowserMatch "JDK/1\.0" force-response-1.0
-BrowserMatch "Microsoft Data Access Internet Publishing Provider" redirect-carefully
-BrowserMatch "MS FrontPage" redirect-carefully
-BrowserMatch "^WebDrive" redirect-carefully
-BrowserMatch "^WebDAVFS/1.[0123]" redirect-carefully
-BrowserMatch "^gnome-vfs/1.0" redirect-carefully
-BrowserMatch "^XML Spy" redirect-carefully
-BrowserMatch "^Dreamweaver-WebDAV-SCM1" redirect-carefully
-
-#############################################
-# Server Variables                          #
-#############################################
-{{#env_vars}}
-SetEnv "{{key}}" "{{value}}"
-{{/env_vars}}
-
 #############################################
 # VirtualHost Configuration                 #
 #############################################
-{{#domains}}
-NameVirtualHost 0.0.0.0:8080
-{{/domains}}
 
-{{#domains}}
-<VirtualHost 0.0.0.0:8080>
+<VirtualHost *:8080>
     DocumentRoot "{{code_dir}}{{document_root}}"
-    ServerName {{.}}
-    ServerAlias *.{{.}}
+    ServerName localhost
     DirectoryIndex {{directory_index}} {{default_gateway}}
     UnsetEnv USER HOME
     SetEnvifNoCase X-Forwarded-Proto "https" HTTPS=on
     RewriteEngine on
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization},L]
 </VirtualHost>
-{{/domains}}

@@ -1,1 +1,0 @@
-{"code_dir":"/opt/code","deploy_dir":"/data","live_dir":"/code","cache_dir":"/mnt/cache","etc_dir":"/data/etc","env_dir":"/data/etc/env.d","app":"php-test-phpinfo","env":{"APP_NAME":"php-test-phpinfo"},"dns":["php-test-phpinfo.dev"],"port":"8080","boxfile":null,"platform":"local"}

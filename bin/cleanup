@@ -2,4 +2,16 @@
 # -*- mode: bash; tab-width: 2; -*-
 # vim: ts=2 sw=2 ft=bash noet
 
-# nothing to cleanup
+# source the Nos framework
+. /opt/nanobox/nos/common.sh
+
+# initialize Nos with the original arguments
+nos_init "$@"
+
+# source common lib
+. ${engine_lib_dir}/php.sh
+
+# Remove build dependencies to ensure the build env is small
+uninstall_build_packages
+
+exit 0

@@ -1,14 +1,14 @@
 [global]
 daemonize = no
-pid = {{deploy_dir}}/var/run/php-fpm.pid
-error_log = {{deploy_dir}}/var/log/php/php-fpm.log
+pid = {{data_dir}}/var/run/php-fpm.pid
+error_log = {{data_dir}}/var/log/php/php-fpm.log
 log_level = warning
 {{#events_mechanism}}
 events.mechanism = {{events_mechanism}}
 {{/events_mechanism}}
 
 [www]
-listen = {{deploy_dir}}/var/tmp/php.sock
+listen = {{data_dir}}/var/tmp/php.sock
 listen.owner = gonano
 listen.group = gonano
 user = gonano

@@ -3,7 +3,7 @@
 # vim: ts=2 sw=2 ft=bash noet
 
 # source the Nos framework
-. /opt/nos/common.sh
+. /opt/nanobox/nos/common.sh
 
 # initialize Nos with the original arguments
 nos_init "$@"
@@ -11,8 +11,5 @@ nos_init "$@"
 # source common lib
 . ${engine_lib_dir}/php.sh
 
-# dynamically generate a Boxfile from a template,
-# and print to stdout
-nos_print_process_start "Generating Engine Boxfile"
-php_create_boxfile
-
+# dynamically generate a Boxfile from a template, and print to stdout
+generate_boxfile
