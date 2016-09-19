@@ -81,6 +81,10 @@ FileETag Mtime Size
 <IfModule mod_mime_magic.c>
     MIMEMagicFile {{etc_dir}}/httpd/magic
 </IfModule>
+<IfModule mod_headers.c>
+    # https://httpoxy.org/
+    RequestHeader unset Proxy early
+</IfModule>
 
 #############################################
 # Logging Configuration                     #
