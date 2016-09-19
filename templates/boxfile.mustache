@@ -1,14 +1,11 @@
-{{#lib_dirs}}
 code.build:
   lib_dirs:
-{{#composer}}
     - vendor
-{{/composer}}
+    - .composer
 {{#nodejs}}
     - node_modules
 {{/nodejs}}
 
-{{/lib_dirs}}
 {{#web}}
 web.main:
 {{#apache}}

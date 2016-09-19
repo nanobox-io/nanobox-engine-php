@@ -23,9 +23,7 @@ report_boxfile() {
 boxfile_payload() {
   cat <<-END
 {
-  "lib_dirs": $(are_lib_dirs_needed),
   "nodejs": $(is_nodejs_required),
-  "composer": $(is_composer_required),
   "web": $(is_web_needed),
   "apache": $(is_webserver 'apache'),
   "fpm": $(is_interpreter 'fpm'),
@@ -49,24 +47,6 @@ is_web_needed() {
   else
     echo "true"
   fi
-}
-
-# Detect it lib_dirs will be needed
-are_lib_dirs_needed() {
-  
-  # check if composer is required
-  if [[ "$(is_composer_required)" = "true" ]]; then
-    echo "true"
-    return
-  fi
-  
-  # check if nodejs is required
-  if [[ "$(is_nodejs_required)" = "true" ]]; then
-    echo "true"
-    return
-  fi
-  
-  echo "false"
 }
 
 # Copy the code into the live directory which will be used to run the app
@@ -110,35 +90,6 @@ is_interpreter() {
 app_name() {
   # payload app
   echo "$(nos_payload app)"
-}
-
-# Simple check to see if a composer.json file is present
-is_composer_required() {
-  
-  # check for composer.json
-  if [[ -f $(nos_code_dir)/composer.json ]]; then
-    echo "true"
-    return
-  fi
-  
-  echo "false"
-  return
-}
-
-# Packages required to install composer
-composer_packages() {
-  pkgs=("composer")
-  echo "${pkgs[@]}"
-}
-
-# Runs composer install
-composer_install() {
-  if [[ -f $(nos_code_dir)/composer.json ]]; then
-    if [[ ! -f $(nos_code_dir)/composer.lock ]]; then
-      nos_print_warning "No 'composer.lock' file detected. This may cause a slow or failed build. To avoid this issue, commit the 'composer.lock' file to your git repo."
-    fi
-    (cd $(nos_code_dir); run_subprocess "composer install" "composer install --no-interaction --prefer-source")
-  fi
 }
 
 webserver() {
@@ -212,10 +163,8 @@ install_runtime_packages() {
     pkgs+=("$(nginx_packages)")
   fi
   
-  # if composer is required, install composer
-  if [[ "$(is_composer_required)" = "true" ]]; then
-    pkgs+=("$(composer_packages)")
-  fi
+  # install composer
+  pkgs+=("$(composer_packages)")
   
   # if nodejs is required, let's fetch any node build deps
   if [[ "$(is_nodejs_required)" = "true" ]]; then

@@ -4,6 +4,7 @@
 . ${engine_lib_dir}/nodejs.sh
 . ${engine_lib_dir}/php/apache.sh
 . ${engine_lib_dir}/php/builtin.sh
+. ${engine_lib_dir}/php/composer.sh
 . ${engine_lib_dir}/php/fpm.sh
 . ${engine_lib_dir}/php/general.sh
 . ${engine_lib_dir}/php/nginx.sh
