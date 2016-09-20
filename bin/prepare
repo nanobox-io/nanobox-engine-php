@@ -26,6 +26,8 @@ configure_webserver
 # # configure the newrelic monitoring agent
 # configure_newrelic
 
+persist_composer_bin_to_path
+
 # if nodejs is required, we have a bit more setup to do
 if [[ "$(is_nodejs_required)" = "true" ]]; then
 
