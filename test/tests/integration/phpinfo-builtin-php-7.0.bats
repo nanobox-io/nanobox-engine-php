@@ -95,7 +95,7 @@ setup() {
   export TEST_VARIABLE=testing
 
   # start php built-in server
-  /data/bin/php -S 0.0.0.0:8080 -c /data/etc/php/php.ini -t /tmp/code/ &
+  /data/bin/run-php &
 
   # sleep a few seconds so the server can start
   sleep 3

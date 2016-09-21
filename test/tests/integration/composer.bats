@@ -12,7 +12,7 @@ payload() {
   "cache_dir": "/tmp/cache",
   "etc_dir": "/data/etc",
   "env_dir": "/data/etc/env.d",
-  "config": { "runtime": "php-5.4", "extensions": ["amqp", "dom", "timezonedb"] }
+  "config": {"extensions": ["phar","json","filter","hash"]}
 }
 END
 }
@@ -33,7 +33,7 @@ setup() {
   mkdir -p /tmp/code
 
   # copy the app into place
-  cp -ar /test/apps/phpinfo/* /tmp/code
+  cp -ar /test/apps/composer/* /tmp/code
 
   run pwd
 
@@ -54,8 +54,6 @@ setup() {
   echo "$output"
 
   [ "$status" -eq 0 ]
-
-
 }
 
 @test "compile" {
@@ -64,6 +62,7 @@ setup() {
   echo "$output"
 
   [ "$status" -eq 0 ]
+  [ "${lines[0]}" = "- composer install :" ]
 }
 
 @test "cleanup" {
@@ -92,8 +91,6 @@ setup() {
   # cd into the app code_dir
   cd /tmp/code
 
-  export TEST_VARIABLE=testing
-
   # start php-fpm
   /data/bin/run-php &
 
@@ -106,8 +103,6 @@ setup() {
   # curl the index
   run curl -s 127.0.0.1:8080 2>/dev/null
 
-  expected="Hello world!"
-
   # kill the server
   pkill php-fpm
   pkill httpd
@@ -115,9 +110,4 @@ setup() {
   echo "$output"
 
   [[ "$output" =~ "phpinfo()" ]]
-  [[ "$output" =~ PHP\ Version\ 5\.4\.[0-9]{1,2} ]]
-  [[ "$output" =~ amqp ]]
-  [[ "$output" =~ dom ]]
-  [[ "$output" =~ timezonedb ]]
-  [[ "$output" =~ TEST_VARIABLE ]]
 }

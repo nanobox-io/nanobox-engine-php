@@ -13,7 +13,7 @@ composer_install() {
     if [[ ! -f $(nos_code_dir)/composer.lock ]]; then
       nos_print_warning "No 'composer.lock' file detected. This may cause a slow or failed build. To avoid this issue, commit the 'composer.lock' file to your git repo."
     fi
-    (cd $(nos_code_dir); run_subprocess "composer install" "composer install --no-interaction --prefer-source")
+    (cd $(nos_code_dir); nos_run_process "composer install" "composer install --no-interaction --prefer-source")
   fi
 }
 

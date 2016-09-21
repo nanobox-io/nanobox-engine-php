@@ -55,7 +55,6 @@ setup() {
 
   [ "$status" -eq 0 ]
 
-
 }
 
 @test "compile" {
@@ -93,16 +92,10 @@ setup() {
   cd /tmp/code
 
   # start php-fpm
-  /data/sbin/php-fpm -y /data/etc/php/php-fpm.conf -c /data/etc/php/php.ini &
-
-  # grab the pid
-  fpm_pid=$!
+  /data/bin/run-php &
 
   # start apache
-  /data/sbin/httpd -DNO_DETACH &
-
-  # grab the pid
-  httpd_pid=$!
+  /data/bin/run-apache &
 
   # sleep a few seconds so the server can start
   sleep 3

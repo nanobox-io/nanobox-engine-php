@@ -61,6 +61,22 @@ nginx_packages() {
   echo "${pkgs[@]}"
 }
 
+generate_nginx_script() {
+  nos_template \
+  "bin/run-nginx-php-fpm.mustache" \
+  "$(nos_data_dir)/bin/run-nginx" \
+  "$(nginx_script_payload)"
+  chmod 755 $(nos_data_dir)/bin/run-nginx
+}
+
+nginx_script_payload() {
+  cat <<-END
+{
+  "data_dir": "$(nos_data_dir)"
+}
+END
+}
+
 configure_nginx() {
   nos_print_bullet "Configuring Nginx..."
   mkdir -p $(nos_etc_dir)/nginx
@@ -69,4 +85,5 @@ configure_nginx() {
   mkdir -p $(nos_data_dir)/var/run
   mkdir -p $(nos_data_dir)/var/tmp
   generate_nginx_conf
+  generate_nginx_script
 }

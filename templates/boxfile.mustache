@@ -11,11 +11,11 @@ web.main:
 {{#apache}}
 {{#fpm}}
   start:
-    fpm: {{data_dir}}/sbin/php-fpm -y {{etc_dir}}/php/php-fpm.conf -c {{etc_dir}}/php/php.ini
-    apache: {{data_dir}}/sbin/httpd -DNO_DETACH
+    fpm: {{data_dir}}/bin/run-php
+    apache: {{data_dir}}/bin/run-apache
 {{/fpm}}
 {{#mod_php}}
-  start: {{data_dir}}/sbin/httpd -DNO_DETACH
+  start: {{data_dir}}/bin/run-apache
 {{/mod_php}}
   log_watch:
     apache[access]: {{data_dir}}/var/log/apache/access.log
@@ -27,8 +27,8 @@ web.main:
 {{/apache}}
 {{#nginx}}
   start:
-    fpm: {{data_dir}}/sbin/php-fpm -y {{etc_dir}}/php/php-fpm.conf -c {{etc_dir}}/php/php.ini
-    nginx: {{data_dir}}/sbin/nginx
+    fpm: {{data_dir}}/bin/run-php
+    nginx: {{data_dir}}/bin/run-nginx
   log_watch:
     nginx[access]: {{data_dir}}/var/log/nginx/access.log
     nginx[error]: {{data_dir}}/var/log/nginx/error.log
@@ -36,7 +36,7 @@ web.main:
     php[fpm]: {{data_dir}}/var/log/php/php_fpm.log
 {{/nginx}}
 {{#builtin}}
-  start: {{data_dir}}/bin/php -S 0.0.0.0:8080 -c {{etc_dir}}/php/php.ini -t {{code_dir}}{{document_root}}/
+  start: {{data_dir}}/bin/run-php
   log_watch:
     php[access]: {{data_dir}}/var/log/php/access.log
     php[error]: {{data_dir}}/var/log/php/php_error.log

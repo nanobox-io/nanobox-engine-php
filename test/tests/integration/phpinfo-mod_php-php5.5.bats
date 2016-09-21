@@ -95,10 +95,7 @@ setup() {
   export TEST_VARIABLE=testing
 
   # start apache
-  /data/sbin/httpd -DNO_DETACH &
-
-  # grab the pid
-  httpd_pid=$!
+  /data/bin/run-apache &
 
   # sleep a few seconds so the server can start
   sleep 3

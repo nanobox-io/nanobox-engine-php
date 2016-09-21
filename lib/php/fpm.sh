@@ -70,10 +70,28 @@ php_fpm_use_fastcgi() {
   echo "false"
 }
 
+generate_php_fpm_script() {
+  nos_template \
+  "bin/run-php-php-fpm.mustache" \
+  "$(nos_data_dir)/bin/run-php" \
+  "$(php_fpm_script_payload)"
+  chmod 755 $(nos_data_dir)/bin/run-php
+}
+
+php_fpm_script_payload() {
+  cat <<-END
+{
+  "data_dir": "$(nos_data_dir)",
+  "etc_dir": "$(nos_etc_dir)"
+}
+END
+}
+
 configure_php_fpm() {
   nos_print_bullet "Configuring php-fpm..."
   mkdir -p $(nos_etc_dir)/php
   mkdir -p $(nos_data_dir)/var/run
   mkdir -p $(nos_data_dir)/var/tmp
   generate_php_fpm_conf
+  generate_php_fpm_script
 }

@@ -1,0 +1,11 @@
+{
+    "name": "notxarb/test",
+    "description": "Braxton's test",
+    "keywords": ["test"],
+    "license": "MIT",
+    "type": "project",
+    "require": {
+        "php": ">=5.6.4",
+        "hamcrest/hamcrest-php": ">=1.0.0"
+    }
+}

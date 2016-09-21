@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [[ "$APP_NAME" = "dev" ]]; then
+  cp {{etc_dir}}/php/dev_php.ini {{etc_dir}}/php/php.ini
+else
+  cp {{etc_dir}}/php/prod_php.ini {{etc_dir}}/php/php.ini
+fi
+
+{{data_dir}}/sbin/httpd -DNO_DETACH

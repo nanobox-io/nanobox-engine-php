@@ -7,8 +7,10 @@ generate_php_ini() {
   
   nos_template \
     "php/php.ini.mustache" \
-    "$(nos_etc_dir)/php/php.ini" \
+    "$(nos_etc_dir)/php/prod_php.ini" \
     "$(php_ini_payload)"
+
+  cp $(nos_etc_dir)/php/prod_php.ini $(nos_etc_dir)/php/php.ini
 }
 
 report_php_settings() {
@@ -66,6 +68,51 @@ php_ini_payload() {
   "max_file_uploads": "$(max_file_uploads)",
   "extensions": $(extensions),
   "zend_extensions": $(zend_extensions),
+  "extension_dir": "$(extension_dir)",
+  "session_length": "$(session_length)",
+  "default_locale": "$(default_locale)",
+  "session_autostart": "$(session_autostart)",
+  "session_save_path": "$(session_save_path)",
+  "session_save_handler": "$(session_save_handler)",
+  "date_timezone": "$(date_timezone)",
+  "iconv_internal_encoding": "$(iconv_internal_encoding)"
+}
+END
+}
+
+generate_dev_php_ini() {
+  nos_template \
+    "php/php.ini.mustache" \
+    "$(nos_etc_dir)/php/dev_php.ini" \
+    "$(dev_php_ini_payload)"
+}
+
+dev_php_ini_payload() {
+  cat <<-END
+{
+  "short_open_tag": "$(short_open_tag)",
+  "zlib_output_compression": "$(zlib_output_compression)",
+  "allow_url_fopen": "$(allow_url_fopen)",
+  "disable_functions": "$(disable_functions)",
+  "expose_php": "$(expose_php)",
+  "max_execution_time": "$(max_execution_time)",
+  "max_input_time": "$(max_input_time)",
+  "memory_limit": "$(memory_limit)",
+  "error_reporting": "$(error_reporting)",
+  "display_errors": "$(display_errors)",
+  "register_globals": "$(register_globals)",
+  "register_argc_argv": "$(register_argc_argv)",
+  "post_max_size": "$(post_max_size)",
+  "default_mimetype": "$(default_mimetype)",
+  "app_dir": "$(nos_app_dir)",
+  "data_dir": "$(nos_data_dir)",
+  "browscap": $(browscap),
+  "file_uploads": "$(file_uploads)",
+  "max_input_vars": "$(max_input_vars)",
+  "upload_max_filesize": "$(upload_max_filesize)",
+  "max_file_uploads": "$(max_file_uploads)",
+  "extensions": $(dev_extensions),
+  "zend_extensions": $(dev_zend_extensions),
   "extension_dir": "$(extension_dir)",
   "session_length": "$(session_length)",
   "default_locale": "$(default_locale)",
@@ -268,6 +315,54 @@ zend_extensions() {
   fi
 }
 
+dev_extensions() {
+  # boxfile extensions
+  extension_dir=$(extension_dir)
+  declare -a extensions_list
+  if [[ "${PL_config_dev_extensions_type}" = "array" ]]; then
+    for ((i=0; i < PL_config_dev_extensions_length ; i++)); do
+      type=PL_config_dev_extensions_${i}_type
+      value=PL_config_dev_extensions_${i}_value
+      if [[ ${!type} = "string" ]]; then
+        if [[ -f ${extension_dir}/${!value}.so ]]; then
+          extensions_list+=(${!value})
+        else
+          exit 1
+        fi
+      fi
+    done
+  fi
+  if [[ -z "extensions_list[@]" ]]; then
+    echo "[]"
+  else
+    echo "[ \"$(nos_join '","' ${extensions_list[@]})\" ]"
+  fi
+}
+
+dev_zend_extensions() {
+  # boxfile zend_extensions
+  extension_dir=$(extension_dir)
+  declare -a zend_extensions_list
+  if [[ "${PL_config_dev_zend_extensions_type}" = "array" ]]; then
+    for ((i=0; i < PL_config_dev_zend_extensions_length ; i++)); do
+      type=PL_config_dev_zend_extensions_${i}_type
+      value=PL_config_dev_zend_extensions_${i}_value
+      if [[ ${!type} = "string" ]]; then
+        if [[ -f ${extension_dir}/${!value}.so ]]; then
+          zend_extensions_list+=(${!value})
+        else
+          exit 1
+        fi
+      fi
+    done
+  fi
+  if [[ -z "${zend_extensions_list[@]}" ]]; then
+    echo "[]"
+  else
+    echo "[ \"$(nos_join '","' ${zend_extensions_list[@]})\" ]"
+  fi
+}
+
 session_length() {
   # boxfile session_length
   _session_length=$(nos_validate "$(nos_payload config_session_length)" "integer" "3600")
@@ -311,6 +406,7 @@ configure_php() {
   mkdir -p $(nos_data_dir)/var/run
   mkdir -p $(nos_data_dir)/var/tmp
   generate_php_ini
+  generate_dev_php_ini
 }
 
 configure_extensions() {

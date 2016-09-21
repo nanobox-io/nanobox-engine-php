@@ -159,6 +159,39 @@ apache_packages() {
   echo "${pkgs[@]}"
 }
 
+generate_apache_php_fpm_script() {
+  nos_template \
+  "bin/run-apache-php-fpm.mustache" \
+  "$(nos_data_dir)/bin/run-apache" \
+  "$(apache_php_fpm_script_payload)"
+  chmod 755 $(nos_data_dir)/bin/run-apache
+}
+
+apache_php_fpm_script_payload() {
+  cat <<-END
+{
+  "data_dir": "$(nos_data_dir)"
+}
+END
+}
+
+generate_apache_mod_php_script() {
+  nos_template \
+  "bin/run-apache-mod-php.mustache" \
+  "$(nos_data_dir)/bin/run-apache" \
+  "$(nginx_script_payload)"
+  chmod 755 $(nos_data_dir)/bin/run-apache
+}
+
+apache_mod_php_script_payload() {
+  cat <<-END
+{
+  "data_dir": "$(nos_data_dir)",
+  "etc_dir": "$(nos_etc_dir)"
+}
+END
+}
+
 configure_apache() {
   nos_print_bullet "Configuring Apache webserver..."
   mkdir -p $(nos_etc_dir)/httpd
@@ -167,4 +200,10 @@ configure_apache() {
   mkdir -p $(nos_data_dir)/var/run
   mkdir -p $(nos_data_dir)/var/tmp
   generate_apache_conf
+  if [[ "$(apache_mod_php)" = "true" ]]; then
+    generate_apache_mod_php_script
+  fi
+  if [[ "$(php_fpm_use_fastcgi)" = "true" ]]; then
+    generate_apache_php_fpm_script
+  fi
 }

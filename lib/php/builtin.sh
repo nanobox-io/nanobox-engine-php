@@ -10,3 +10,26 @@ builtin_document_root() {
     echo /$document_root
   fi
 }
+
+generate_builtin_script() {
+  nos_template \
+  "bin/run-php-builtin.mustache" \
+  "$(nos_data_dir)/bin/run-php" \
+  "$(builtin_script_payload)"
+  chmod 755 $(nos_data_dir)/bin/run-php
+}
+
+builtin_script_payload() {
+  cat <<-END
+{
+  "data_dir": "$(nos_data_dir)",
+  "etc_dir": "$(nos_etc_dir)",
+  "code_dir": "$(nos_code_dir)",
+  "document_root": "$(builtin_document_root)"
+}
+END
+}
+
+configure_builtin() {
+	generate_builtin_script
+}
