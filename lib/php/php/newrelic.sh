@@ -8,7 +8,14 @@ generate_newrelic_ini() {
   
   nos_template \
     "php/php.d/newrelic.ini.mustache" \
-    "$(nos_etc_dir)/php.d/newrelic.ini" \
+    "$(nos_etc_dir)/php.prod.d/newrelic.ini" \
+    "$(newrelic_ini_payload)"
+}
+
+generate_dev_newrelic_ini() {
+  nos_template \
+    "php/php.d/newrelic.ini.mustache" \
+    "$(nos_etc_dir)/php.dev.d/newrelic.ini" \
     "$(newrelic_ini_payload)"
 }
 

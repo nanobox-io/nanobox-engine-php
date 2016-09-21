@@ -8,7 +8,14 @@ generate_mongo_ini() {
   
   nos_template \
     "php/php.d/mongo.ini.mustache" \
-    "$(nos_etc_dir)/php.d/mongo.ini" \
+    "$(nos_etc_dir)/php.prod.d/mongo.ini" \
+    "$(mongo_ini_payload)"
+}
+
+generate_dev_mongo_ini() {
+  nos_template \
+    "php/php.d/mongo.ini.mustache" \
+    "$(nos_etc_dir)/php.dev.d/mongo.ini" \
     "$(mongo_ini_payload)"
 }
 

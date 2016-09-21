@@ -8,7 +8,14 @@ generate_geoip_ini() {
   
   nos_template \
     "php/php.d/geoip.ini.mustache" \
-    "$(nos_etc_dir)/php.d/geoip.ini" \
+    "$(nos_etc_dir)/php.prod.d/geoip.ini" \
+    "$(geoip_ini_payload)"
+}
+
+generate_dev_geoip_ini() {
+  nos_template \
+    "php/php.d/geoip.ini.mustache" \
+    "$(nos_etc_dir)/php.dev.d/geoip.ini" \
     "$(geoip_ini_payload)"
 }
 

@@ -8,7 +8,14 @@ generate_xcache_ini() {
   
   nos_template \
     "php/php.d/xcache.ini.mustache" \
-    "$(nos_etc_dir)/php.d/xcache.ini" \
+    "$(nos_etc_dir)/php.prod.d/xcache.ini" \
+    "$(xcache_ini_payload)"
+}
+
+generate_xcache_ini() {
+  nos_template \
+    "php/php.d/xcache.ini.mustache" \
+    "$(nos_etc_dir)/php.dev.d/xcache.ini" \
     "$(xcache_ini_payload)"
 }
 

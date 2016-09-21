@@ -331,6 +331,8 @@ dev_extensions() {
         fi
       fi
     done
+  else 
+    extensions_list+=($(extensions))
   fi
   if [[ -z "extensions_list[@]" ]]; then
     echo "[]"
@@ -355,6 +357,8 @@ dev_zend_extensions() {
         fi
       fi
     done
+  else
+    zend_extensions_list+=($(dev_zend_extensions))
   fi
   if [[ -z "${zend_extensions_list[@]}" ]]; then
     echo "[]"
@@ -416,7 +420,8 @@ configure_extensions() {
     print_extension_warnings
   fi
   
-  mkdir -p $(nos_etc_dir)/php.d
+  mkdir -p $(nos_etc_dir)/php.prod.d
+  mkdir -p $(nos_etc_dir)/php.dev.d
   
   if [[ "${PL_config_extensions_type}" = "array" ]]; then
     for ((i=0; i < PL_config_extensions_length ; i++)); do
@@ -426,6 +431,10 @@ configure_extensions() {
         if [[ -f ../templates/php/php.d/${!value}.ini.mustache ]]; then
           nos_print_bullet_info "Configuring PHP extension ${!value}..."
           eval generate_${!value}_ini
+          if [[ ! "${PL_config_dev_extensions_type}" = "array" ]]; then
+            nos_print_bullet_info "Configuring dev PHP extension ${!value}..."
+            eval generate_dev_${!value}_ini
+          fi
         fi
       fi
     done
@@ -439,10 +448,43 @@ configure_extensions() {
         if [[ -f ../templates/php/php.d/${!value}.ini.mustache ]]; then
           nos_print_bullet_info "Configuring Zend extension ${!value}..."
           eval generate_${!value}_ini
+          if [[ ! "${PL_config_dev_zend_extensions_type}" = "array" ]]; then
+            nos_print_bullet_info "Configuring dev Zend extension ${!value}..."
+            eval generate_dev_${!value}_ini
+          fi
         fi
       fi
     done
   fi
+
+  if [[ "${PL_config_dev_extensions_type}" = "array" ]]; then
+    for ((i=0; i < PL_config_dev_extensions_length ; i++)); do
+      type=PL_config_dev_extensions_${i}_type
+      value=PL_config_dev_extensions_${i}_value
+      if [[ ${!type} = "string" ]]; then
+        if [[ -f ../templates/php/php.d/${!value}.ini.mustache ]]; then
+          nos_print_bullet_info "Configuring dev PHP extension ${!value}..."
+          eval generate_dev_${!value}_ini
+        fi
+      fi
+    done
+  fi
+
+  if [[ "${PL_config_dev_zend_extensions_type}" = "array" ]]; then
+    for ((i=0; i < PL_config_dev_zend_extensions_length ; i++)); do
+      type=PL_config_dev_zend_extensions_${i}_type
+      value=PL_config_dev_zend_extensions_${i}_value
+      if [[ ${!type} = "string" ]]; then
+        if [[ -f ../templates/php/php.d/${!value}.ini.mustache ]]; then
+          nos_print_bullet_info "Configuring dev Zend extension ${!value}..."
+          eval generate_dev_${!value}_ini
+        fi
+      fi
+    done
+  fi
+
+  rm -rf $(nos_etc_dir)/php.d
+  ln -sf $(nos_etc_dir)/php.d $(nos_etc_dir)/php.prod.d
 }
 
 print_extension_warnings() {

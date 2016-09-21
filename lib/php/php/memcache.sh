@@ -8,7 +8,14 @@ generate_memcache_ini() {
   
   nos_template \
     "php/php.d/memcache.ini.mustache" \
-    "$(nos_etc_dir)/php.d/memcache.ini" \
+    "$(nos_etc_dir)/php.prod.d/memcache.ini" \
+    "$(memcache_ini_payload)"
+}
+
+generate_dev_memcache_ini() {
+  nos_template \
+    "php/php.d/memcache.ini.mustache" \
+    "$(nos_etc_dir)/php.dev.d/memcache.ini" \
     "$(memcache_ini_payload)"
 }
 

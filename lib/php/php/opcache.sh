@@ -8,7 +8,14 @@ generate_opcache_ini() {
   
   nos_template \
     "php/php.d/opcache.ini.mustache" \
-    "$(nos_etc_dir)/php.d/opcache.ini" \
+    "$(nos_etc_dir)/php.prod.d/opcache.ini" \
+    "$(opcache_ini_payload)"
+}
+
+generate_opcache_ini() {
+  nos_template \
+    "php/php.d/opcache.ini.mustache" \
+    "$(nos_etc_dir)/php.dev.d/opcache.ini" \
     "$(opcache_ini_payload)"
 }
 

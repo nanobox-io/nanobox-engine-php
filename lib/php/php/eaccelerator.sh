@@ -8,7 +8,14 @@ generate_eaccelerator_ini() {
   
   nos_template \
     "php/php.d/eaccelerator.ini.mustache" \
-    "$(nos_etc_dir)/php.d/eaccelerator.ini" \
+    "$(nos_etc_dir)/php.prod.d/eaccelerator.ini" \
+    "$(eaccelerator_ini_payload)"
+}
+
+generate_dev_eaccelerator_ini() {
+  nos_template \
+    "php/php.d/eaccelerator.ini.mustache" \
+    "$(nos_etc_dir)/php.dev.d/eaccelerator.ini" \
     "$(eaccelerator_ini_payload)"
 }
 

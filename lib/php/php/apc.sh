@@ -8,7 +8,14 @@ generate_apc_ini() {
   
   nos_template \
     "php/php.d/apc.ini.mustache" \
-    "$(nos_etc_dir)/php.d/apc.ini" \
+    "$(nos_etc_dir)/php.prod.d/apc.ini" \
+    "$(apc_ini_payload)"
+}
+
+generate_dev_apc_ini() {
+  nos_template \
+    "php/php.d/apc.ini.mustache" \
+    "$(nos_etc_dir)/php.dev.d/apc.ini" \
     "$(apc_ini_payload)"
 }
 
