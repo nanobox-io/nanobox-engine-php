@@ -358,7 +358,7 @@ dev_zend_extensions() {
       fi
     done
   else
-    zend_extensions_list+=($(dev_zend_extensions))
+    zend_extensions_list+=($(zend_extensions))
   fi
   if [[ -z "${zend_extensions_list[@]}" ]]; then
     echo "[]"
