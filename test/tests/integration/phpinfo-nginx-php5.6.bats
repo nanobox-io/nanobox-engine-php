@@ -95,10 +95,10 @@ setup() {
   export TEST_VARIABLE=testing
 
   # start php-fpm
-  /data/bin/run-php &
+  /data/bin/start-php &
 
   # start apache
-  /data/bin/run-nginx &
+  /data/bin/start-nginx &
 
   # sleep a few seconds so the server can start
   sleep 3

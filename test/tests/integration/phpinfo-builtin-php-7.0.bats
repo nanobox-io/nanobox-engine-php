@@ -95,7 +95,7 @@ setup() {
   export TEST_VARIABLE=testing
 
   # start php built-in server
-  /data/bin/run-php &
+  /data/bin/start-php &
 
   # sleep a few seconds so the server can start
   sleep 3

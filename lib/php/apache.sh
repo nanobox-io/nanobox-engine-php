@@ -161,10 +161,10 @@ apache_packages() {
 
 generate_apache_php_fpm_script() {
   nos_template \
-  "bin/run-apache-php-fpm.mustache" \
-  "$(nos_data_dir)/bin/run-apache" \
+  "bin/start-apache-php-fpm.mustache" \
+  "$(nos_data_dir)/bin/start-apache" \
   "$(apache_php_fpm_script_payload)"
-  chmod 755 $(nos_data_dir)/bin/run-apache
+  chmod 755 $(nos_data_dir)/bin/start-apache
 }
 
 apache_php_fpm_script_payload() {
@@ -177,10 +177,10 @@ END
 
 generate_apache_mod_php_script() {
   nos_template \
-  "bin/run-apache-mod-php.mustache" \
-  "$(nos_data_dir)/bin/run-apache" \
+  "bin/start-apache-mod-php.mustache" \
+  "$(nos_data_dir)/bin/start-apache" \
   "$(nginx_script_payload)"
-  chmod 755 $(nos_data_dir)/bin/run-apache
+  chmod 755 $(nos_data_dir)/bin/start-apache
 }
 
 apache_mod_php_script_payload() {

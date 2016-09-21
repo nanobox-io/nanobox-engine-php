@@ -72,10 +72,10 @@ php_fpm_use_fastcgi() {
 
 generate_php_fpm_script() {
   nos_template \
-  "bin/run-php-php-fpm.mustache" \
-  "$(nos_data_dir)/bin/run-php" \
+  "bin/start-php-php-fpm.mustache" \
+  "$(nos_data_dir)/bin/start-php" \
   "$(php_fpm_script_payload)"
-  chmod 755 $(nos_data_dir)/bin/run-php
+  chmod 755 $(nos_data_dir)/bin/start-php
 }
 
 php_fpm_script_payload() {

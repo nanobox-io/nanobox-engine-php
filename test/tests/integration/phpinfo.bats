@@ -91,10 +91,10 @@ setup() {
   cd /tmp/code
 
   # start php-fpm
-  /data/bin/run-php &
+  /data/bin/start-php &
 
   # start apache
-  /data/bin/run-apache &
+  /data/bin/start-apache &
 
   # sleep a few seconds so the server can start
   sleep 3

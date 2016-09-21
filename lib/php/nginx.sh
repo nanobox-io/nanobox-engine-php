@@ -63,10 +63,10 @@ nginx_packages() {
 
 generate_nginx_script() {
   nos_template \
-  "bin/run-nginx-php-fpm.mustache" \
-  "$(nos_data_dir)/bin/run-nginx" \
+  "bin/start-nginx-php-fpm.mustache" \
+  "$(nos_data_dir)/bin/start-nginx" \
   "$(nginx_script_payload)"
-  chmod 755 $(nos_data_dir)/bin/run-nginx
+  chmod 755 $(nos_data_dir)/bin/start-nginx
 }
 
 nginx_script_payload() {

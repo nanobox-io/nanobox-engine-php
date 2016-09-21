@@ -95,7 +95,7 @@ setup() {
   export TEST_VARIABLE=testing
 
   # start apache
-  /data/bin/run-apache &
+  /data/bin/start-apache &
 
   # sleep a few seconds so the server can start
   sleep 3

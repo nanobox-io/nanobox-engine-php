@@ -11,11 +11,11 @@ web.main:
 {{#apache}}
 {{#fpm}}
   start:
-    fpm: {{data_dir}}/bin/run-php
-    apache: {{data_dir}}/bin/run-apache
+    fpm: {{data_dir}}/bin/start-php
+    apache: {{data_dir}}/bin/start-apache
 {{/fpm}}
 {{#mod_php}}
-  start: {{data_dir}}/bin/run-apache
+  start: {{data_dir}}/bin/start-apache
 {{/mod_php}}
   log_watch:
     apache[access]: {{data_dir}}/var/log/apache/access.log
@@ -27,8 +27,8 @@ web.main:
 {{/apache}}
 {{#nginx}}
   start:
-    fpm: {{data_dir}}/bin/run-php
-    nginx: {{data_dir}}/bin/run-nginx
+    fpm: {{data_dir}}/bin/start-php
+    nginx: {{data_dir}}/bin/start-nginx
   log_watch:
     nginx[access]: {{data_dir}}/var/log/nginx/access.log
     nginx[error]: {{data_dir}}/var/log/nginx/error.log
@@ -36,7 +36,7 @@ web.main:
     php[fpm]: {{data_dir}}/var/log/php/php_fpm.log
 {{/nginx}}
 {{#builtin}}
-  start: {{data_dir}}/bin/run-php
+  start: {{data_dir}}/bin/start-php
   log_watch:
     php[access]: {{data_dir}}/var/log/php/access.log
     php[error]: {{data_dir}}/var/log/php/php_error.log

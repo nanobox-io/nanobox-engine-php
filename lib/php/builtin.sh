@@ -13,10 +13,10 @@ builtin_document_root() {
 
 generate_builtin_script() {
   nos_template \
-  "bin/run-php-builtin.mustache" \
-  "$(nos_data_dir)/bin/run-php" \
+  "bin/start-php-builtin.mustache" \
+  "$(nos_data_dir)/bin/start-php" \
   "$(builtin_script_payload)"
-  chmod 755 $(nos_data_dir)/bin/run-php
+  chmod 755 $(nos_data_dir)/bin/start-php
 }
 
 builtin_script_payload() {
