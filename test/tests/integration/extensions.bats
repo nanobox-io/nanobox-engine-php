@@ -12,7 +12,7 @@ payload() {
   "cache_dir": "/tmp/cache",
   "etc_dir": "/data/etc",
   "env_dir": "/data/etc/env.d",
-  "config": {"extensions": ["phar","json","filter","hash","mongo"],"zend_extensions":["xcache"],"dev_extensions":{"add":["geoip"],"rm":["mongo"]},"dev_zend_extensions":{"add":["memcache"],"rm":["xcache"]}}
+  "config": {"extensions": ["phar","json","filter","hash","mongo"],"zend_extensions":["xcache"],"dev_extensions":{"add":["geoip", "session"],"rm":["mongo"]},"dev_zend_extensions":{"add":["xdebug", "memcache"],"rm":["xcache"]}}
 }
 END
 }
@@ -118,11 +118,30 @@ setup() {
 
   # kill the server
   pkill php-fpm
-  pkill httpd
+
 
   echo "$output"
 
   [[ "$output" =~ "phpinfo()" ]]
   [[ "$output" =~ "mongo" ]]
   [[ "$output" =~ "xcache" ]]
+
+  # start php-fpm
+  APP_NAME=dev /data/bin/start-php &
+
+  sleep 3
+
+  # curl the index
+  run curl -s 127.0.0.1:8080 2>/dev/null
+
+  # kill the server
+  pkill php-fpm
+
+  pkill httpd
+
+  echo "$output"
+
+  [[ "$output" =~ "phpinfo()" ]]
+  [[ "$output" =~ "geoip" ]]
+  [[ "$output" =~ "xdebug" ]]
 }

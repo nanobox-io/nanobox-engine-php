@@ -351,7 +351,7 @@ dev_extensions() {
       value=PL_config_dev_extensions_rm_${i}_value
       if [[ ${!type} = "string" ]]; then
         if [[ -f ${extension_dir}/${!value}.so ]]; then
-          extensions_list=("${extensions_list[@]/$!value}")
+          extensions_list=("${extensions_list[@]/${!value}}")
         else
           exit 1
         fi
@@ -401,7 +401,7 @@ dev_zend_extensions() {
       value=PL_config_dev_zend_extensions_rm_${i}_value
       if [[ ${!type} = "string" ]]; then
         if [[ -f ${extension_dir}/${!value}.so ]]; then
-          zend_extensions_list=("${zend_extensions_list[@]/$!value}")
+          zend_extensions_list=("${zend_extensions_list[@]/${!value}}")
         else
           exit 1
         fi
