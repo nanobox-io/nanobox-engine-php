@@ -319,10 +319,10 @@ dev_extensions() {
   # boxfile extensions
   extension_dir=$(extension_dir)
   declare -a extensions_list
-  if [[ "${PL_config_dev_extensions_type}" = "array" ]]; then
-    for ((i=0; i < PL_config_dev_extensions_length ; i++)); do
-      type=PL_config_dev_extensions_${i}_type
-      value=PL_config_dev_extensions_${i}_value
+  if [[ "${PL_config_extensions_type}" = "array" ]]; then
+    for ((i=0; i < PL_config_extensions_length ; i++)); do
+      type=PL_config_extensions_${i}_type
+      value=PL_config_extensions_${i}_value
       if [[ ${!type} = "string" ]]; then
         if [[ -f ${extension_dir}/${!value}.so ]]; then
           extensions_list+=(${!value})
@@ -331,8 +331,32 @@ dev_extensions() {
         fi
       fi
     done
-  else 
-    extensions_list+=($(extensions))
+  fi
+  if [[ "${PL_config_dev_extensions_add_type}" = "array" ]]; then
+    for ((i=0; i < PL_config_dev_extensions_add_length ; i++)); do
+      type=PL_config_dev_extensions_add_${i}_type
+      value=PL_config_dev_extensions_add_${i}_value
+      if [[ ${!type} = "string" ]]; then
+        if [[ -f ${extension_dir}/${!value}.so ]]; then
+          extensions_list+=(${!value})
+        else
+          exit 1
+        fi
+      fi
+    done
+  fi
+  if [[ "${PL_config_dev_extensions_rm_type}" = "array" ]]; then
+    for ((i=0; i < PL_config_dev_extensions_rm_length ; i++)); do
+      type=PL_config_dev_extensions_rm_${i}_type
+      value=PL_config_dev_extensions_rm_${i}_value
+      if [[ ${!type} = "string" ]]; then
+        if [[ -f ${extension_dir}/${!value}.so ]]; then
+          extensions_list=("${extensions_list[@]/$!value}")
+        else
+          exit 1
+        fi
+      fi
+    done
   fi
   if [[ -z "extensions_list[@]" ]]; then
     echo "[]"
@@ -345,10 +369,10 @@ dev_zend_extensions() {
   # boxfile zend_extensions
   extension_dir=$(extension_dir)
   declare -a zend_extensions_list
-  if [[ "${PL_config_dev_zend_extensions_type}" = "array" ]]; then
-    for ((i=0; i < PL_config_dev_zend_extensions_length ; i++)); do
-      type=PL_config_dev_zend_extensions_${i}_type
-      value=PL_config_dev_zend_extensions_${i}_value
+  if [[ "${PL_config_zend_extensions_type}" = "array" ]]; then
+    for ((i=0; i < PL_config_zend_extensions_length ; i++)); do
+      type=PL_config_zend_extensions_${i}_type
+      value=PL_config_zend_extensions_${i}_value
       if [[ ${!type} = "string" ]]; then
         if [[ -f ${extension_dir}/${!value}.so ]]; then
           zend_extensions_list+=(${!value})
@@ -357,8 +381,32 @@ dev_zend_extensions() {
         fi
       fi
     done
-  else
-    zend_extensions_list+=($(zend_extensions))
+  fi
+  if [[ "${PL_config_dev_zend_extensions_add_type}" = "array" ]]; then
+    for ((i=0; i < PL_config_dev_zend_extensions_add_length ; i++)); do
+      type=PL_config_dev_zend_extensions_add_${i}_type
+      value=PL_config_dev_zend_extensions_add_${i}_value
+      if [[ ${!type} = "string" ]]; then
+        if [[ -f ${extension_dir}/${!value}.so ]]; then
+          zend_extensions_list+=(${!value})
+        else
+          exit 1
+        fi
+      fi
+    done
+  fi
+  if [[ "${PL_config_dev_zend_extensions_rm_type}" = "array" ]]; then
+    for ((i=0; i < PL_config_dev_zend_extensions_rm_length ; i++)); do
+      type=PL_config_dev_zend_extensions_rm_${i}_type
+      value=PL_config_dev_zend_extensions_rm_${i}_value
+      if [[ ${!type} = "string" ]]; then
+        if [[ -f ${extension_dir}/${!value}.so ]]; then
+          zend_extensions_list=("${zend_extensions_list[@]/$!value}")
+        else
+          exit 1
+        fi
+      fi
+    done
   fi
   if [[ -z "${zend_extensions_list[@]}" ]]; then
     echo "[]"
@@ -422,6 +470,28 @@ configure_extensions() {
   
   mkdir -p $(nos_etc_dir)/php.prod.d
   mkdir -p $(nos_etc_dir)/php.dev.d
+
+  declare -a dev_extensions_rm
+  if [[ "${PL_config_dev_extensions_rm_type}" = "array" ]]; then
+    for ((i=0; i < PL_config_dev_extensions_rm_length ; i++)); do
+      type=PL_config_dev_extensions_rm_${i}_type
+      value=PL_config_dev_extensions_rm_${i}_value
+      if [[ ${!type} = "string" ]]; then
+        dev_extensions_rm+=(${!value})
+      fi
+    done
+  fi
+
+  declare -a dev_zend_extensions_rm
+  if [[ "${PL_config_dev_zend_extensions_rm_type}" = "array" ]]; then
+    for ((i=0; i < PL_config_dev_zend_extensions_rm_length ; i++)); do
+      type=PL_config_dev_zend_extensions_rm_${i}_type
+      value=PL_config_dev_zend_extensions_rm_${i}_value
+      if [[ ${!type} = "string" ]]; then
+        dev_zend_extensions_rm+=(${!value})
+      fi
+    done
+  fi
   
   if [[ "${PL_config_extensions_type}" = "array" ]]; then
     for ((i=0; i < PL_config_extensions_length ; i++)); do
@@ -431,7 +501,7 @@ configure_extensions() {
         if [[ -f ../templates/php/php.d/${!value}.ini.mustache ]]; then
           nos_print_bullet_info "Configuring PHP extension ${!value}..."
           eval generate_${!value}_ini
-          if [[ ! "${PL_config_dev_extensions_type}" = "array" ]]; then
+          if [[ ! " ${dev_extensions_rm[@]} " =~ " ${!value} " ]]; then
             nos_print_bullet_info "Configuring dev PHP extension ${!value}..."
             eval generate_dev_${!value}_ini
           fi
@@ -448,7 +518,7 @@ configure_extensions() {
         if [[ -f ../templates/php/php.d/${!value}.ini.mustache ]]; then
           nos_print_bullet_info "Configuring Zend extension ${!value}..."
           eval generate_${!value}_ini
-          if [[ ! "${PL_config_dev_zend_extensions_type}" = "array" ]]; then
+          if [[ ! " ${dev_zend_extensions_rm[@]} " =~ " ${!value} " ]]; then
             nos_print_bullet_info "Configuring dev Zend extension ${!value}..."
             eval generate_dev_${!value}_ini
           fi
@@ -457,10 +527,10 @@ configure_extensions() {
     done
   fi
 
-  if [[ "${PL_config_dev_extensions_type}" = "array" ]]; then
-    for ((i=0; i < PL_config_dev_extensions_length ; i++)); do
-      type=PL_config_dev_extensions_${i}_type
-      value=PL_config_dev_extensions_${i}_value
+  if [[ "${PL_config_dev_extensions_add_type}" = "array" ]]; then
+    for ((i=0; i < PL_config_dev_extensions_add_length ; i++)); do
+      type=PL_config_dev_extensions_add_${i}_type
+      value=PL_config_dev_extensions_add_${i}_value
       if [[ ${!type} = "string" ]]; then
         if [[ -f ../templates/php/php.d/${!value}.ini.mustache ]]; then
           nos_print_bullet_info "Configuring dev PHP extension ${!value}..."
@@ -470,10 +540,10 @@ configure_extensions() {
     done
   fi
 
-  if [[ "${PL_config_dev_zend_extensions_type}" = "array" ]]; then
-    for ((i=0; i < PL_config_dev_zend_extensions_length ; i++)); do
-      type=PL_config_dev_zend_extensions_${i}_type
-      value=PL_config_dev_zend_extensions_${i}_value
+  if [[ "${PL_config_dev_zend_extensions_add_type}" = "array" ]]; then
+    for ((i=0; i < PL_config_dev_zend_extensions_add_length ; i++)); do
+      type=PL_config_dev_zend_extensions_add_${i}_type
+      value=PL_config_dev_zend_extensions_add_${i}_value
       if [[ ${!type} = "string" ]]; then
         if [[ -f ../templates/php/php.d/${!value}.ini.mustache ]]; then
           nos_print_bullet_info "Configuring dev Zend extension ${!value}..."
@@ -484,7 +554,7 @@ configure_extensions() {
   fi
 
   rm -rf $(nos_etc_dir)/php.d
-  ln -sf $(nos_etc_dir)/php.d $(nos_etc_dir)/php.prod.d
+  ln -sf $(nos_etc_dir)/php.prod.d $(nos_etc_dir)/php.d
 }
 
 print_extension_warnings() {

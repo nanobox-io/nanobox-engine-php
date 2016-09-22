@@ -1,11 +1,11 @@
 #!/bin/bash
 
 if [[ "$APP_NAME" = "dev" ]]; then
-  cp {{etc_dir}}/php/dev_php.ini {{etc_dir}}/php/php.ini
-  ln -sf {{etc_dir}}/php/php.d {{etc_dir}}/php/php.dev.d
+  cp {{etc_dir}}/dev_php.ini {{etc_dir}}/php.ini
+  ln -sf {{etc_dir}}/php.dev.d {{etc_dir}}/php.d
 else
-  cp {{etc_dir}}/php/prod_php.ini {{etc_dir}}/php/php.ini
-  ln -sf {{etc_dir}}/php/php.d {{etc_dir}}/php/php.prod.d
+  cp {{etc_dir}}/prod_php.ini {{etc_dir}}/php.ini
+  ln -sf {{etc_dir}}/php.prod.d {{etc_dir}}/php.d
 fi
 
 {{data_dir}}/bin/php -S 0.0.0.0:8080 -c {{etc_dir}}/php/php.ini -t {{code_dir}}{{document_root}}/

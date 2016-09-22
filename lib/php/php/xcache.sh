@@ -12,7 +12,7 @@ generate_xcache_ini() {
     "$(xcache_ini_payload)"
 }
 
-generate_xcache_ini() {
+generate_dev_xcache_ini() {
   nos_template \
     "php/php.d/xcache.ini.mustache" \
     "$(nos_etc_dir)/php.dev.d/xcache.ini" \

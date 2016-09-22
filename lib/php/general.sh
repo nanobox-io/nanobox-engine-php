@@ -145,20 +145,20 @@ extension_packages() {
     done
   fi
   
-  if [[ "${PL_config_dev_extensions_type}" = "array" ]]; then
-    for ((i=0; i < PL_config_dev_extensions_length ; i++)); do
-      type=PL_config_dev_extensions_${i}_type
-      value=PL_config_dev_extensions_${i}_value
+  if [[ "${PL_config_dev_extensions_add_type}" = "array" ]]; then
+    for ((i=0; i < PL_config_dev_extensions_add_length ; i++)); do
+      type=PL_config_dev_extensions_add_${i}_type
+      value=PL_config_dev_extensions_add_${i}_value
       if [[ ${!type} = "string" ]]; then
         pkgs+=("$(condensed_runtime)-${!value}")
       fi
     done
   fi
 
-  if [[ "${PL_config_dev_zend_extensions_type}" = "array" ]]; then
-    for ((i=0; i < PL_config_dev_zend_extensions_length ; i++)); do
-      type=PL_config_dev_zend_extensions_${i}_type
-      value=PL_config_dev_zend_extensions_${i}_value
+  if [[ "${PL_config_dev_zend_extensions_add_type}" = "array" ]]; then
+    for ((i=0; i < PL_config_dev_zend_extensions_add_length ; i++)); do
+      type=PL_config_dev_zend_extensions_add_${i}_type
+      value=PL_config_dev_zend_extensions_add_${i}_value
       if [[ ${!type} = "string" ]]; then
         pkgs+=("$(condensed_runtime)-${!value}")
       fi

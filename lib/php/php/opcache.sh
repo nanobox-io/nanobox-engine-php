@@ -12,7 +12,7 @@ generate_opcache_ini() {
     "$(opcache_ini_payload)"
 }
 
-generate_opcache_ini() {
+generate_dev_opcache_ini() {
   nos_template \
     "php/php.d/opcache.ini.mustache" \
     "$(nos_etc_dir)/php.dev.d/opcache.ini" \
