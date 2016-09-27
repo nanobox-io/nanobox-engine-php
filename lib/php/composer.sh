@@ -17,11 +17,16 @@ composer_install() {
   fi
 }
 
+composer_dir() {
+  [[ ! -f $(nos_data_dir)/var/composer ]] && nos_run_process "make composer dir" "mkdir -p $(nos_data_dir)/var/composer"
+  [[ ! -s ${HOME}/.composer ]] && nos_run_process "link composer dir" "ln -s $(nos_data_dir)/var/composer ${HOME}/.composer"
+}
+
 # Generate the payload to render the composer profile template
 composer_profile_payload() {
   cat <<-END
 {
-  "code_dir": "$(nos_code_dir)"
+  "data_dir": "$(nos_data_dir)"
 }
 END
 }
@@ -32,4 +37,16 @@ persist_composer_bin_to_path() {
     "profile.d/composer.sh" \
     "$(nos_etc_dir)/profile.d/composer.sh" \
     "$(composer_profile_payload)"
+}
+
+copy_cached_files() {
+  if [ -d $(nos_cache_dir)/composer ]; then
+    rsync -a $(nos_cache_dir)/composer/ $(nos_data_dir)/var/composer
+  fi
+}
+
+save_cached_files() {
+  if [ -d $(nos_data_dir)/var/composer ]; then
+    rsync -a --delete $(nos_data_dir)/var/composer/ $(nos_cache_dir)/composer
+  fi
 }
