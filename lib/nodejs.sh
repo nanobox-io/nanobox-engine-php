@@ -51,12 +51,12 @@ package_json_runtime() {
 
 # Fetch the nodejs runtime and dependencies
 nodejs_dependencies() {
-  echo "$(nodejs_runtime) python27"
+  echo "$(nodejs_runtime) python"
 }
 
 # Fetch the list of build-only dependencies
 nodejs_build_dependencies() {
-  echo "python27"
+  echo "python"
 }
 
 # set the runtime in a file inside of node_modules so that if the
