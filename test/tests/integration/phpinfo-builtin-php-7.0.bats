@@ -51,11 +51,11 @@ setup() {
   [ "$status" -eq 0 ]
 }
 
-@test "bulid" {
+@test "build" {
   if [[ ! -f /engine/bin/build ]]; then
     skip "No build script"
   fi
-  run /engine/bin/bulid "$(payload)"
+  run /engine/bin/build "$(payload)"
 
   echo "$output"
 
