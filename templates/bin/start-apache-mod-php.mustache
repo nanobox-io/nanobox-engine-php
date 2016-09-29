@@ -8,4 +8,4 @@ else
   ln -sf {{etc_dir}}/php/php.prod.d {{etc_dir}}/php/php.d
 fi
 
-{{data_dir}}/sbin/httpd -DNO_DETACH
+exec {{data_dir}}/sbin/httpd -DNO_DETACH

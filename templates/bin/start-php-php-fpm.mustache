@@ -8,4 +8,4 @@ else
   ln -sf {{etc_dir}}/php/php.prod.d {{etc_dir}}/php/php.d
 fi
 
-{{data_dir}}/sbin/php-fpm -y {{etc_dir}}/php/php-fpm.conf -c {{etc_dir}}/php/php.ini
+exec {{data_dir}}/sbin/php-fpm -y {{etc_dir}}/php/php-fpm.conf -c {{etc_dir}}/php/php.ini
