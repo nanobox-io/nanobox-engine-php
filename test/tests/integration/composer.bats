@@ -125,4 +125,6 @@ setup() {
   echo "$output"
 
   [[ "$output" =~ "phpinfo()" ]]
+
+  sleep 5m
 }
