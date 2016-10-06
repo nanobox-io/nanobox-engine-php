@@ -12,7 +12,7 @@ payload() {
   "cache_dir": "/tmp/cache",
   "etc_dir": "/data/etc",
   "env_dir": "/data/etc/env.d",
-  "config": {"extensions": ["phar","json","filter","hash"]}
+  "config": {}
 }
 END
 }
@@ -60,6 +60,7 @@ setup() {
   echo "$output"
 
   [ "$status" -eq 0 ]
+  [[ "${output}" =~ "- composer install :" ]]
 }
 
 @test "compile" {
@@ -71,7 +72,6 @@ setup() {
   echo "$output"
 
   [ "$status" -eq 0 ]
-  [ "${lines[0]}" = "- composer install :" ]
 }
 
 @test "cleanup" {
@@ -126,5 +126,4 @@ setup() {
 
   [[ "$output" =~ "phpinfo()" ]]
 
-  sleep 5m
 }

@@ -7,6 +7,11 @@ composer_packages() {
   echo "${pkgs[@]}"
 }
 
+composer_required_extensions() {
+  exts=("phar" "json" "filter" "hash")
+  echo "${exts[@]}"
+}
+
 # Runs composer install
 composer_install() {
   if [[ -f $(nos_code_dir)/composer.json ]]; then

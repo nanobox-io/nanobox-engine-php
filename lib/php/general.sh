@@ -124,7 +124,12 @@ condensed_runtime() {
 
 extension_packages() {
   pkgs=()
+  extensions_list+=($(composer_required_extensions))
   
+  for pkg in $(composer_required_extensions); do
+    pkgs+=("$(condensed_runtime)-${pkg}")
+  done
+
   if [[ "${PL_config_extensions_type}" = "array" ]]; then
     for ((i=0; i < PL_config_extensions_length ; i++)); do
       type=PL_config_extensions_${i}_type

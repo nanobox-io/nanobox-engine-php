@@ -271,6 +271,7 @@ extensions() {
   # boxfile extensions
   extension_dir=$(extension_dir)
   declare -a extensions_list
+  extensions_list+=($(composer_required_extensions))
   if [[ "${PL_config_extensions_type}" = "array" ]]; then
     for ((i=0; i < PL_config_extensions_length ; i++)); do
       type=PL_config_extensions_${i}_type
@@ -319,6 +320,7 @@ dev_extensions() {
   # boxfile extensions
   extension_dir=$(extension_dir)
   declare -a extensions_list
+  extensions_list+=($(composer_required_extensions))
   if [[ "${PL_config_extensions_type}" = "array" ]]; then
     for ((i=0; i < PL_config_extensions_length ; i++)); do
       type=PL_config_extensions_${i}_type
