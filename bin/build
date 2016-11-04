@@ -11,6 +11,8 @@ nos_init "$@"
 # source common lib, where the helpers are defined
 . ${engine_lib_dir}/php.sh
 
+validate_runtime_packages
+
 # install php interpreter, webservers, extensions, etc
 install_runtime_packages
 

@@ -109,6 +109,47 @@ extension_packages() {
   echo "${pkgs[@]}"
 }
 
+validate_runtime_packages() {
+  /data/bin/pkgin up > /dev/null
+
+  pkgs=("$(runtime)")
+  
+  # add php/zend extensions
+  pkgs+=("$(extension_packages)")
+  
+  # add apache packages
+  if [[ "$(webserver)" = "apache" ]]; then
+    pkgs+=("$(apache_packages)")
+  fi
+  
+  # add nginx packages
+  if [[ "$(webserver)" = "nginx" ]]; then
+    pkgs+=("$(nginx_packages)")
+  fi
+  
+  # install composer
+  pkgs+=("$(composer_packages)")
+
+  bad_pkgs=()
+
+  for pkg in ${pkgs[@]}; do
+    if [[ $pkg =~ ^(.*)-([0-9\.]+) ]]; then
+      p=${BASH_REMATCH[1]}
+      v=${BASH_REMATCH[2]}
+      (/data/bin/pkgin se ${p} | grep v > /dev/null) || bad_pkgs+=("${pkg}")
+    else
+      /data/bin/pkgin se ${pkg} > /dev/null || bad_pkgs+=("${pkg}")
+    fi
+  done
+
+  if [[ ${#bad_pkgs[@]} -gt 0 ]]; then
+    echo "Can not find ${bad_pkgs[@]} to install"
+    echo "Please verify they exist. Check what extensions are available here:"
+    echo "https://github.com/nanobox-io/nanobox-engine-php/blob/master/doc/php-extensions.md"
+    exit 1
+  fi
+}
+
 # Install php runtime, webservers, and any additional dependencies
 install_runtime_packages() {
   pkgs=("$(runtime)")
