@@ -352,11 +352,7 @@ dev_extensions() {
       type=PL_config_dev_extensions_rm_${i}_type
       value=PL_config_dev_extensions_rm_${i}_value
       if [[ ${!type} = "string" ]]; then
-        if [[ -f ${extension_dir}/${!value}.so ]]; then
-          extensions_list=("${extensions_list[@]/${!value}}")
-        else
-          exit 1
-        fi
+        extensions_list=("${extensions_list[@]/${!value}}")
       fi
     done
   fi
@@ -402,11 +398,7 @@ dev_zend_extensions() {
       type=PL_config_dev_zend_extensions_rm_${i}_type
       value=PL_config_dev_zend_extensions_rm_${i}_value
       if [[ ${!type} = "string" ]]; then
-        if [[ -f ${extension_dir}/${!value}.so ]]; then
-          zend_extensions_list=("${zend_extensions_list[@]/${!value}}")
-        else
-          exit 1
-        fi
+        zend_extensions_list=("${zend_extensions_list[@]/${!value}}")
       fi
     done
   fi
