@@ -148,7 +148,7 @@ apache_access_log() {
 }
 
 apache_packages() {
-  pkgs=("apache-2.2" "ap22-cloudflare", "ap22-xsendfile")
+  pkgs=("apache-2.2" "ap22-cloudflare" "ap22-xsendfile")
   
   if [[ "$(php_fpm_use_fastcgi)" = "true" ]]; then
     pkgs+=("ap22-fastcgi")
