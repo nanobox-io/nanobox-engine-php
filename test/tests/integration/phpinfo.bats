@@ -60,6 +60,7 @@ setup() {
   echo "$output"
 
   [ "$status" -eq 0 ]
+  [ -f /data/etc/profile.d/php.sh ]
 }
 
 @test "compile" {

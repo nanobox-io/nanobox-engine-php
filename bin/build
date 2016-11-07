@@ -28,6 +28,9 @@ configure_webserver
 # # configure the newrelic monitoring agent
 # configure_newrelic
 
+# Configure profile script for php.ini management
+php_profile_script
+
 composer_dir
 
 persist_composer_bin_to_path

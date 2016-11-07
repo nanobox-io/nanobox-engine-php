@@ -183,3 +183,20 @@ uninstall_build_packages() {
     nos_uninstall ${pkgs[@]}
   fi
 }
+
+# Generate the payload to render the php profile template
+php_profile_payload() {
+  cat <<-END
+{
+  "etc_dir": "$(nos_etc_dir)"
+}
+END
+}
+
+# Profile script to switch between production and dev php.ini files
+php_profile_script() {
+  nos_template \
+    "profile.d/php.sh" \
+    "$(nos_etc_dir)/profile.d/php.sh" \
+    "$(php_profile_payload)"
+}
