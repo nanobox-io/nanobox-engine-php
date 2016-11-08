@@ -169,8 +169,16 @@ install_runtime_packages() {
   
   # install composer
   pkgs+=("$(composer_packages)")
+
+  # unique the list
+  declare -a install_pkgs
+  for i in "${pkgs[@]}"; do
+    if [[ ! ${install_pkgs[@]} =~ $i ]]; then
+      install_pkgs+=(${i})
+    fi
+  done 
   
-  nos_install ${pkgs[@]}
+  nos_install ${install_pkgs[@]}
 }
 
 # Uninstall build dependencies

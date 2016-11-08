@@ -278,7 +278,9 @@ extensions() {
       value=PL_config_extensions_${i}_value
       if [[ ${!type} = "string" ]]; then
         if [[ -f ${extension_dir}/${!value}.so ]]; then
-          extensions_list+=(${!value})
+          if [[ ! ${extensions_list[@]} =~ ${!value} ]]; then
+            extensions_list+=(${!value})
+          fi
         else
           exit 1
         fi
@@ -302,7 +304,9 @@ zend_extensions() {
       value=PL_config_zend_extensions_${i}_value
       if [[ ${!type} = "string" ]]; then
         if [[ -f ${extension_dir}/${!value}.so ]]; then
-          zend_extensions_list+=(${!value})
+          if [[ ! ${zend_extensions_list[@]} =~ ${!value} ]]; then
+            zend_extensions_list+=(${!value})
+          fi
         else
           exit 1
         fi
@@ -327,7 +331,9 @@ dev_extensions() {
       value=PL_config_extensions_${i}_value
       if [[ ${!type} = "string" ]]; then
         if [[ -f ${extension_dir}/${!value}.so ]]; then
-          extensions_list+=(${!value})
+          if [[ ! ${extensions_list[@]} =~ ${!value} ]]; then
+            extensions_list+=(${!value})
+          fi
         else
           exit 1
         fi
@@ -340,7 +346,9 @@ dev_extensions() {
       value=PL_config_dev_extensions_add_${i}_value
       if [[ ${!type} = "string" ]]; then
         if [[ -f ${extension_dir}/${!value}.so ]]; then
-          extensions_list+=(${!value})
+          if [[ ! ${extensions_list[@]} =~ ${!value} ]]; then
+            extensions_list+=(${!value})
+          fi
         else
           exit 1
         fi
@@ -373,7 +381,9 @@ dev_zend_extensions() {
       value=PL_config_zend_extensions_${i}_value
       if [[ ${!type} = "string" ]]; then
         if [[ -f ${extension_dir}/${!value}.so ]]; then
-          zend_extensions_list+=(${!value})
+          if [[ ! ${zend_extensions_list[@]} =~ ${!value} ]]; then
+            zend_extensions_list+=(${!value})
+          fi
         else
           exit 1
         fi
@@ -386,7 +396,9 @@ dev_zend_extensions() {
       value=PL_config_dev_zend_extensions_add_${i}_value
       if [[ ${!type} = "string" ]]; then
         if [[ -f ${extension_dir}/${!value}.so ]]; then
-          zend_extensions_list+=(${!value})
+          if [[ ! ${zend_extensions_list[@]} =~ ${!value} ]]; then
+            zend_extensions_list+=(${!value})
+          fi
         else
           exit 1
         fi
