@@ -12,7 +12,7 @@ payload() {
   "cache_dir": "/tmp/cache",
   "etc_dir": "/data/etc",
   "env_dir": "/data/etc/env.d",
-  "config": {"extensions": ["json","json","json","json","json"],"zend_extensions":["xcache","xcache"],"dev_extensions":{"add":["geoip", "geoip"],"rm":["mongo"]},"dev_zend_extensions":{"add":["xdebug", "xdebug"],"rm":["xcache"]}}
+  "config": {"extensions": ["json","json","json","json","json","xmlwriter","xml"],"zend_extensions":["xcache","xcache"],"dev_extensions":{"add":["geoip", "geoip"],"rm":["mongo"]},"dev_zend_extensions":{"add":["xdebug", "xdebug"],"rm":["xcache"]}}
 }
 END
 }
@@ -60,18 +60,26 @@ setup() {
   echo "$output"
   echo "$(grep -c json.so /data/etc/php/prod_php.ini)"
   echo "$(grep -c xcache.so /data/etc/php/prod_php.ini)"
+  echo "$(grep -c xml.so /data/etc/php/prod_php.ini)"
+  echo "$(grep -c xmlwriter.so /data/etc/php/prod_php.ini)"
   echo "$(grep -c json.so /data/etc/php/dev_php.ini)"
   echo "$(grep -c xcache.so /data/etc/php/dev_php.ini)"
   echo "$(grep -c geoip.so /data/etc/php/dev_php.ini)"
   echo "$(grep -c xdebug.so /data/etc/php/dev_php.ini)"
+  echo "$(grep -c xml.so /data/etc/php/dev_php.ini)"
+  echo "$(grep -c xmlwriter.so /data/etc/php/dev_php.ini)"
 
   [ "$status" -eq 0 ]
   [ "$(grep -c json.so /data/etc/php/prod_php.ini)" = "1" ]
   [ "$(grep -c xcache.so /data/etc/php/prod_php.ini)" = "1" ]
+  [ "$(grep -c xml.so /data/etc/php/prod_php.ini)" = "1" ]
+  [ "$(grep -c xmlwriter.so /data/etc/php/prod_php.ini)" = "1" ]
   [ "$(grep -c json.so /data/etc/php/dev_php.ini)" = "1" ]
   [ "$(grep -c xcache.so /data/etc/php/dev_php.ini)" = "0" ]
   [ "$(grep -c geoip.so /data/etc/php/dev_php.ini)" = "1" ]
   [ "$(grep -c xdebug.so /data/etc/php/dev_php.ini)" = "1" ]
+  [ "$(grep -c xml.so /data/etc/php/dev_php.ini)" = "1" ]
+  [ "$(grep -c xmlwriter.so /data/etc/php/dev_php.ini)" = "1" ]
 }
 
 @test "compile" {

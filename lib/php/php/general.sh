@@ -278,7 +278,14 @@ extensions() {
       value=PL_config_extensions_${i}_value
       if [[ ${!type} = "string" ]]; then
         if [[ -f ${extension_dir}/${!value}.so ]]; then
-          if [[ ! ${extensions_list[@]} =~ ${!value} ]]; then
+          add="true"
+          for j in "${extensions_list[@]}"; do
+            if [[ "$j" = "${!value}" ]]; then
+              add="false"
+              break;
+            fi
+          done
+          if [[ "$add" = "true" ]]; then
             extensions_list+=(${!value})
           fi
         else
@@ -304,7 +311,14 @@ zend_extensions() {
       value=PL_config_zend_extensions_${i}_value
       if [[ ${!type} = "string" ]]; then
         if [[ -f ${extension_dir}/${!value}.so ]]; then
-          if [[ ! ${zend_extensions_list[@]} =~ ${!value} ]]; then
+          add="true"
+          for j in "${zend_extensions_list[@]}"; do
+            if [[ "$j" = "${!value}" ]]; then
+              add="false"
+              break;
+            fi
+          done
+          if [[ "$add" = "true" ]]; then
             zend_extensions_list+=(${!value})
           fi
         else
@@ -331,7 +345,14 @@ dev_extensions() {
       value=PL_config_extensions_${i}_value
       if [[ ${!type} = "string" ]]; then
         if [[ -f ${extension_dir}/${!value}.so ]]; then
-          if [[ ! ${extensions_list[@]} =~ ${!value} ]]; then
+          add="true"
+          for j in "${extensions_list[@]}"; do
+            if [[ "$j" = "${!value}" ]]; then
+              add="false"
+              break;
+            fi
+          done
+          if [[ "$add" = "true" ]]; then
             extensions_list+=(${!value})
           fi
         else
@@ -346,7 +367,14 @@ dev_extensions() {
       value=PL_config_dev_extensions_add_${i}_value
       if [[ ${!type} = "string" ]]; then
         if [[ -f ${extension_dir}/${!value}.so ]]; then
-          if [[ ! ${extensions_list[@]} =~ ${!value} ]]; then
+          add="true"
+          for j in "${extensions_list[@]}"; do
+            if [[ "$j" = "${!value}" ]]; then
+              add="false"
+              break;
+            fi
+          done
+          if [[ "$add" = "true" ]]; then
             extensions_list+=(${!value})
           fi
         else
@@ -381,7 +409,14 @@ dev_zend_extensions() {
       value=PL_config_zend_extensions_${i}_value
       if [[ ${!type} = "string" ]]; then
         if [[ -f ${extension_dir}/${!value}.so ]]; then
-          if [[ ! ${zend_extensions_list[@]} =~ ${!value} ]]; then
+          add="true"
+          for j in "${zend_extensions_list[@]}"; do
+            if [[ "$j" = "${!value}" ]]; then
+              add="false"
+              break;
+            fi
+          done
+          if [[ "$add" = "true" ]]; then
             zend_extensions_list+=(${!value})
           fi
         else
@@ -396,7 +431,14 @@ dev_zend_extensions() {
       value=PL_config_dev_zend_extensions_add_${i}_value
       if [[ ${!type} = "string" ]]; then
         if [[ -f ${extension_dir}/${!value}.so ]]; then
-          if [[ ! ${zend_extensions_list[@]} =~ ${!value} ]]; then
+          add="true"
+          for j in "${zend_extensions_list[@]}"; do
+            if [[ "$j" = "${!value}" ]]; then
+              add="false"
+              break;
+            fi
+          done
+          if [[ "$add" = "true" ]]; then
             zend_extensions_list+=(${!value})
           fi
         else
