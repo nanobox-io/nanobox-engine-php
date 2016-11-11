@@ -185,8 +185,8 @@ The following web servers are available:
 - builtin ([PHP's built-in web server](http://php.net/manual/en/features.commandline.webserver.php) available in 5.4+)
 
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     webserver: 'apache'
 ```
 
@@ -197,8 +197,8 @@ code.build:
 #### document_root
 The public root of your web application. For instance, if you like to house your app in `/public` for security or organizational purposes, you can specify that here. The default is the `/`.
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     document_root: '/'
 ```
 
@@ -249,8 +249,8 @@ Specifies which PHP runtime and version to use. The following runtimes are avail
 - php-7.0
 
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     runtime: 'php-5.6'
 ```
 
@@ -260,8 +260,8 @@ code.build:
 Specifies what PHP extensions should be included in your app's environment. To see what PHP extensions are available, view the [full list of available PHP extensions](https://github.com/nanobox-io/nanobox-engine-php/blob/master/doc/php-extensions.md).
 
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     extensions:
       - curl
       - gd
@@ -274,8 +274,8 @@ code.build:
 #### zend_extensions
 Specifies what Zend extensions should be included in your app's environment. To see what Zend extensions are available, view the [Zend Extensions section of the PHP extensions list](https://github.com/nanobox-io/nanobox-engine-php/blob/master/doc/php-extensions.md#zend-extensions).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     zend_extensions:
       - ioncube_loader
       - opcache
@@ -286,8 +286,8 @@ code.build:
 #### short_open_tag
 Sets the [`short_open_tag` PHP setting](http://www.php.net/manual/en/ini.core.php#ini.short-open-tag).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     short_open_tag: true
 ```
 
@@ -296,8 +296,8 @@ code.build:
 #### zlib_output_compression
 Sets the [`zlib.output_compression` PHP setting](http://php.net/manual/en/zlib.configuration.php#ini.zlib.output-compression).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     zlib_output_compression: 'Off'
 ```
 
@@ -306,8 +306,8 @@ code.build:
 #### allow_url_fopen
 Sets the [`allow_url_fopen` PHP setting](http://php.net/manual/en/filesystem.configuration.php#ini.allow-url-fopen).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     allow_url_fopen: 'On'
 ```
 
@@ -316,8 +316,8 @@ code.build:
 #### disable_functions
 Sets the [`disable_fuctions` PHP setting](http://php.net/manual/en/ini.core.php#ini.disable-functions).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     disable_functions:
       - exec
       - shell_exec
@@ -329,8 +329,8 @@ code.build:
 #### expose_php
 Sets the [`expose_php` PHP setting](http://www.php.net/manual/en/ini.core.php#ini.expose-php).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     expose_php: 'On'
 ```
 
@@ -339,8 +339,8 @@ code.build:
 #### max_execution_time
 Sets the [`max_execution_time` PHP setting](http://www.php.net/manual/en/info.configuration.php#ini.max-execution-time).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     max_execution_time: 30
 ```
 
@@ -349,8 +349,8 @@ code.build:
 #### max_input_time
 Sets the [`max_input_time` PHP setting](http://www.php.net/manual/en/info.configuration.php#ini.max-input-time).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     max_input_time: 60
 ```
 
@@ -359,8 +359,8 @@ code.build:
 #### memory_limit
 Sets the [`memory_limit` PHP setting](http://php.net/manual/en/ini.core.php#ini.memory-limit). **Note:** This setting should not exceed the memory available on your PHP server(s).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     memory_limit: '128M'
 ```
 
@@ -369,8 +369,8 @@ code.build:
 #### error_reporting
 Sets the [`error_reporting` PHP setting](http://www.php.net/manual/en/errorfunc.configuration.php#ini.error-reporting).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     error_reporting: E_ALL
 ```
 
@@ -379,8 +379,8 @@ code.build:
 #### display_errors
 Sets the [`display_errors` PHP setting](http://us3.php.net/manual/en/errorfunc.configuration.php#ini.display-errors).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     display_errors: 'stderr'
 ```
 
@@ -389,8 +389,8 @@ code.build:
 #### register_globals
 Sets the [`register_globals` PHP setting](http://www.php.net/manual/en/ini.core.php#ini.register-globals)
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     register_globals: 'Off'
 ```
 
@@ -399,8 +399,8 @@ code.build:
 #### register_argc_argv
 Sets the [`register_argc_argv` PHP setting](http://www.php.net/manual/en/ini.core.php#ini.register-argc-argv).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     register_argc_argv: 'Off'
 ```
 
@@ -409,8 +409,8 @@ code.build:
 #### post_max_size
 Sets the [`post_max_size` PHP setting](http://www.php.net/manual/en/ini.core.php#ini.post-max-size).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     post_max_size: '8M'
 ```
 
@@ -419,8 +419,8 @@ code.build:
 #### upload_max_filesize
 Sets the [`upload_max_filesize` PHP setting](http://php.net/manual/en/ini.core.php#ini.upload-max-filesize).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     upload_max_filesize: '2M'
 ```
 
@@ -429,8 +429,8 @@ code.build:
 #### file_uploads
 Sets the [`file_uploads` PHP setting](http://php.net/manual/en/ini.core.php#ini.file-uploads).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     file_uploads: true
 ```
 
@@ -439,8 +439,8 @@ code.build:
 #### max_file_uploads
 Sets the [`max_file_uploads` PHP setting](http://php.net/manual/en/ini.core.php#ini.max-file-uploads).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     max_file_uploads: 20
 ```
 
@@ -449,8 +449,8 @@ code.build:
 #### max_input_vars
 Sets the [`max_input_vars` PHP setting](http://php.net/manual/en/info.configuration.php#ini.max-input-vars).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     max_input_vars: 1000
 ```
 
@@ -459,8 +459,8 @@ code.build:
 #### default_mimetype
 Sets the [`default_mime_type` PHP setting](http://www.php.net/manual/en/ini.core.php#ini.default-mimetype).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     default_mimetype: 'text/html'
 ```
 
@@ -469,8 +469,8 @@ code.build:
 #### default_locale
 Sets the [`intl.default_locale` PHP setting](http://php.net/manual/en/intl.configuration.php#ini.intl.default-locale).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     default_locale: 'en_US'
 ```
 
@@ -482,8 +482,8 @@ This allows you to specify the filepath to your browser capabilities file (brows
 ***Note:*** You must include your own browscap.ini in your app's repo. They are available for free from [browscap.org](http://browscap.org/).
 
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     browscap: 'app/browscap.ini'
 ```
 
@@ -492,8 +492,8 @@ code.build:
 #### session_save_handler
 Sets the [`session.save_handler` PHP setting](http://www.php.net/manual/en/session.configuration.php#ini.session.save-handler).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     session_save_handler: 'files'
 ```
 
@@ -502,8 +502,8 @@ code.build:
 #### session_save_path
 Sets the [`session.save_path` PHP setting](http://www.php.net/manual/en/session.configuration.php#ini.session.save-path).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     session_save_path: '/tmp/nanobox/sessions'
 ```
 
@@ -512,8 +512,8 @@ code.build:
 #### session_length
 Sets the [`session.gc_maxlifetime` PHP setting](http://www.php.net/manual/en/session.configuration.php#ini.session.gc-maxlifetime).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     session_length: 3600
 ```
 
@@ -522,8 +522,8 @@ code.build:
 #### session_autostart
 Sets the [`session.autostart` PHP setting](http://www.php.net/manual/en/session.configuration.php#ini.session.auto-start).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     session_autostart: 'false'
 ```
 
@@ -532,8 +532,8 @@ code.build:
 #### date_timezone
 Sets the [`date.timezone` PHP setting](http://php.net/manual/en/datetime.configuration.php#ini.date.timezone).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     date_timezone: 'US/central'
 ```
 
@@ -542,8 +542,8 @@ code.build:
 #### iconv_internal_encoding
 Sets the [`iconv.internal_encoding` PHP setting](http://www.php.net/manual/en/iconv.configuration.php#ini.iconv.internal-encoding).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     iconv_internal_encoding: 'UTF-8'
 ```
 
@@ -558,8 +558,8 @@ Many PHP applications utilize Javascript tools in some way. The most common use 
 Specifies which Node.js runtime and version to use. This engine overlays the Node.js engine. You can view the available Node.js runtimes in the [Node.js engine documentation](https://github.com/nanobox-io/nanobox-engine-nodejs#nodejs_runtime).
 
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     nodejs_runtime: 'nodejs-4.2'
 ```
 
@@ -589,8 +589,8 @@ The public root of your web application. For instance, if you like to house your
 **Note:** If both this setting and the [global `document_root`](#document_root) are set, the `builtin_document_root` will take precedence.
 
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     apache_document_root: '/'
 ```
 
@@ -599,8 +599,8 @@ code.build:
 #### apache_index_list
 When a path is not specified in the url, these files are served in order in which they're listed.
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     apache_index_list:
       - index.php
       - index.html
@@ -611,8 +611,8 @@ code.build:
 #### apache_default_gateway
 When a path is not specified in the url, this files is served. *This is similar to [`apache_index_list`](#apache_index_list) except it only accepts a single argument.*
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     apache_default_gateway: "index.php"
 ```
 
@@ -626,8 +626,8 @@ Specify which PHP interpreter you would like Apache to use.
 - mod_php
 
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     apache_php_interpreter: php_fpm
 ```
 
@@ -637,8 +637,8 @@ code.build:
 
 Specify which Apache modules to enable or disable. View the [full list of available Apache Modules](https://github.com/nanobox-io/nanobox-engine-php/blob/master/doc/apache-modules.md). By default, all modules are enabled.
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     apache_modules
 ```
 
@@ -648,8 +648,8 @@ code.build:
 
 Sets Apaches [`MaxSpareServers` directive](http://httpd.apache.org/docs/2.2/mod/prefork.html#maxspareservers).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     apache_max_spares: 10
 ```
 
@@ -658,9 +658,9 @@ code.build:
 #### apache_max_clients
 Sets Apache's [`MaxClients` directive](http://httpd.apache.org/docs/2.2/mod/mpm_common.html#maxclients). **Note:**This configuration must be less than or equal to the [`apache_server_limit`](#apache_server_limit).
 ```yaml
-code.build:
-config:
-apache_max_clients: 128
+run.config:
+  engine.config:
+    apache_max_clients: 128
 ```
 
 ---
@@ -668,8 +668,8 @@ apache_max_clients: 128
 #### apache_server_limit
 Sets Apaches [`ServerLimit` directive](http://httpd.apache.org/docs/2.2/mod/mpm_common.html#serverlimit). **Note:** This configuration must be greater than or equal to the [`apache_max_clients`](#apache_max_clients).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     apache_server_limit: 128
 ```
 
@@ -678,8 +678,8 @@ code.build:
 #### apache_max_requests
 Sets Apache's [`MaxRequestsPerChild` directive](http://httpd.apache.org/docs/2.2/mod/mpm_common.html#maxrequestsperchild).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     apache_max_requests: 10000
 ```
 
@@ -688,8 +688,8 @@ code.build:
 #### apache_static_expire
 Adds far future expires to your header, setting the number of seconds static assets are cached. By default, static asset caching is not enabled. We only recommend using this directive on apps whose static assets do not change often.
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     apache_static_expire: 86400
 ```
 
@@ -698,8 +698,8 @@ code.build:
 #### apache_log_level
 Sets Apache's [`LogLevel` directive](http://httpd.apache.org/docs/2.2/mod/core.html#loglevel).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     apache_log_level: warn
 ```
 
@@ -708,8 +708,8 @@ code.build:
 #### apache_access_log
 Enables or disables the Apache Access log.
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     apache_access_log: false
 ```
 
@@ -730,8 +730,8 @@ The public root of your web application. For instance, if you like to house your
 **Note:** If both this setting and the [global `document_root`](#document_root) are set, the `nginx_document_root` will take precedence.
 
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     nginx_document_root: '/'
 ```
 
@@ -740,8 +740,8 @@ code.build:
 #### nginx_index_list
 When a path is not specified in the url, these files are served in order in which they're listed.
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     nginx_index_list:
       - index.php
       - index.html
@@ -752,8 +752,8 @@ code.build:
 #### nginx_default_gateway
 When a path is not specified in the url, this files is served. *This is similar to [`nginx_index_list`](#nginx_index_list) except it only accepts a single argument.*
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     nginx_default_gateway: 'index.php'
 ```
 
@@ -770,8 +770,8 @@ The public root of your web application. For instance, if you like to house your
 **Note:** If both this setting and the [global `document_root`](#document_root) are set, the `builtin_document_root` will take precedence.
 
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     builtin_document_root: '/'
 ```
 
@@ -790,8 +790,8 @@ These settings only apply when using `php_fpm` as your `apache_php_interpreter`.
 #### php_fpm_events_mechanism
 Sets `events.mechanism` setting in the `php-fpm.conf` which specifies the events mechanism FPM will use. More information is available in [PHP's documentation](http://php.net/manual/en/install.fpm.configuration.php#events-mechanism).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     php_fpm_events_mechanism: 'epoll'
 ```
 
@@ -800,8 +800,8 @@ code.build:
 #### php_fpm_max_children
 Sets the maximum number of child processes that can be created by PHP.
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     php_fpm_max_children: 20
 ```
 
@@ -810,8 +810,8 @@ code.build:
 #### php_fpm_max_spare_servers
 The desired maximum number of idle server processes.
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     php_fpm_max_spare_servers: 1
 ```
 
@@ -820,8 +820,8 @@ code.build:
 #### php_fpm_max_requests
 Sets the number of requests each child process should execute before respawning. This can be useful to work around memory leaks in 3rd party libraries.
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     php_fpm_max_requests: 128
 ```
 
@@ -837,8 +837,8 @@ Sets the [`geoip.custom_directory` PHP setting](http://php.net/manual/en/geoip.c
 
 **Note:** When using the `geoip` php extension, you need to provide your own GeoIP database. Free databases are [available for download from Maxmind]http://dev.maxmind.com/geoip/legacy/geolite/#Downloads. Maxmind also provides subscription databases that tend to be more accurate.
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     geoip_custom_directory: 'app/GeoIP/'
 ```
 
@@ -855,8 +855,8 @@ The following settings are used to configure the PHP Memcache driver.
 #### memcache_chunk_size
 Sets the [`memcache.chunk_size` PHP setting](http://php.net/manual/en/memcache.ini.php#ini.memcache.chunk-size).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     memcache_chunk_size: 8192
 ```
 
@@ -865,8 +865,8 @@ code.build:
 #### memcache_hash_strategy
 Sets the [`memcache.hash_strategy` PHP setting](http://php.net/manual/en/memcache.ini.php#ini.memcache.hash-strategy)
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     memcache_hash_strategy: 'standard'
 ```
 
@@ -885,8 +885,8 @@ The following settings are used to configure the PHP Mongo driver.
 #### mongo_native_long
 Sets the [`mongo.native_long` PHP setting](http://php.net/manual/en/mongo.configuration.php#ini.mongo.native-long).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     mongo_native_long: 1
 ```
 
@@ -895,8 +895,8 @@ code.build:
 #### mongo_allow_empty_keys
 Sets the [`mongo.allow_empty_keys` PHP setting](http://php.net/manual/en/mongo.configuration.php#ini.mongo.allow-empty-keys)
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     mongo_allow_empty_keys: 0
 ```
 
@@ -905,8 +905,8 @@ code.build:
 #### mongo_cmd
 Sets the [`mongo.cmd` PHP setting](http://php.net/manual/en/mongo.configuration.php#ini.mongo.cmd).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     mongo_cmd: '$'
 ```
 
@@ -915,8 +915,8 @@ code.build:
 #### mongo_long_as_object
 Sets the [`mongo.long_as_object` PHP setting](http://php.net/manual/en/mongo.configuration.php#ini.mongo.long-as-object).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     mongo_long_as_object: 0
 ```
 
@@ -935,16 +935,16 @@ The following settings are used to configure APC, a PHP byte-code caching engine
 #### apc_shm_size
 Sets the [`apc.shm_size` PHP setting](http://php.net/manual/en/apc.configuration.php#ini.apc.shm-size).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     apc_shm_size: '32M'
 ```
 
 #### apc_num_files_hint
 Sets the [`apc.num_files_hint` PHP setting](http://php.net/manual/en/apc.configuration.php#ini.apc.num-files-hint).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     apc_num_files_hint: 1000
 ```
 
@@ -953,8 +953,8 @@ code.build:
 #### apc_user_entries_hint
 Sets the [`apc.user_entries_hint` PHP setting](http://php.net/manual/en/apc.configuration.php#ini.apc.user-entries-hint).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     apc_user_entries_hint: 4096
 ```
 
@@ -963,8 +963,8 @@ code.build:
 #### apc_filters
 Sets the [`apc.filters` PHP setting](http://php.net/manual/en/apc.configuration.php#ini.apc.filters).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     apc_filters: ''
 ```
 
@@ -982,8 +982,8 @@ The following settings are used to configure eAccelerator, a PHP byte-code cachi
 #### eaccelerator_shm_max
 Sets the [`eaccelerator.shm_max` setting](https://github.com/eaccelerator/eaccelerator/wiki/Settings#eacceleratorshm_max).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     eaccelerator_shm_max: '0'
 ```
 
@@ -992,8 +992,8 @@ code.build:
 #### eaccelerator_shm_size
 Sets the [`eaccelerator.shm_size` setting](https://github.com/eaccelerator/eaccelerator/wiki/Settings#eacceleratorshm_size).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     eaccelerator_shm_size: '0'
 ```
 
@@ -1002,8 +1002,8 @@ code.build:
 #### eaccelerator_filter
 Sets the [`eaccelerator.filter` setting](https://github.com/eaccelerator/eaccelerator/wiki/Settings#eacceleratorfilter).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
      eaccelerator_filter: ''
 ```
 
@@ -1029,8 +1029,8 @@ The following settings are used to configure the OPcache PHP byte-code caching e
 #### opcache_memory_consumption
 Sets the [`opcache.memory_consumption` PHP setting](http://php.net/manual/en/opcache.configuration.php#ini.opcache.memory-consumption).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     opcache_memory_consumption: 64
 ```
 
@@ -1039,8 +1039,8 @@ code.build:
 #### opcache_validate_timestamps
 Sets the [`opcache.validate_timestamps` PHP setting](http://php.net/manual/en/opcache.configuration.php#ini.opcache.validate-timestamps).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     opcache_validate_timestamps: 1
 ```
 
@@ -1049,8 +1049,8 @@ code.build:
 #### opcache_revalidate_freq
 Sets the [`opcache.revalidate_freq` PHP setting](http://php.net/manual/en/opcache.configuration.php#ini.opcache.revalidate-freq)
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     opcache_revalidate_freq: 2
 ```
 
@@ -1059,8 +1059,8 @@ code.build:
 #### opcache_revalidate_path
 Sets the [`opcache.revalidate_path` PHP setting](http://php.net/manual/en/opcache.configuration.php#ini.opcache.revalidate-path).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     opcache_revalidate_path: 0
 ```
 
@@ -1069,8 +1069,8 @@ code.build:
 #### opcache_save_comments
 Sets the [`opcache.save_comments` PHP setting](http://php.net/manual/en/opcache.configuration.php#ini.opcache.save-comments).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     opcache_save_comments: 1
 ```
 
@@ -1079,8 +1079,8 @@ code.build:
 #### opcache_load_comments
 Sets the [`opcache_load_comments` PHP setting](http://php.net/manual/en/opcache.configuration.php#ini.opcache.load-comments).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     opcache_load_comments: 1
 ```
 
@@ -1089,8 +1089,8 @@ code.build:
 #### opcache_enable_file_override
 Sets the [`opcache.enable_file_override` PHP setting](http://php.net/manual/en/opcache.configuration.php#ini.opcache.enable-file-override).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     opcache_enable_file_override: 0
 ```
 
@@ -1099,8 +1099,8 @@ code.build:
 #### opcache_optimization_level
 Sets the [`opcache.optimization_level` PHP setting](http://php.net/manual/en/opcache.configuration.php#ini.opcache.optimization-level).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     opcache_optimization_level: '0xffffffff'
 ```
 
@@ -1109,8 +1109,8 @@ code.build:
 #### opcache_inherited_hack
 Sets the [`opcache.inherited_hack` PHP setting](http://php.net/manual/en/opcache.configuration.php#ini.opcache.inherited-hack).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     opcache_inherited_hack: 1
 ```
 
@@ -1119,8 +1119,8 @@ code.build:
 #### opcache_dups_fix
 Sets the [`opcache.dups_fix` PHP setting](http://php.net/manual/en/opcache.configuration.php#ini.opcache.dups-fix).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     opcache_dups_fix: 0
 ```
 
@@ -1129,8 +1129,8 @@ code.build:
 #### opcache_blacklist_filename
 Sets the [`opcache.blacklist_filename` PHP setting](http://php.net/manual/en/opcache.configuration.php#ini.opcache.blacklist-filename).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     opcache_blacklist_filename: ''
 ```
 
@@ -1149,8 +1149,8 @@ The following settings are used to configure the XCache PHP byte-code caching en
 #### xcache_size
 Sets the [`xcache.size` setting](http://xcache.lighttpd.net/wiki/XcacheIni#XCacheCacher).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     xcache_size: 0
 ```
 
@@ -1159,8 +1159,8 @@ code.build:
 #### xcache_var_size
 Sets the [`xcache.var_size` setting](http://xcache.lighttpd.net/wiki/XcacheIni#XCacheCacher).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     xcache_var_size: 0
 ```
 
@@ -1169,8 +1169,8 @@ code.build:
 #### xcache_admin_user
 Sets the [`xcache.admin.user` setting](http://xcache.lighttpd.net/wiki/XcacheIni#XCacheAdministration).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     xcache_admin_user: 'mOo'
 ```
 
@@ -1179,8 +1179,8 @@ code.build:
 #### xcache_admin_pass
 Sets the [`xcache_admin_pass` setting](http://xcache.lighttpd.net/wiki/XcacheIni#XCacheAdministration).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     xcache_admin_pass: ''
 ```
 
@@ -1214,8 +1214,8 @@ The following settings are used to configure the [PHP New Relic Agent](https://d
 #### newrelic_capture_params
 Sets the [`newrelic.capture_params` setting](https://docs.newrelic.com/docs/agents/php-agent/configuration/php-agent-configuration#inivar-capture_params).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     newrelic_capture_params: false
 ```
 
@@ -1224,8 +1224,8 @@ code.build:
 #### newrelic_ignored_params
 Sets the [`newrelic.ignored_params` setting](https://docs.newrelic.com/docs/agents/php-agent/configuration/php-agent-configuration#inivar-ignored_params).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     newrelic_ignored_params: ''
 ```
 
@@ -1234,8 +1234,8 @@ code.build:
 #### newrelic_loglevel
 Sets the [`newrelic.loglevel` setting](https://docs.newrelic.com/docs/agents/php-agent/configuration/php-agent-configuration#inivar-loglevel).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     newrelic_loglevel: 'info'
 ```
 
@@ -1244,8 +1244,8 @@ code.build:
 #### newrelic_framework
 Sets the [`newrelic.framework` setting](https://docs.newrelic.com/docs/agents/php-agent/configuration/php-agent-configuration#inivar-framework).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     newrelic_framework: 'laravel'
 ```
 
@@ -1254,8 +1254,8 @@ code.build:
 #### newrelic_framework_drupal_modules
 Sets the [`newrelic.framework.drupal.modules` setting](https://docs.newrelic.com/docs/agents/php-agent/configuration/php-agent-configuration#inivar-framework-drupal-modules).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     newrelic_framework_drupal_modules: true
 ```
 
@@ -1264,8 +1264,8 @@ code.build:
 #### newrelic_browser_monitoring_auto_instrument
 Sets the [`newrelic.browser_monitoring_auto_instrument` setting](https://docs.newrelic.com/docs/agents/php-agent/configuration/php-agent-configuration#inivar-autorum).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     newrelic_browser_monitoring_auto_instrument: true
 ```
 
@@ -1274,8 +1274,8 @@ code.build:
 #### newrelic_transaction_tracer_enabled
 Sets the [`newrelic.transaction_tracer.enabled` setting](https://docs.newrelic.com/docs/agents/php-agent/configuration/php-agent-configuration#inivar-tt-enable).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     newrelic_transaction_tracer_enabled: true
 ```
 
@@ -1284,8 +1284,8 @@ code.build:
 #### newrelic_transaction_tracer_detail
 Sets the [`newrelic.transaction_tracer.detail` setting](https://docs.newrelic.com/docs/agents/php-agent/configuration/php-agent-configuration#inivar-tt-detail).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     newrelic_transaction_tracer_detail: 1
 ```
 
@@ -1294,8 +1294,8 @@ code.build:
 #### newrelic_transaction_tracer_record_sql
 Sets the [`newrelic.transaction_tracer.record_sql` setting](https://docs.newrelic.com/docs/agents/php-agent/configuration/php-agent-configuration#inivar-tt-sql).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     newrelic_transaction_tracer_record_sql: 'obfuscated'
 ```
 
@@ -1304,8 +1304,8 @@ code.build:
 #### newrelic_transaction_tracer_threshold
 Sets the [`newrelic.transaction_tracer.threshold` setting](https://docs.newrelic.com/docs/agents/php-agent/configuration/php-agent-configuration#inivar-tt-threshold).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     newrelic_transaction_tracer_threshold: 'apdex_f'
 ```
 
@@ -1314,8 +1314,8 @@ code.build:
 #### newrelic_transaction_tracer_explain_threshold
 Sets the [`newrelic.transaction_tracer.explain_threshold` setting](https://docs.newrelic.com/docs/agents/php-agent/configuration/php-agent-configuration#inivar-tt-epthreshold).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     newrelic_transaction_tracer_explain_threshold: '500'
 ```
 
@@ -1324,8 +1324,8 @@ code.build:
 #### newrelic_transaction_tracer_stack_trace_threshold
 Sets the [`newrelic.transaction_tracer.stack_trace_threshold` setting](https://docs.newrelic.com/docs/agents/php-agent/configuration/php-agent-configuration#inivar-tt-stthreshold).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     newrelic_transaction_tracer_stack_trace_threshold: '500'
 ```
 
@@ -1334,8 +1334,8 @@ code.build:
 #### newrelic_transaction_tracer_slow_sql
 Sets the [`newrelic.transaction_tracer.slow_sql` setting](hhttps://docs.newrelic.com/docs/agents/php-agent/configuration/php-agent-configuration#inivar-tt-slowsql).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     newrelic_transaction_tracer_slow_sql: true
 ```
 
@@ -1344,8 +1344,8 @@ code.build:
 #### newrelic_transaction.tracer_custom
 Sets the [`newrelic.transaction_tracer.custom` setting](https://docs.newrelic.com/docs/agents/php-agent/configuration/php-agent-configuration#inivar-tt-custom).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     newrelic_transaction_tracer_custom: ''
 ```
 
@@ -1354,8 +1354,8 @@ code.build:
 #### newrelic_error_collector_enabled
 Sets the [`newrelic.error_collector.enabled` setting](https://docs.newrelic.com/docs/agents/php-agent/configuration/php-agent-configuration#inivar-err-enabled).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     newrelic_error_collector_enabled: true
 ```
 
@@ -1364,8 +1364,8 @@ code.build:
 #### newrelic_error_collector_record_database_errors
 Sets the [`newrelic.error_collector.record_database_errors` setting](https://docs.newrelic.com/docs/agents/php-agent/configuration/php-agent-configuration#inivar-err-db).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     newrelic_error_collector_record_database_errors: true
 ```
 
@@ -1374,8 +1374,8 @@ code.build:
 #### newrelic_webtransaction_name_files
 Sets the [`newrelic.webtransaction.name.files` setting](https://docs.newrelic.com/docs/agents/php-agent/configuration/php-agent-configuration#inivar-wt-files).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     newrelic_webtransaction_name_files: ''
 ```
 
@@ -1384,8 +1384,8 @@ code.build:
 #### newrelic_webtransaction_name_functions
 Sets the [`newrelic.webtransaction.name.functions` setting](https://docs.newrelic.com/docs/agents/php-agent/configuration/php-agent-configuration#inivar-wt-funcs).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     newrelic_webtransaction_name_functions: ''
 ```
 
@@ -1394,8 +1394,8 @@ code.build:
 #### newrelic_webtransaction_name_remove_trailing_path
 Sets the [`newrelic.webtransaction.name_remove_trailing_path` setting](https://docs.newrelic.com/docs/agents/php-agent/configuration/php-agent-configuration#inivar-wt-remove-path).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     newrelic_webtransaction_name_remove_trailing_path: false
 ```
 

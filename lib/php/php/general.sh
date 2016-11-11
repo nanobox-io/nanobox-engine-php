@@ -570,9 +570,9 @@ print_extension_warnings() {
   It looks like you haven't declared any php extensions. If this app requires php 
   extensions, you can declare them in the boxfile like this:
 
-  code.build:
+  run.config:
     engine: php
-    config:
+    engine.config:
       extensions:
         - apc
         - geoip
