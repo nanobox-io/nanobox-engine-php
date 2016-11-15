@@ -5,7 +5,11 @@
 cat <<-END
 code.build:
   lib_dirs:
+    - .composer
     - vendor
+  paths:
+    - .composer/bin
+    - vendor/bin
 END
 
 exit 0
