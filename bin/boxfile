@@ -8,7 +8,7 @@ code.build:
     - .composer
     - vendor
   paths:
-    - .composer/bin
+    - .composer/vendor/bin
     - vendor/bin
 END
 
