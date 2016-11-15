@@ -52,7 +52,7 @@ nginx_directory_index() {
 
 nginx_default_gateway() {
   # boxfile nginx_default_gateway
-  default_gateway=$(nos_validate "$(nos_payload config_nginx_default_gateway)" "file" "index.php")
+  default_gateway=$(nos_validate "$(nos_payload config_nginx_default_gateway)" "string" "index.php")
   echo "$default_gateway"
 }
 
