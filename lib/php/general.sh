@@ -173,7 +173,14 @@ install_runtime_packages() {
   # unique the list
   declare -a install_pkgs
   for i in "${pkgs[@]}"; do
-    if [[ ! ${install_pkgs[@]} =~ $i ]]; then
+    add="true"
+    for j in "${install_pkgs[@]}"; do
+      if [[ "$i" = "$j" ]]; then
+        add="false"
+        break;
+      fi
+    done
+    if [[ "$add" = "true" ]]; then
       install_pkgs+=(${i})
     fi
   done 
