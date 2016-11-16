@@ -1,0 +1,109 @@
+#!/bin/bash
+
+# trap ctrl-c and call ctrl_c()
+trap ctrl_c INT SIGINT SIGTERM
+
+killed="false"
+
+function ctrl_c() {
+  if [[ "$killed" = "false" ]]; then
+    killed="true"
+    stop_services
+    stop_logging
+  fi
+}
+
+{{#apache}}
+start_apache() {
+  start-apache &
+}
+{{/apache}}
+{{#nginx}}
+start_nginx() {
+  start-nginx &
+}
+{{/nginx}}
+{{^mod_php}}
+start_php() {
+  start-php &
+}
+{{/mod_php}}
+
+start_services() {
+  {{^mod_php}}
+  start_php
+  {{/mod_php}}
+  {{#apache}}
+  start_apache
+  {{/apache}}
+  {{#nginx}}
+  start_nginx
+  {{/nginx}}
+}
+{{#apache}}
+stop_apache() {
+  pkill httpd
+}
+{{/apache}}
+{{#nginx}}
+stop_nginx() {
+  pkill nginx
+}
+{{/nginx}}
+{{^mod_php}}
+stop_php() {
+  {{^builtin}}
+  pkill php-fpm
+  {{/builtin}}
+  {{#builtin}}
+  pkill php
+  {{/builtin}}
+}
+{{/mod_php}}
+stop_services() {
+  {{^mod_php}}
+  stop_php
+  {{/mod_php}}
+  {{#apache}}
+  stop_apache
+  {{/apache}}
+  {{#nginx}}
+  stop_nginx
+  {{/nginx}}
+}
+
+start_logging() {
+  declare -a logs
+  # php logs
+  {{#builtin}}
+  logs+=({{data_dir}}/var/log/php/access.log)
+  {{/builtin}}
+  logs+=({{data_dir}}/var/log/php/php_error.log)
+  {{#fpm}}
+  logs+=({{data_dir}}/var/log/php/php_fpm.log)
+  {{/fpm}}
+  {{#apache}}
+  # apache logs
+  logs+=({{data_dir}}/var/log/apache/access.log)
+  logs+=({{data_dir}}/var/log/apache/error.log)
+  {{/apache}}
+  {{#nginx}}
+  # nginx logs
+  logs+=({{data_dir}}/var/log/nginx/access.log)
+  logs+=({{data_dir}}/var/log/nginx/error.log)
+  {{/nginx}}
+  for i in ${logs[@]}; do
+    sudo mkdir -p $(dirname $i)
+    sudo touch $i
+    sudo chown -R gonano $(dirname $i)
+  done
+  tail -f ${logs[@]} &
+}
+
+stop_logging() {
+  pkill tail
+}
+
+start_logging
+start_services
+wait

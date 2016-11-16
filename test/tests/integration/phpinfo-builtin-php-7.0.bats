@@ -108,7 +108,8 @@ setup() {
   export TEST_VARIABLE=testing
 
   # start php built-in server
-  /data/bin/start-php &
+  # /data/bin/start-php &
+  php-server &
 
   # sleep a few seconds so the server can start
   sleep 3
@@ -117,7 +118,8 @@ setup() {
   run curl -s 127.0.0.1:8080 2>/dev/null
 
   # kill the server
-  pkill php
+  # pkill php
+  pkill php-server
 
   echo "$output"
 

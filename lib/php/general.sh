@@ -215,3 +215,43 @@ php_profile_script() {
     "$(nos_etc_dir)/profile.d/php.sh" \
     "$(php_profile_payload)"
 }
+
+# Takes an argument as the webserver and returns true if it's configured    
+is_webserver() {    
+  # set the default webserver to apache   
+  webserver='apache'    
+      
+  if [[ -n "$(nos_payload 'config_webserver')" ]]; then   
+    webserver=$(nos_payload 'config_webserver')   
+  fi    
+      
+  if [[ "$webserver" = "$1" ]]; then    
+    echo "true"   
+  else    
+    echo "false"    
+  fi    
+}
+
+php_server_script_payload() {
+  cat <<-END
+{
+  "env_dir": "$(nos_payload "env_dir")",
+  "apache": $(is_webserver 'apache'),    
+  "fpm": $(is_interpreter 'fpm'),   
+  "mod_php": $(is_interpreter 'mod_php'),   
+  "nginx": $(is_webserver 'nginx'),   
+  "builtin": $(is_webserver 'builtin'),   
+  "etc_dir": "$(nos_etc_dir)",    
+  "data_dir": "$(nos_data_dir)",    
+  "code_dir": "$(nos_code_dir)",
+}
+END
+}
+
+php_server_script() {
+  nos_template \
+  "bin/php-server.mustache" \
+  "$(nos_data_dir)/bin/php-server" \
+  "$(php_server_script_payload)"
+  chmod 755 $(nos_data_dir)/bin/php-server
+}

@@ -120,10 +120,11 @@ setup() {
   cd /tmp/code
 
   # start php-fpm
-  /data/bin/start-php &
+  # /data/bin/start-php &
 
   # start apache
-  /data/bin/start-apache &
+  # /data/bin/start-apache &
+  php-server &
 
   # sleep a few seconds so the server can start
   sleep 3
@@ -132,7 +133,8 @@ setup() {
   run curl -s 127.0.0.1:8080 2>/dev/null
 
   # kill the server
-  pkill php-fpm
+  # pkill php-fpm
+  pkill php-server
 
 
   echo "$output"
@@ -142,7 +144,8 @@ setup() {
   [[ "$output" =~ "xcache" ]]
 
   # start php-fpm
-  APP_NAME=dev /data/bin/start-php &
+  # APP_NAME=dev /data/bin/start-php &
+  APP_NAME=dev php-server &
 
   sleep 3
 
@@ -150,9 +153,10 @@ setup() {
   run curl -s 127.0.0.1:8080 2>/dev/null
 
   # kill the server
-  pkill php-fpm
+  # pkill php-fpm
 
-  pkill httpd
+  # pkill httpd
+  pkill php-server
 
   echo "$output"
 
