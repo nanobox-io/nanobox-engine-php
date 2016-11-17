@@ -7,7 +7,7 @@ run.config:
   cache_dirs:
     - .composer
     - vendor
-  paths:
+  extra_path_dirs:
     - .composer/vendor/bin
     - vendor/bin
 END
