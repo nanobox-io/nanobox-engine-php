@@ -5,7 +5,11 @@
 cat <<-END
 run.config:
   cache_dirs:
+    - .composer
     - vendor
+  paths:
+    - .composer/vendor/bin
+    - vendor/bin
 END
 
 exit 0
