@@ -2,14 +2,22 @@
 # -*- mode: bash; tab-width: 2; -*-
 # vim: ts=2 sw=2 ft=bash noet
 
+# source the Nos framework
+. /opt/nanobox/nos/common.sh
+
+# initialize Nos with the original arguments
+nos_init "$@"
+
+# source common lib, where the helpers are defined
+. ${engine_lib_dir}/php.sh
+
 cat <<-END
-code.build:
-  lib_dirs:
-    - .composer
+run.config:
+  cache_dirs:
     - vendor
-  paths:
-    - .composer/vendor/bin
-    - vendor/bin
+  extra_path_dirs:
+    - ${HOME}/.composer/vendor/bin
+    - $(nos_code_dir)/vendor/bin
 END
 
 exit 0

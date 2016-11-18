@@ -5,7 +5,7 @@ This is a generic PHP engine used to launch PHP web and worker services on [Nano
 ## Usage
 To use this engine, specify in the boxfile.yml:
 ```yaml
-code.build:
+run.config:
   engine: php
 ```
 
@@ -17,8 +17,8 @@ If a package.json file exists at the root of the application, nodejs will be ins
 
 You can also specify a custom nodejs version:
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     nodejs_runtime: nodejs-6
 ```
 
@@ -31,8 +31,8 @@ This Readme outlines only the most basic and commonly used settings. For the ful
 
 #### Overview of Basic boxfile.yml Configuration Options
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     # PHP Settings
     runtime: 'php-5.6'
     extensions:
@@ -80,8 +80,8 @@ The following web servers are available:
 - builtin *([PHP's built-in web server](http://php.net/manual/en/features.commandline.webserver.php) available in 5.4+)*
 
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     webserver: 'apache'
 ```
 
@@ -120,8 +120,8 @@ Specifies which PHP runtime and version to use. The following runtimes are avail
 - php-7.0
 
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     runtime: 'php-5.6'
 ```
 
@@ -131,8 +131,8 @@ code.build:
 Specifies what PHP extensions should be included in your app's environment. To see what PHP extensions are available, view the [full list of available PHP extensions](https://github.com/nanobox-io/nanobox-engine-php/blob/master/doc/php-extensions.md).
 
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     extensions:
       - curl
       - gd
@@ -145,8 +145,8 @@ code.build:
 #### zend_extensions
 Specifies what Zend extensions should be included in your app's environment. To see what Zend extensions are available, view the [Zend Extensions section of the PHP extensions list](https://github.com/nanobox-io/nanobox-engine-php/blob/master/doc/php-extensions.md#zend-extensions).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     zend_extensions:
       - ioncube_loader
       - opcache
@@ -157,8 +157,8 @@ code.build:
 #### max_execution_time
 Sets the [`max_execution_time` PHP setting](http://www.php.net/manual/en/info.configuration.php#ini.max-execution-time).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     max_execution_time: 30
 ```
 
@@ -167,8 +167,8 @@ code.build:
 #### max_input_time
 Sets the [`max_input_time` PHP setting](http://www.php.net/manual/en/info.configuration.php#ini.max-input-time).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     max_input_time: 60
 ```
 
@@ -177,8 +177,8 @@ code.build:
 #### error_reporting
 Sets the [`error_reporting` PHP setting](http://www.php.net/manual/en/errorfunc.configuration.php#ini.error-reporting).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     error_reporting: E_ALL
 ```
 
@@ -187,8 +187,8 @@ code.build:
 #### display_errors
 Sets the [`display_errors` PHP setting](http://us3.php.net/manual/en/errorfunc.configuration.php#ini.display-errors).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     display_errors: 'stderr'
 ```
 
@@ -197,8 +197,8 @@ code.build:
 #### post_max_size
 Sets the [`post_max_size` PHP setting](http://www.php.net/manual/en/ini.core.php#ini.post-max-size).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     post_max_size: '8M'
 ```
 
@@ -207,8 +207,8 @@ code.build:
 #### upload_max_filesize
 Sets the [`upload_max_filesize` PHP setting](http://php.net/manual/en/ini.core.php#ini.upload-max-filesize).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     upload_max_filesize: '2M'
 ```
 
@@ -217,8 +217,8 @@ code.build:
 #### file_uploads
 Sets the [`file_uploads` PHP setting](http://php.net/manual/en/ini.core.php#ini.file-uploads).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     file_uploads: true
 ```
 
@@ -227,8 +227,8 @@ code.build:
 #### date_timezone
 Sets the [`date.timezone` PHP setting](http://php.net/manual/en/datetime.configuration.php#ini.date.timezone).
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     date_timezone: 'US/central'
 ```
 
@@ -250,8 +250,8 @@ Specify which PHP interpreter you would like Apache to use.
 - mod_php
 
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     apache_php_interpreter: fpm
 ```
 
@@ -260,8 +260,8 @@ code.build:
 #### apache_access_log
 Enables or disables the Apache Access log.
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     apache_access_log: false
 ```
 

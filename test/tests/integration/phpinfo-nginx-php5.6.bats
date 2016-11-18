@@ -108,10 +108,11 @@ setup() {
   export TEST_VARIABLE=testing
 
   # start php-fpm
-  /data/bin/start-php &
+  # /data/bin/start-php &
 
   # start apache
-  /data/bin/start-nginx &
+  # /data/bin/start-nginx &
+  php-server &
 
   # sleep a few seconds so the server can start
   sleep 3
@@ -122,8 +123,9 @@ setup() {
   expected="Hello world!"
 
   # kill the server
-  pkill php-fpm
-  pkill nginx
+  # pkill php-fpm
+  # pkill nginx
+  pkill php-server
 
   echo "$output"
   echo
