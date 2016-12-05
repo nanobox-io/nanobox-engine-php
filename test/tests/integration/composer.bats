@@ -61,7 +61,6 @@ setup() {
 
   [ "$status" -eq 0 ]
   [[ "${output}" =~ "- composer install :" ]]
-  [ -f /data/etc/profile.d/composer.sh ]
 }
 
 @test "compile" {

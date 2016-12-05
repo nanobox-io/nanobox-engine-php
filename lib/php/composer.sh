@@ -21,25 +21,3 @@ composer_install() {
     (cd $(nos_code_dir); nos_run_process "composer install" "composer install --no-interaction --prefer-source")
   fi
 }
-
-composer_dir() {
-  [[ ! -f $(nos_code_dir)/.composer ]] && nos_run_process "make composer dir" "mkdir -p $(nos_code_dir)/.composer"
-  [[ ! -s ${HOME}/.composer ]] && nos_run_process "link composer dir" "ln -s $(nos_code_dir)/.composer ${HOME}/.composer"
-}
-
-# Generate the payload to render the composer profile template
-composer_profile_payload() {
-  cat <<-END
-{
-  "code_dir": "$(nos_code_dir)"
-}
-END
-}
-
-# ensure ${HOME}/.composer/vendor/bin is persisted to the PATH
-persist_composer_bin_to_path() {
-  nos_template \
-    "profile.d/composer.sh" \
-    "$(nos_etc_dir)/profile.d/composer.sh" \
-    "$(composer_profile_payload)"
-}

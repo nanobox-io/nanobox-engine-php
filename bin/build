@@ -33,10 +33,6 @@ php_profile_script
 
 php_server_script
 
-composer_dir
-
-persist_composer_bin_to_path
-
 composer_install
 
 exit 0
