@@ -97,7 +97,7 @@ start_logging() {
     sudo touch $i
     sudo chown -R gonano $(dirname $i)
   done
-  tail -f ${logs[@]} &
+  tail -f -n0 ${logs[@]} &
 }
 
 stop_logging() {
