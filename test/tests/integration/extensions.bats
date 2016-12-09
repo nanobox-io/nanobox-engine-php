@@ -12,7 +12,7 @@ payload() {
   "cache_dir": "/tmp/cache",
   "etc_dir": "/data/etc",
   "env_dir": "/data/etc/env.d",
-  "config": {"extensions": ["phar","json","filter","hash","mongo"],"zend_extensions":["xcache"],"dev_extensions":{"add":["geoip", "session"],"rm":["mongo"]},"dev_zend_extensions":{"add":["xdebug", "memcache"],"rm":["xcache"]}}
+  "config": {"runtime": "php-5.6","extensions": ["phar","json","filter","hash","mongo"],"zend_extensions":["xcache"],"dev_extensions":{"add":["geoip", "session"],"rm":["mongo"]},"dev_zend_extensions":{"add":["xdebug", "memcache"],"rm":["xcache"]}}
 }
 END
 }
