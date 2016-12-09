@@ -12,16 +12,6 @@ run.config:
 ## Composer
 This engine uses [Composer](https://getcomposer.org) to manage dependencies. If a composer.json file exists at the root of your application, dependencies will be fetched during a build.
 
-## Node.js
-If a package.json file exists at the root of the application, nodejs will be installed and an `npm install` will be run during the build.
-
-You can also specify a custom nodejs version:
-```yaml
-run.config:
-  engine.config:
-    nodejs_runtime: nodejs-6
-```
-
 ## Basic Configuration
 
 This engine exposes configuration options through the [boxfile.yml](http://docs.nanobox.io/boxfile/), a yaml config file used to provision and configure your app's platform.
