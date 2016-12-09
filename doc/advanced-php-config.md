@@ -12,7 +12,7 @@ run.config:
     document_root: '/'
 
     # PHP Settings
-    runtime: 'php-5.6'
+    runtime: 'php-7.0'
     extensions:
       - curl
       - gd
@@ -247,12 +247,13 @@ Specifies which PHP runtime and version to use. The following runtimes are avail
 - php-5.5
 - php-5.6
 - php-7.0
+- php-7.1
 
 ```yaml
 run.config:
   engine: php
   engine.config:
-    runtime: 'php-5.6'
+    runtime: 'php-7.0'
 ```
 
 ---

@@ -24,7 +24,7 @@ run.config:
 
 ## Basic Configuration
 
-This engine exposes configuration options through the [boxfile,yml](http://docs.nanobox.io/boxfile/), a yaml config file used to provision and configure your app's platform.
+This engine exposes configuration options through the [boxfile.yml](http://docs.nanobox.io/boxfile/), a yaml config file used to provision and configure your app's platform.
 
 ##### *Advanced Configuration Options*
 This Readme outlines only the most basic and commonly used settings. For the full list of available configuration options, view the **[Advanced PHP Configuration options](https://github.com/nanobox-io/nanobox-engine-php/blob/master/doc/advanced-php-config.md)**.
