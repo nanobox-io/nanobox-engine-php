@@ -1,116 +1,116 @@
 # PHP/Zend Extension Availability in the Nanobox PHP Engine
 
-#### PHP Extensions
-| extensions          | PHP 5.3             | PHP 5.4             | PHP 5.5             | PHP 5.6             | PHP 7.0             |
-| :------------------ | :-----------------: | :-----------------: | :-----------------: | :-----------------: | :-----------------: |
-| amqp                | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| apc                 | :white_check_mark:  | :white_check_mark:  | :x:                 | :x:                 | :x:                 |
-| apcu                | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| apfd                | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| apm                 | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| bcmath              | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| bcompiler           | :white_check_mark:  | :x:                 | :x:                 | :x:                 | :x:                 |
-| bz2                 | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| calendar            | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| ctype               | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| curl                | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| dba                 | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| dom                 | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| eaccelerator        | :white_check_mark:  | :white_check_mark:  | :x:                 | :x:                 | :x:                 |
-| enchant             | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| exif                | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| fileinfo            | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| filter              | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| ftp                 | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| gd                  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| gender              | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| geoip               | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| gettext             | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| gmp                 | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| gnupg               | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| hash                | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| htscanner           | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :x:                 |
-| http                | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| iconv               | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| igbinary            | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| imagick             | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| imap                | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| intl                | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| json                | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| json_post           | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| ldap                | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| lzf                 | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| magickwand          | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :x:                 |
-| mbstring            | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| mcrypt              | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| memcache            | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :x:                 |
-| memcached           | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| mogilefs            | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| mongo               | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :x:                 |
-| mongodb             | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| mssql               | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :x:                 |
-| mysql               | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :x:                 |
-| mysqli              | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| ncurses             | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :x:                 |
-| newrelic            | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| newt                | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :x:                 |
-| oauth               | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| parsekit            | :white_check_mark:  | :x:                 | :x:                 | :x:                 | :x:                 |
-| pcntl               | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| pdo                 | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| pdo_dblib           | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| pdo_mysql           | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| pdo_odbc            | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| pdo_pgsql           | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| pdo_sqlite          | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| pgsql               | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| phalcon             | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| phar                | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| phpwkhtmltox        | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :x:                 |
-| posix               | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| propro              | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| pspell              | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| radius              | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :x:                 |
-| raphf               | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| rar                 | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :x:                 |
-| readline            | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| recode              | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| redis               | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| session             | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| shmop               | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| simplexml           | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| snmp                | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| soap                | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| sockets             | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| sphinx              | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :x:                 |
-| sqlite              | :white_check_mark:  | :x:                 | :x:                 | :x:                 | :x:                 |
-| ssh2                | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| stats               | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| stomp               | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| svn                 | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :x:                 |
-| sysvmsg             | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| sysvsem             | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| sysvshm             | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| tidy                | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| timezonedb          | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| tokenizer           | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| txforward           | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :x:                 |
-| uploadprogress      | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :x:                 |
-| wddx                | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| wsf                 | :white_check_mark:  | :x:                 | :x:                 | :x:                 | :x:                 |
-| xcache              | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :x:                 |
-| xml                 | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| xmlreader           | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| xmlrpc              | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| xmlwriter           | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| xsl                 | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| yaml                | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :x:                 |
-| zip                 | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| zlib                | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
+## PHP Extension Per PHP Version
+| extensions     | 5.3 | 5.4 | 5.5 | 5.6 | 7.0 | 7.1 |
+|:---------------|:---:|:---:|:---:|:---:|:---:|:---:|
+| amqp           | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| apc            | ✅  | ✅  | ❌  | ❌  | ❌  | ❌  |
+| apcu           | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| apfd           | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| apm            | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| bcmath         | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| bcompiler      | ✅  | ❌  | ❌  | ❌  | ❌  | ❌  |
+| bz2            | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| calendar       | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| ctype          | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| curl           | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| dba            | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| dom            | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| eaccelerator   | ✅  | ✅  | ❌  | ❌  | ❌  | ❌  |
+| enchant        | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| exif           | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| fileinfo       | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| filter         | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| ftp            | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| gd             | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| gender         | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| geoip          | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| gettext        | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| gmp            | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| gnupg          | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| hash           | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| htscanner      | ✅  | ✅  | ✅  | ✅  | ❌  | ❌  |
+| http           | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| iconv          | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| igbinary       | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| imagick        | ✅  | ✅  | ✅  | ✅  | ✅  | ❌  |
+| imap           | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| intl           | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| json           | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| json_post      | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| ldap           | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| lzf            | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| magickwand     | ✅  | ✅  | ✅  | ✅  | ❌  | ❌  |
+| mbstring       | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| mcrypt         | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| memcache       | ✅  | ✅  | ✅  | ✅  | ❌  | ❌  |
+| memcached      | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| mogilefs       | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| mongo          | ✅  | ✅  | ✅  | ✅  | ❌  | ❌  |
+| mongodb        | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| mssql          | ✅  | ✅  | ✅  | ✅  | ❌  | ❌  |
+| mysql          | ✅  | ✅  | ✅  | ✅  | ❌  | ❌  |
+| mysqli         | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| ncurses        | ✅  | ✅  | ✅  | ✅  | ❌  | ❌  |
+| newrelic       | ✅  | ✅  | ✅  | ✅  | ✅  | ❌  |
+| newt           | ✅  | ✅  | ✅  | ✅  | ❌  | ❌  |
+| oauth          | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| parsekit       | ✅  | ❌  | ❌  | ❌  | ❌  | ❌  |
+| pcntl          | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| pdo            | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| pdo_dblib      | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| pdo_mysql      | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| pdo_odbc       | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| pdo_pgsql      | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| pdo_sqlite     | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| pgsql          | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| phalcon        | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| phar           | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| phpwkhtmltox   | ✅  | ✅  | ✅  | ✅  | ❌  | ❌  |
+| posix          | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| propro         | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| pspell         | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| radius         | ✅  | ✅  | ✅  | ✅  | ❌  | ❌  |
+| raphf          | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| rar            | ✅  | ✅  | ✅  | ✅  | ❌  | ❌  |
+| readline       | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| recode         | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| redis          | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| session        | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| shmop          | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| simplexml      | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| snmp           | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| soap           | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| sockets        | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| sphinx         | ✅  | ✅  | ✅  | ✅  | ❌  | ❌  |
+| sqlite         | ✅  | ❌  | ❌  | ❌  | ❌  | ❌  |
+| ssh2           | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| stats          | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| stomp          | ✅  | ✅  | ✅  | ✅  | ✅  | ❌  |
+| svn            | ✅  | ✅  | ✅  | ✅  | ❌  | ❌  |
+| sysvmsg        | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| sysvsem        | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| sysvshm        | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| tidy           | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| timezonedb     | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| tokenizer      | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| txforward      | ✅  | ✅  | ✅  | ✅  | ❌  | ❌  |
+| uploadprogress | ✅  | ✅  | ✅  | ✅  | ❌  | ❌  |
+| wddx           | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| wsf            | ✅  | ❌  | ❌  | ❌  | ❌  | ❌  |
+| xcache         | ✅  | ✅  | ✅  | ✅  | ❌  | ❌  |
+| xml            | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| xmlreader      | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| xmlrpc         | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| xmlwriter      | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| xsl            | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| yaml           | ✅  | ✅  | ✅  | ✅  | ❌  | ❌  |
+| zip            | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| zlib           | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
 
-#### Zend Extensions
-| php_zend_extensions | PHP 5.3             | PHP 5.4             | PHP 5.5             | PHP 5.6             | PHP 7.0             |
-| :------------------ | :-----------------: | :-----------------: | :-----------------: | :-----------------: | :-----------------: |
-| ioncube_loader      | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| opcache             | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
-| xdebug              | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
+## Zend Extension Per PHP Version
+| zend_extensions | 5.3 | 5.4 | 5.5 | 5.6 | 7.0 | 7.1 |
+|:----------------|:---:|:---:|:---:|:---:|:---:|:---:|
+| ioncube_loader  | ✅  | ✅  | ✅  | ✅  | ✅  | ❌  |
+| opcache         | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| xdebug          | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
