@@ -43,7 +43,7 @@
 | magickwand     | ✅  | ✅  | ✅  | ✅  | ❌  | ❌  |
 | mbstring       | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
 | mcrypt         | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
-| memcache       | ✅  | ✅  | ✅  | ✅  | ❌  | ❌  |
+| memcache       | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
 | memcached      | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
 | mogilefs       | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
 | mongo          | ✅  | ✅  | ✅  | ✅  | ❌  | ❌  |
