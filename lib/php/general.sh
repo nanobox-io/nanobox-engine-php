@@ -49,7 +49,7 @@ configure_webserver() {
 }
 
 runtime() {
-  version=$(nos_validate "$(nos_payload config_runtime)" "string" "php-5.6")
+  version=$(nos_validate "$(nos_payload config_runtime)" "string" "php-7.0")
   echo "${version}"
 }
 

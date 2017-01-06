@@ -12,7 +12,7 @@ payload() {
   "cache_dir": "/tmp/cache",
   "etc_dir": "/data/etc",
   "env_dir": "/data/etc/env.d",
-  "config": {"extensions": ["cat","dog","fish","gd"]}
+  "config": {"runtime": "php-5.6", "extensions": ["cat","dog","fish","gd"]}
 }
 END
 }

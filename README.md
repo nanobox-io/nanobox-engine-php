@@ -12,19 +12,9 @@ run.config:
 ## Composer
 This engine uses [Composer](https://getcomposer.org) to manage dependencies. If a composer.json file exists at the root of your application, dependencies will be fetched during a build.
 
-## Node.js
-If a package.json file exists at the root of the application, nodejs will be installed and an `npm install` will be run during the build.
-
-You can also specify a custom nodejs version:
-```yaml
-run.config:
-  engine.config:
-    nodejs_runtime: nodejs-6
-```
-
 ## Basic Configuration
 
-This engine exposes configuration options through the [boxfile,yml](http://docs.nanobox.io/boxfile/), a yaml config file used to provision and configure your app's platform. 
+This engine exposes configuration options through the [boxfile.yml](http://docs.nanobox.io/boxfile/), a yaml config file used to provision and configure your app's platform.
 
 ##### *Advanced Configuration Options*
 This Readme outlines only the most basic and commonly used settings. For the full list of available configuration options, view the **[Advanced PHP Configuration options](https://github.com/nanobox-io/nanobox-engine-php/blob/master/doc/advanced-php-config.md)**.
@@ -34,7 +24,7 @@ This Readme outlines only the most basic and commonly used settings. For the ful
 run.config:
   engine.config:
     # PHP Settings
-    runtime: 'php-5.6'
+    runtime: 'php-7.0'
     extensions:
       - curl
       - gd
@@ -117,12 +107,13 @@ Specifies which PHP runtime and version to use. The following runtimes are avail
 - php-5.4
 - php-5.5
 - php-5.6
-- php-7.0
+- php-7.0 *(default)*
+- php-7.1
 
 ```yaml
 run.config:
   engine.config:
-    runtime: 'php-5.6'
+    runtime: 'php-7.0'
 ```
 
 ---

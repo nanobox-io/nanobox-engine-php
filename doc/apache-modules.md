@@ -1,8 +1,19 @@
 # Apache Modules Available in the Nanobox PHP Engine
 The apache modules listed below are available to the Nanobox PHP engine.
 
-- actions
-- alias
+## Included by Default
+- actions *(only included when using fastcgi)*
+- alias *(only included when using fastcgi)*
+- deflate
+- dir
+- env
+- expires
+- log_config
+- mime
+- rewrite
+- setenvif
+
+## Optional Modules
 - asis
 - auth_basic
 - auth_digest
@@ -33,7 +44,6 @@ The apache modules listed below are available to the Nanobox PHP engine.
 - dav_fs
 - dav_lock
 - dbd
-- deflate
 - disk_cache
 - dumpio
 - echo
