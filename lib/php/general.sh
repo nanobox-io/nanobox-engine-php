@@ -136,9 +136,9 @@ validate_runtime_packages() {
     if [[ $pkg =~ ^(.*)-([0-9\.]+) ]]; then
       p=${BASH_REMATCH[1]}
       v=${BASH_REMATCH[2]}
-      (/data/bin/pkgin se ${p} | grep v > /dev/null) || bad_pkgs+=("${pkg}")
+      (/data/bin/pkgin se ${p} | grep ${p}-${v} > /dev/null) || bad_pkgs+=("${pkg}")
     else
-      /data/bin/pkgin se ${pkg} > /dev/null || bad_pkgs+=("${pkg}")
+      /data/bin/pkgin se ${pkg} | grep ${pkg}- > /dev/null || bad_pkgs+=("${pkg}")
     fi
   done
 
