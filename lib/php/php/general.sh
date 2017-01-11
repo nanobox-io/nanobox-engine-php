@@ -131,6 +131,12 @@ php53() {
   echo "false"
 }
 
+php7() {
+    # boxfile php_version = 7
+  [[ $(runtime) =~ "php-7" ]] && echo "true" && return
+  echo "false"
+}
+
 iconv_internal_encoding() {
   # boxfile php_iconv_internal_encoding
   _iconv_internal_encoding=$(nos_validate "$(nos_payload config_iconv_internal_encoding)" "string" "UTF-8")

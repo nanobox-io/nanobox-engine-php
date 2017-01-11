@@ -52,9 +52,23 @@ apache_conf_payload() {
   "etc_dir": "$(nos_etc_dir)",
   "static_expire": "$(apache_static_expire)",
   "log_level": "$(apache_log_level)",
-  "access_log": "$(apache_access_log)"
+  "access_log": "$(apache_access_log)",
+  "apache24": $(apache24),
+  "php7": $(php7)
 }
 END
+}
+
+apache_version() {
+  # boxfile apache_version
+  apache_version=$(nos_validate "$(nos_payload config_apache_version)" "string" "2.2")
+  echo "$apache_version"
+}
+
+apache24() {
+  # boxfile php_version = 7
+  [[ $(apache_version) =~ "2.4" ]] && echo "true" && return
+  echo "false"
 }
 
 apache_max_spares() {
@@ -148,12 +162,15 @@ apache_access_log() {
 }
 
 apache_packages() {
-  pkgs=("apache-2.2" "ap22-cloudflare" "ap22-xsendfile")
+  apv=$(apache_version)
+  pkgs=("apache-${apv}" "ap${apv//[.-]/}-cloudflare" "ap${apv//[.-]/}-xsendfile")
   
   if [[ "$(php_fpm_use_fastcgi)" = "true" ]]; then
-    pkgs+=("ap22-fastcgi")
+    if [[ "${apv}" = "2.2" ]]; then
+      pkgs+=("ap${apv//[.-]/}-fastcgi")
+    fi
   else
-    pkgs+=("ap22-$(condensed_runtime)")
+    pkgs+=("ap${apv//[.-]/}-$(condensed_runtime)")
   fi
   
   echo "${pkgs[@]}"

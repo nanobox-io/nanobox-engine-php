@@ -9,12 +9,32 @@ KeepAlive On
 MaxKeepAliveRequests 100
 KeepAliveTimeout 15
 
+{{^apache24}}
 StartServers          1
 MinSpareServers       1
 MaxSpareServers       {{max_spares}}
 MaxClients            {{max_clients}}
 MaxRequestsPerChild   {{max_requests_per_child}}
 ServerLimit           {{server_limit}}
+{{/apache24}}
+{{#apache24}}
+{{#mod_php}}
+StartServers           1
+MinSpareServers        1
+MaxSpareServers        {{max_spares}}
+MaxClients             {{max_clients}}
+MaxConnectionsPerChild {{max_requests_per_child}}
+ServerLimit            {{server_limit}}
+{{/mod_php}}
+{{#fastcgi}}
+StartServers           1
+MinSpareThreads        1
+MaxSpareThreads        {{max_spares}}
+MaxRequestWorkers      {{max_clients}}
+MaxConnectionsPerChild {{max_requests_per_child}}
+ServerLimit            {{server_limit}}
+{{/fastcgi}}
+{{/apache24}}
 
 ServerName localhost
 Listen 0.0.0.0:8080
@@ -22,6 +42,12 @@ Listen 0.0.0.0:8080
 #############################################
 # Dynamic Apache Modules                    #
 #############################################
+{{#apache24}}
+LoadModule unixd_module lib/httpd/mod_unixd.so
+LoadModule filter_module lib/httpd/mod_filter.so
+LoadModule authz_core_module lib/httpd/mod_authz_core.so
+LoadModule authz_host_module lib/httpd/mod_authz_host.so
+{{/apache24}}
 LoadModule dir_module lib/httpd/mod_dir.so
 LoadModule env_module lib/httpd/mod_env.so
 LoadModule expires_module lib/httpd/mod_expires.so
@@ -31,12 +57,27 @@ LoadModule rewrite_module lib/httpd/mod_rewrite.so
 LoadModule setenvif_module lib/httpd/mod_setenvif.so
 LoadModule deflate_module lib/httpd/mod_deflate.so
 {{#mod_php}}
+{{#apache24}}
+LoadModule mpm_prefork_module lib/httpd/mod_mpm_prefork.so
+{{/apache24}}
+{{^php7}}
 LoadModule php5_module lib/httpd/mod_php5.so
+{{/php7}}
+{{#php7}}
+LoadModule php7_module lib/httpd/mod_php7.so
+{{/php7}}
 {{/mod_php}}
 {{#fastcgi}}
+{{^apache24}}
 LoadModule actions_module lib/httpd/mod_actions.so
 LoadModule alias_module lib/httpd/mod_alias.so
 LoadModule fastcgi_module lib/httpd/mod_fastcgi.so
+{{/apache24}}
+{{#apache24}}
+LoadModule mpm_worker_module lib/httpd/mod_mpm_worker.so
+LoadModule proxy_module lib/httpd/mod_proxy.so
+LoadModule proxy_fcgi_module lib/httpd/mod_proxy_fcgi.so
+{{/apache24}}
 {{/fastcgi}}
 {{#modules}}
 LoadModule {{.}}_module lib/httpd/mod_{{.}}.so
@@ -106,10 +147,15 @@ AddType application/x-gzip .gz .tgz
 AddType application/x-httpd-php .php
 AddHandler type-map var
 {{#fastcgi}}
+{{^apache24}}
 ScriptAlias /cgi-bin/ "{{data_dir}}/libexec/cgi-bin/"
 FastCgiExternalServer {{data_dir}}/libexec/cgi-bin/php-cgi -idle-timeout {{timeout}} -socket {{data_dir}}/var/tmp/php.sock -pass-header Authorization
 AddHandler php-fastcgi .php
 Action php-fastcgi /cgi-bin/php-cgi
+{{/apache24}}
+{{#apache24}}
+ProxyPassMatch "^/(.*\.php(/.*)?)$" "unix:{{data_dir}}/var/tmp/php.sock|fcgi://localhost{{code_dir}}"
+{{/apache24}}
 {{/fastcgi}}
 
 #############################################
