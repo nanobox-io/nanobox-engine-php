@@ -188,7 +188,7 @@ max_input_time() {
 
 memory_limit() {
   # boxfile memory_limit
-  _memory_limit=$(nos_validate "$(nos_payload config_memory_limit)" "byte" "512M")
+  _memory_limit=$(nos_validate "$(nos_payload config_memory_limit)" "byte" "512")
   echo "$_memory_limit"
 }
 
