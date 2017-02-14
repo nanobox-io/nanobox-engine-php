@@ -63,6 +63,7 @@ php_fpm_use_fastcgi() {
   # use fastcgi when the webserver is nginx
   # don't use fastcgi if webserver is builtin
   # don't use fastcgi if apache is using mod_php
+  # don't use fastcgi if apache version is 2.4
   [[ "$(webserver)" = 'nginx' ]] && echo 'true' && return
   [[ "$(webserver)" = 'builtin' ]] && echo 'false' && return
   [[ "$(webserver)" = 'apache' && "$(nos_validate "$(nos_payload config_apache_php_interpreter)" "string" "fpm")" = 'fpm' ]] && echo "true" && return
