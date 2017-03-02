@@ -40,6 +40,8 @@ report_php_settings() {
   nos_print_bullet_sub "Session save handler: $(session_save_handler)"
   nos_print_bullet_sub "Date timezone: $(date_timezone)"
   nos_print_bullet_sub "Iconv internal encoding: $(iconv_internal_encoding)"
+  nos_print_bullet_sub "PHP extension: $(extensions)"
+  nos_print_bullet_sub "PHP zend extension: $(zend_extensions)"
 }
 
 php_ini_payload() {
