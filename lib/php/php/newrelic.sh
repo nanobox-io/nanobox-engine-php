@@ -38,7 +38,7 @@ report_newrelic_settings() {
   nos_print_bullet_sub "Error collector record database errors: $(newrelic_error_collector_record_database_errors)"
   nos_print_bullet_sub "Eebtransaction name functions: $(newrelic_webtransaction_name_functions)"
   nos_print_bullet_sub "Webtransaction name files: $(newrelic_webtransaction_name_files)"
-  nos_print_bullet_sub "Webtransaction name remove trailing pathprint bullet sub: $(newrelic_webtransaction_name_remove_trailing_pathnos_print_bullet_sub)"  
+  nos_print_bullet_sub "Webtransaction name remove trailing pathprint bullet sub: $(newrelic_webtransaction_name_remove_trailing_path)"  
 }
 
 newrelic_ini_payload() {
