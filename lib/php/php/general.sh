@@ -40,8 +40,6 @@ report_php_settings() {
   nos_print_bullet_sub "Session save handler: $(session_save_handler)"
   nos_print_bullet_sub "Date timezone: $(date_timezone)"
   nos_print_bullet_sub "Iconv internal encoding: $(iconv_internal_encoding)"
-  nos_print_bullet_sub "PHP extension: $(extensions)"
-  nos_print_bullet_sub "PHP zend extension: $(zend_extensions)"
 }
 
 php_ini_payload() {
@@ -297,7 +295,6 @@ extensions() {
             extensions_list+=(${!value})
           fi
         else
-          echo ${!value}
           exit 1
         fi
       fi
