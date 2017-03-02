@@ -297,6 +297,7 @@ extensions() {
             extensions_list+=(${!value})
           fi
         else
+          echo ${!value}
           exit 1
         fi
       fi
