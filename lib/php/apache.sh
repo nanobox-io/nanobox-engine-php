@@ -196,7 +196,7 @@ generate_apache_mod_php_script() {
   nos_template \
   "bin/start-apache-mod-php.mustache" \
   "$(nos_data_dir)/bin/start-apache" \
-  "$(nginx_script_payload)"
+  "$(apache_mod_php_script_payload)"
   chmod 755 $(nos_data_dir)/bin/start-apache
 }
 
