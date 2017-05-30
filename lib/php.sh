@@ -16,3 +16,4 @@
 . ${engine_lib_dir}/php/php/newrelic.sh
 . ${engine_lib_dir}/php/php/opcache.sh
 . ${engine_lib_dir}/php/php/xcache.sh
+. ${engine_lib_dir}/php/php/xdebug.sh
