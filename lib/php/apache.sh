@@ -52,7 +52,7 @@ apache_conf_payload() {
   "etc_dir": "$(nos_etc_dir)",
   "static_expire": "$(apache_static_expire)",
   "log_level": "$(apache_log_level)",
-  "access_log": "$(apache_access_log)",
+  "access_log": $(apache_access_log),
   "apache24": $(apache24),
   "php7": $(php7)
 }
