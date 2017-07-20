@@ -52,6 +52,7 @@ run.config:
     iconv_internal_encoding: 'UTF-8'
 
     # Apache Settings
+    apache_version: 2.2
     apache_document_root: '/'
     apache_index_list:
       - index.php
@@ -582,6 +583,7 @@ run.config:
 ### Apache Settings
 The following settings are used to configure Apache. These only apply when using `apache` as your `webserver`.
 
+- [apache_version](#apache_version)
 - [apache_document_root](#apache_document_root)
 - [apache_index_list](#apache_index_list)
 - [apache_default_gateway](#apache_default_gateway)
@@ -594,6 +596,21 @@ The following settings are used to configure Apache. These only apply when using
 - [apache_static_expire](#apache_static_expire)
 - [apache_log_level](#apache_log_level)
 - [apache_access_log](#apache_access_log)
+
+---
+
+#### apache_version
+Defines which version of Apache to use in your application. The following versions are available:
+
+- 2.2
+- 2.4
+
+```yaml
+run.config:
+  engine: php
+  engine.config:
+    apache_version: 2.2
+```
 
 ---
 
