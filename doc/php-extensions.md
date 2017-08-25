@@ -96,6 +96,7 @@
 | tidy           | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
 | timezonedb     | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
 | tokenizer      | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| trader         | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
 | txforward      | ✅  | ✅  | ✅  | ✅  | ❌  | ❌  |
 | uploadprogress | ✅  | ✅  | ✅  | ✅  | ❌  | ❌  |
 | wddx           | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
