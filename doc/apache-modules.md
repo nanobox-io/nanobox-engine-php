@@ -14,6 +14,7 @@ The apache modules listed below are available to the Nanobox PHP engine.
 - setenvif
 
 ## Optional Modules
+- access_compat
 - asis
 - auth_basic
 - auth_digest
