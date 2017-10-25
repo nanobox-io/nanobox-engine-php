@@ -61,7 +61,7 @@ END
 
 apache_version() {
   # boxfile apache_version
-  apache_version=$(nos_validate "$(nos_payload config_apache_version)" "string" "2.2")
+  apache_version=$(nos_validate "$(nos_payload config_apache_version)" "string" "2.4")
   echo "$apache_version"
 }
 
