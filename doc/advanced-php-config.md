@@ -249,6 +249,7 @@ Specifies which PHP runtime and version to use. The following runtimes are avail
 - php-5.6
 - php-7.0
 - php-7.1
+- php-7.2
 
 ```yaml
 run.config:
