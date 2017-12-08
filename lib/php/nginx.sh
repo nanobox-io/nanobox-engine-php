@@ -35,7 +35,7 @@ END
 
 nginx_force_https() {
   # boxfile nginx_force_https
-  force_https=$(nos_validate "$(nos_payload config_nginx_force_https)" "string" "false")
+  force_https=$(nos_validate "$(nos_payload config_nginx_force_https)" "boolean" "false")
   echo "$force_https"
 }
 
