@@ -41,12 +41,12 @@ http {
             }
 {{/force_https}}
             root   {{code_dir}}{{document_root}};
-{{#try_files}}
+{{#has_try_files}}
             try_files {{try_files}};
-{{/try_files}}
-{{^try_files}}
+{{/has_try_files}}
+{{^has_try_files}}
             index  {{directory_index}} {{default_gateway}};
-{{/try_files}}
+{{/has_try_files}}
         }
 
         # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
@@ -106,12 +106,12 @@ http {
             deny  all;
         }
 
-{{#try_files}}
+{{#has_try_files}}
         try_files {{try_files}};
-{{/try_files}}
-{{^try_files}}
+{{/has_try_files}}
+{{^has_try_files}}
         try_files $uri {{directory_index}} {{default_gateway}};
-{{/try_files}}
+{{/has_try_files}}
     }
 }
 }

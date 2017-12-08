@@ -24,6 +24,7 @@ nginx_conf_payload() {
   "data_dir": "$(nos_data_dir)",
   "code_dir": "$(nos_code_dir)",
   "force_https": $(nginx_force_https),
+  "has_try_files": $(nginx_has_try_files),
   "try_files": "$(nginx_try_files)",
   "document_root": "$(nginx_document_root)",
   "directory_index": "$(nginx_directory_index)",
@@ -36,6 +37,11 @@ nginx_force_https() {
   # boxfile nginx_force_https
   force_https=$(nos_validate "$(nos_payload config_nginx_force_https)" "string" "false")
   echo "$force_https"
+}
+
+nginx_has_try_files() {
+  [[ -n "$(nginx_try_files)" ]] && echo "true" && return
+  echo "false"
 }
 
 nginx_try_files() {
