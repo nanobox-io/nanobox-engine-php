@@ -34,6 +34,12 @@ http {
         port_in_redirect off;
         server_name localhost;
 
+        client_body_buffer_size {{client_body_buffer_size}};
+        client_body_in_file_only {{client_body_in_file_only}};
+        client_max_body_size {{client_max_body_size}};
+
+        send_timeout {{send_timeout}}s;
+
         location / {
 {{#force_https}}
             if ($http_x_forwarded_proto != "https") {
@@ -65,6 +71,8 @@ http {
 
             fastcgi_pass unix:{{data_dir}}/var/tmp/php.sock;
             fastcgi_index {{default_gateway}};
+            fastcgi_read_timeout {{fastcgi_read_timeout}}s;
+            fastcgi_send_timeout {{fastcgi_send_timeout}}s;
             # include fastcgi_params;
             
             fastcgi_param   QUERY_STRING            $query_string;

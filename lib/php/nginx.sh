@@ -28,7 +28,13 @@ nginx_conf_payload() {
   "try_files": "$(nginx_try_files)",
   "document_root": "$(nginx_document_root)",
   "directory_index": "$(nginx_directory_index)",
-  "default_gateway": "$(nginx_default_gateway)"
+  "default_gateway": "$(nginx_default_gateway)",
+  "client_body_buffer_size": "$(nginx_client_body_buffer_size)",
+  "client_body_in_file_only": "$(nginx_client_body_in_file_only)",
+  "client_max_body_size": "$(nginx_client_max_body_size)",
+  "send_timeout": "$(nginx_send_timeout)",
+  "fastcgi_read_timeout": "$(nginx_fastcgi_read_timeout)",
+  "fastcgi_send_timeout": "$(nginx_fastcgi_send_timeout)"
 }
 END
 }
@@ -74,6 +80,41 @@ nginx_default_gateway() {
   # boxfile nginx_default_gateway
   default_gateway=$(nos_validate "$(nos_payload config_nginx_default_gateway)" "string" "index.php")
   echo "$default_gateway"
+}
+
+nginx_client_body_buffer_size() {
+  # boxfile nginx_client_body_buffer_size
+  client_body_buffer_size=$(nos_validate "$(nos_payload config_nginx_client_body_buffer_size)" "byte" "16k")
+  echo "$client_body_buffer_size"
+}
+
+nginx_client_body_in_file_only() {
+  # boxfile nginx_client_body_in_file_only
+  client_body_in_file_only=$(nos_validate "$(nos_payload config_nginx_client_body_in_file_only)" "string" "off")
+  echo "$client_body_in_file_only"
+}
+nginx_client_max_body_size() {
+  # boxfile nginx_client_max_body_size
+  client_max_body_size=$(nos_validate "$(nos_payload config_nginx_client_max_body_size)" "byte" "1m")
+  echo "$client_max_body_size"
+}
+
+nginx_send_timeout() {
+  # boxfile nginx_send_timeout
+  send_timeout=$(nos_validate "$(nos_payload config_nginx_send_timeout)" "integer" "60")
+  echo "$send_timeout"
+}
+
+nginx_fastcgi_read_timeout() {
+  # boxfile nginx_fastcgi_read_timeout
+  fastcgi_read_timeout=$(nos_validate "$(nos_payload config_nginx_fastcgi_read_timeout)" "integer" "60")
+  echo "$fastcgi_read_timeout"
+}
+
+nginx_fastcgi_send_timeout() {
+  # boxfile nginx_fastcgi_send_timeout
+  fastcgi_send_timeout=$(nos_validate "$(nos_payload config_nginx_fastcgi_send_timeout)" "integer" "60")
+  echo "$fastcgi_send_timeout"
 }
 
 nginx_packages() {
