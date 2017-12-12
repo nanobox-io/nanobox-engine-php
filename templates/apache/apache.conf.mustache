@@ -87,7 +87,9 @@ DocumentRoot "{{code_dir}}{{document_root}}"
 DirectoryIndex {{directory_index}} {{default_gateway}}
 AccessFileName .htaccess
 TypesConfig {{etc_dir}}/httpd/mime.types
+{{^apache24}}
 DefaultType text/plain
+{{/apache24}}
 
 # add gzip compression
 AddOutputFilterByType DEFLATE text/plain text/html text/xml text/css application/x-javascript application/javascript
