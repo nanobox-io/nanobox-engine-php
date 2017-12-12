@@ -79,7 +79,7 @@ apache_max_spares() {
 
 apache_max_clients() {
   # boxfile apache_max_clients
-  apache_max_clients=$(nos_validate "$(nos_payload config_apache_max_clients)" "integer" "128")
+  apache_max_clients=$(nos_validate "$(nos_payload config_apache_max_clients)" "integer" "125")
   echo "$apache_max_clients"
 }
 
