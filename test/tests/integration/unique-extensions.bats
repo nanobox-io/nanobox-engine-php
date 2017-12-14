@@ -1,4 +1,4 @@
-# Integration test for a simple go app
+# Integration test for a simple php app
 
 # source environment helpers
 . util/env.sh
@@ -12,7 +12,7 @@ payload() {
   "cache_dir": "/tmp/cache",
   "etc_dir": "/data/etc",
   "env_dir": "/data/etc/env.d",
-  "config": {"runtime": "php-5.6", "extensions": ["json","json","json","json","json","xmlwriter","xml"],"zend_extensions":["xcache","xcache"],"dev_extensions":{"add":["geoip", "geoip"],"rm":["mongo"]},"dev_zend_extensions":{"add":["xdebug", "xdebug"],"rm":["xcache"]}}
+  "config": {"runtime": "php-5.6", "extensions": ["json","json","json","json","json","xmlwriter","xml"],"zend_extensions":["xcache","xcache"],"dev_extensions":{"add":["geoip", "geoip"],"rm":["mongo"]},"dev_zend_extensions":{"add":["xdebug", "xdebug"],"rm":["xcache"]}, "apache_version": "2.2"}
 }
 END
 }

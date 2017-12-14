@@ -1,4 +1,4 @@
-# Integration test for a simple go app
+# Integration test for a simple php app
 
 # source environment helpers
 . util/env.sh
@@ -12,7 +12,7 @@ payload() {
   "cache_dir": "/tmp/cache",
   "etc_dir": "/data/etc",
   "env_dir": "/data/etc/env.d",
-  "config": { "runtime": "php-5.4", "extensions": ["amqp", "dom", "timezonedb"] }
+  "config": { "runtime": "php-5.4", "extensions": ["amqp", "dom", "timezonedb"], "webserver": "nginx" }
 }
 END
 }
@@ -111,7 +111,7 @@ setup() {
   # /data/bin/start-php &
 
   # start apache
-  # /data/bin/start-apache &
+  # /data/bin/start-nginx &
   php-server &
 
   # sleep a few seconds so the server can start
@@ -124,10 +124,12 @@ setup() {
 
   # kill the server
   # pkill php-fpm
-  # pkill httpd
+  # pkill nginx
   pkill php-server
 
   echo "$output"
+  echo
+
 
   [[ "$output" =~ "phpinfo()" ]]
   [[ "$output" =~ PHP\ Version\ 5\.4\.[0-9]{1,2} ]]

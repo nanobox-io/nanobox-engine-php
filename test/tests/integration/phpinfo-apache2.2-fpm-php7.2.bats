@@ -1,4 +1,4 @@
-# Integration test for a simple go app
+# Integration test for a simple php app
 
 # source environment helpers
 . util/env.sh
@@ -12,7 +12,7 @@ payload() {
   "cache_dir": "/tmp/cache",
   "etc_dir": "/data/etc",
   "env_dir": "/data/etc/env.d",
-  "config": { "runtime": "php-5.3", "extensions": ["amqp", "dom", "timezonedb"] }
+  "config": { "runtime": "php-7.2", "extensions": ["amqp", "dom", "timezonedb"], "apache_version": "2.2" }
 }
 END
 }
@@ -128,7 +128,7 @@ setup() {
   echo "$output"
 
   [[ "$output" =~ "phpinfo()" ]]
-  [[ "$output" =~ PHP\ Version\ 5\.3\.[0-9]{1,2} ]]
+  [[ "$output" =~ PHP\ Version\ 7\.2\.[0-9]{1,2} ]]
   [[ "$output" =~ amqp ]]
   [[ "$output" =~ dom ]]
   [[ "$output" =~ timezonedb ]]

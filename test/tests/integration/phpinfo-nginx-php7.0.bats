@@ -12,7 +12,7 @@ payload() {
   "cache_dir": "/tmp/cache",
   "etc_dir": "/data/etc",
   "env_dir": "/data/etc/env.d",
-  "config": { "runtime": "php-5.6", "extensions": ["amqp", "dom", "timezonedb"], "webserver": "nginx" }
+  "config": { "runtime": "php-7.0", "extensions": ["amqp", "dom", "timezonedb"], "webserver": "nginx" }
 }
 END
 }
@@ -132,7 +132,7 @@ setup() {
 
 
   [[ "$output" =~ "phpinfo()" ]]
-  [[ "$output" =~ PHP\ Version\ 5\.6\.[0-9]{1,2} ]]
+  [[ "$output" =~ PHP\ Version\ 7\.0\.[0-9]{1,2} ]]
   [[ "$output" =~ amqp ]]
   [[ "$output" =~ dom ]]
   [[ "$output" =~ timezonedb ]]
