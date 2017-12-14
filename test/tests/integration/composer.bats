@@ -12,7 +12,7 @@ payload() {
   "cache_dir": "/tmp/cache",
   "etc_dir": "/data/etc",
   "env_dir": "/data/etc/env.d",
-  "config": {}
+  "config": {"composer_use_prestissimo": "true"}
 }
 END
 }
