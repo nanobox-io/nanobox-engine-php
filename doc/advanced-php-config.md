@@ -58,7 +58,7 @@ run.config:
       - index.php
       - index.html
     apache_default_gateway: 'index.php'
-    apache_php_interpreter: php_fpm
+    apache_php_interpreter: fpm
     apache_modules:
       - actions
       - alias
@@ -657,14 +657,14 @@ run.config:
 
 Specify which PHP interpreter you would like Apache to use.
 
-- php_fpm *(default)*
+- fpm *(default)*
 - mod_php
 
 ```yaml
 run.config:
   engine: php
   engine.config:
-    apache_php_interpreter: php_fpm
+    apache_php_interpreter: fpm
 ```
 
 ---
@@ -826,7 +826,7 @@ run.config:
 ---
 
 ### PHP-FPM Settings
-These settings only apply when using `php_fpm` as your `apache_php_interpreter`.
+These settings only apply when using `fpm` as your `apache_php_interpreter`.
 
 - [php_fpm_events_mechanism](#php_fpm_events_mechanism)
 - [php_fpm_max_children](#php_fpm_max_children)
