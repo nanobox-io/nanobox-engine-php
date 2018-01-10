@@ -27,21 +27,42 @@ http {
     gzip  on;
     gzip_min_length 1000;
     gzip_proxied    expired no-cache no-store private auth;
-    gzip_types      text/plain text/xml text/css application/x-javascript application/javascript;
+    gzip_types      text/plain text/xml text/css text/javascript application/x-javascript application/javascript application/xml text/x-component text/x-js text/richtext image/svg+xml text/xsd text/xsl image/bmp application/java application/msword application/vnd.ms-fontobject application/x-msdownload image/x-icon image/webp application/json application/vnd.ms-access application/vnd.ms-project application/x-font-otf application/vnd.ms-opentype application/vnd.oasis.opendocument.database application/vnd.oasis.opendocument.chart application/vnd.oasis.opendocument.formula application/vnd.oasis.opendocument.graphics application/vnd.oasis.opendocument.spreadsheet application/vnd.oasis.opendocument.text audio/ogg application/pdf application/vnd.ms-powerpoint application/x-shockwave-flash image/tiff application/x-font-ttf audio/wav application/vnd.ms-write application/font-woff application/font-woff2 application/vnd.ms-excel;
 
     server {
         listen       8080;
         port_in_redirect off;
         server_name localhost;
 
+        client_body_buffer_size {{client_body_buffer_size}};
+        client_body_in_file_only {{client_body_in_file_only}};
+        client_max_body_size {{client_max_body_size}};
+
+        send_timeout {{send_timeout}}s;
+
         location / {
+{{#force_https}}
+            if ($http_x_forwarded_proto != "https") {
+                return 301 https://$host$request_uri;
+            }
+{{/force_https}}
             root   {{code_dir}}{{document_root}};
+{{#has_try_files}}
+            try_files {{try_files}};
+{{/has_try_files}}
+{{^has_try_files}}
             index  {{directory_index}} {{default_gateway}};
+{{/has_try_files}}
         }
 
         # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
 
         location ~ [^/]\.php(/|$) {
+{{#force_https}}
+            if ($http_x_forwarded_proto != "https") {
+                return 301 https://$host$request_uri;
+            }
+{{/force_https}}
             root   {{code_dir}}{{document_root}};
             fastcgi_split_path_info ^(.+?\.php)(/.*)$;
             if (!-f $document_root$fastcgi_script_name) {
@@ -50,6 +71,8 @@ http {
 
             fastcgi_pass unix:{{data_dir}}/var/tmp/php.sock;
             fastcgi_index {{default_gateway}};
+            fastcgi_read_timeout {{fastcgi_read_timeout}}s;
+            fastcgi_send_timeout {{fastcgi_send_timeout}}s;
             # include fastcgi_params;
             
             fastcgi_param   QUERY_STRING            $query_string;
@@ -91,6 +114,11 @@ http {
             deny  all;
         }
 
+{{#has_try_files}}
+        try_files {{try_files}};
+{{/has_try_files}}
+{{^has_try_files}}
         try_files $uri {{directory_index}} {{default_gateway}};
+{{/has_try_files}}
     }
 }
