@@ -14,7 +14,7 @@ composer_required_extensions() {
 
 composer_install_command() {
   # boxfile composer_install
-  composer_install_command=$(nos_validate "$(nos_payload config_composer_install)" "string" "composer install --no-interaction --prefer-source")
+  composer_install_command=$(nos_validate "$(nos_payload config_composer_install)" "string" "composer install --no-interaction")
   echo "$composer_install_command"
 }
 

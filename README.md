@@ -16,7 +16,7 @@ The composer install command can be customized during the build process using a 
 run.config:
   engine: php
   engine.config:
-    composer_install: "composer install --no-interaction --prefer-source"
+    composer_install: "composer install --no-interaction"
 ```
 
 ## Basic Configuration
