@@ -8,4 +8,7 @@ else
   ln -sTf {{etc_dir}}/php.prod.d {{etc_dir}}/php.d
 fi
 
-exec {{data_dir}}/bin/php -S 0.0.0.0:8080 -c {{etc_dir}}/php/php.ini -t {{code_dir}}{{document_root}}/
+document_root="${1:-{{document_root}}}"
+document_root="/${document_root##/}"
+
+exec {{data_dir}}/bin/php -S 0.0.0.0:8080 -c {{etc_dir}}/php/php.ini -t {{code_dir}}${document_root}/

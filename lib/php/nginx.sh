@@ -2,10 +2,10 @@
 # vim: ts=2 sw=2 ft=bash noet
 
 generate_nginx_conf() {
-  
+
   # Report back to the user
   report_nginx_settings
-  
+
   nos_template \
   "nginx/nginx.conf.mustache" \
   "$(nos_etc_dir)/nginx/nginx.conf" \
@@ -21,8 +21,8 @@ report_nginx_settings() {
 nginx_conf_payload() {
   cat <<-END
 {
-  "data_dir": "$(nos_data_dir)",
   "code_dir": "$(nos_code_dir)",
+  "data_dir": "$(nos_data_dir)",
   "document_root": "$(nginx_document_root)",
   "directory_index": "$(nginx_directory_index)",
   "default_gateway": "$(nginx_default_gateway)"
@@ -36,7 +36,7 @@ nginx_document_root() {
 
   if [[ ${document_root:0:1} = '/' ]]; then
     echo $document_root
-  else 
+  else
     echo /$document_root
   fi
 }
@@ -72,7 +72,10 @@ generate_nginx_script() {
 nginx_script_payload() {
   cat <<-END
 {
-  "data_dir": "$(nos_data_dir)"
+  "code_dir": "$(nos_code_dir)",
+  "data_dir": "$(nos_data_dir)",
+  "etc_dir": "$(nos_etc_dir)",
+  "document_root": "$(nginx_document_root)",
 }
 END
 }

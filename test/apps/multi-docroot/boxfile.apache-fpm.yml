@@ -1,0 +1,16 @@
+run.config:
+  engine: php
+
+web.wp:
+  start:
+    php: start-php
+    apache: start-apache wp
+  routes:
+    - /
+
+web.api:
+  start:
+    php: start-php
+    apache: start-apache api
+  routes:
+    - api:/

@@ -104,7 +104,7 @@ AddOutputFilterByType DEFLATE text/plain text/html text/xml text/css application
 #Header unset ETag
 FileETag Mtime Size
 
-<Directory />
+<Directory {{code_dir}}>
     Options Indexes FollowSymLinks
     AllowOverride All
     DirectoryIndex {{ directory_index }} {{ default_gateway }}
@@ -155,16 +155,7 @@ ProxyPassMatch "^/(.*\.php(/.*)?)$" "unix:{{data_dir}}/var/tmp/php.sock|fcgi://l
 {{/apache24}}
 {{/fastcgi}}
 
-#############################################
-# VirtualHost Configuration                 #
-#############################################
-
-<VirtualHost *:8080>
-    DocumentRoot "{{code_dir}}{{document_root}}"
-    ServerName localhost
-    DirectoryIndex {{directory_index}} {{default_gateway}}
-    UnsetEnv USER HOME
-    SetEnvifNoCase X-Forwarded-Proto "https" HTTPS=on
-    RewriteEngine on
-    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization},L]
-</VirtualHost>
+UnsetEnv USER HOME
+SetEnvifNoCase X-Forwarded-Proto "https" HTTPS=on
+RewriteEngine on
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization},L]

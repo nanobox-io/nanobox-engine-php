@@ -1,5 +1,8 @@
 #!/bin/bash
 
+document_root="${1:-{{document_root}}}"
+document_root="/${document_root##/}"
+
 if [[ "$APP_NAME" = "dev" ]]; then
   cp {{etc_dir}}/php/dev_php.ini {{etc_dir}}/php/php.ini
   ln -sTf {{etc_dir}}/php.dev.d {{etc_dir}}/php.d
@@ -8,4 +11,4 @@ else
   ln -sTf {{etc_dir}}/php.prod.d {{etc_dir}}/php.d
 fi
 
-exec {{data_dir}}/sbin/httpd -DNO_DETACH
+exec {{data_dir}}/sbin/httpd -DNO_DETACH -c "DocumentRoot {{code_dir}}${document_root}"

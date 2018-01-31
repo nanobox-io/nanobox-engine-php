@@ -13,19 +13,27 @@ function ctrl_c() {
   fi
 }
 
+document_root="${1:-{{document_root}}}"
+document_root="/${document_root##/}"
+
 {{#apache}}
 start_apache() {
-  start-apache &
+  start-apache ${document_root} &
 }
 {{/apache}}
 {{#nginx}}
 start_nginx() {
-  start-nginx &
+  start-nginx ${document_root} &
 }
 {{/nginx}}
 {{^mod_php}}
 start_php() {
+  {{^builtin}}
   start-php &
+  {{/builtin}}
+  {{#builtin}}
+  start-php ${document_root} &
+  {{/builtin}}
 }
 {{/mod_php}}
 
@@ -80,7 +88,7 @@ start_logging() {
   {{/builtin}}
   logs+=({{data_dir}}/var/log/php/php_error.log)
   {{#fpm}}
-  logs+=({{data_dir}}/var/log/php/php_fpm.log)
+  logs+=({{data_dir}}/var/log/php/php-fpm.log)
   {{/fpm}}
   {{#apache}}
   # apache logs

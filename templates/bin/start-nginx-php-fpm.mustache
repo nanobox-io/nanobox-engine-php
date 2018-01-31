@@ -1,3 +1,16 @@
 #!/bin/bash
 
-exec {{data_dir}}/sbin/nginx
+document_root="${1:-{{document_root}}}"
+document_root="/${document_root##/}"
+
+if [ "${document_root}" != "{{document_root}}" ]
+then
+  TMPFILE=$(mktemp -q -t) && {
+    # Safe to use $TMPFILE in this block
+    cp {{etc_dir}}/nginx/nginx.conf "${TMPFILE}"
+    sed -i "s:root \+{{code_dir}}{{document_root}}:root {{code_dir}}${document_root}:" "${TMPFILE}"
+    exec {{data_dir}}/sbin/nginx -c "${TMPFILE}"
+  }
+else
+  exec {{data_dir}}/sbin/nginx
+fi
