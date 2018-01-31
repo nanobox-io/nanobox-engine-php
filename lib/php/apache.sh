@@ -2,10 +2,10 @@
 # vim: ts=2 sw=2 ft=bash noet
 
 generate_apache_conf() {
-  
+
   # Report back to the user
   report_apache_settings
-  
+
   nos_template \
     "apache/apache.conf.mustache" \
     "$(nos_etc_dir)/httpd/httpd.conf" \
@@ -16,11 +16,11 @@ report_apache_settings() {
   if [[ "$(apache_mod_php)" = "true" ]]; then
     nos_print_bullet_sub "Enabling mod_php"
   fi
-  
+
   if [[ "$(php_fpm_use_fastcgi)" = "true" ]]; then
     nos_print_bullet_sub "Enabling FastCGI"
   fi
-  
+
   nos_print_bullet_sub "Max spare servers: $(apache_max_spares)"
   nos_print_bullet_sub "Max clients: $(apache_max_clients)"
   nos_print_bullet_sub "Max requests per child: $(apache_max_requests_per_child)"
@@ -164,7 +164,7 @@ apache_access_log() {
 apache_packages() {
   apv=$(apache_version)
   pkgs=("apache-${apv}" "ap${apv//[.-]/}-cloudflare" "ap${apv//[.-]/}-xsendfile")
-  
+
   if [[ "$(php_fpm_use_fastcgi)" = "true" ]]; then
     if [[ "${apv}" = "2.2" ]]; then
       pkgs+=("ap${apv//[.-]/}-fastcgi")
@@ -172,7 +172,7 @@ apache_packages() {
   else
     pkgs+=("ap${apv//[.-]/}-$(condensed_runtime)")
   fi
-  
+
   echo "${pkgs[@]}"
 }
 
@@ -187,7 +187,10 @@ generate_apache_php_fpm_script() {
 apache_php_fpm_script_payload() {
   cat <<-END
 {
-  "data_dir": "$(nos_data_dir)"
+  "code_dir": "$(nos_code_dir)",
+  "data_dir": "$(nos_data_dir)",
+  "document_root": "$(apache_document_root)",
+  "apache24": $(apache24),
 }
 END
 }
@@ -203,8 +206,10 @@ generate_apache_mod_php_script() {
 apache_mod_php_script_payload() {
   cat <<-END
 {
+  "code_dir": "$(nos_code_dir)",
   "data_dir": "$(nos_data_dir)",
-  "etc_dir": "$(nos_etc_dir)"
+  "etc_dir": "$(nos_etc_dir)",
+  "document_root": "$(apache_document_root)"
 }
 END
 }

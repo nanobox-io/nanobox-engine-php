@@ -11,11 +11,11 @@ publish_release() {
 is_interpreter() {
   # extract php interpreter
   interpreter="fpm"
-  
+
   if [[ -n "$(nos_payload 'config_apache_php_interpreter')" ]]; then
     interpreter=$(nos_payload 'config_apache_php_interpreter')
   fi
-  
+
   if [[ "${interpreter}" = "$1" ]]; then
     echo "true"
   else
@@ -34,7 +34,7 @@ webserver() {
 }
 
 configure_webserver() {
-  
+
   if [[ "$(webserver)" = 'apache' ]]; then
     configure_apache
   elif [[ "$(webserver)" = 'nginx' ]]; then
@@ -42,7 +42,7 @@ configure_webserver() {
   elif [[ "$(webserver)" = 'builtin' ]]; then
     configure_builtin
   fi
-  
+
   if [[ "$(php_fpm_use_fastcgi)" = "true" ]]; then
     configure_php_fpm
   fi
@@ -61,7 +61,7 @@ condensed_runtime() {
 extension_packages() {
   pkgs=()
   extensions_list+=($(composer_required_extensions))
-  
+
   for pkg in $(composer_required_extensions); do
     pkgs+=("$(condensed_runtime)-${pkg}")
   done
@@ -85,7 +85,7 @@ extension_packages() {
       fi
     done
   fi
-  
+
   if [[ "${PL_config_dev_extensions_add_type}" = "array" ]]; then
     for ((i=0; i < PL_config_dev_extensions_add_length ; i++)); do
       type=PL_config_dev_extensions_add_${i}_type
@@ -113,20 +113,20 @@ validate_runtime_packages() {
   /data/bin/pkgin up > /dev/null
 
   pkgs=("$(runtime)")
-  
+
   # add php/zend extensions
   pkgs+=("$(extension_packages)")
-  
+
   # add apache packages
   if [[ "$(webserver)" = "apache" ]]; then
     pkgs+=("$(apache_packages)")
   fi
-  
+
   # add nginx packages
   if [[ "$(webserver)" = "nginx" ]]; then
     pkgs+=("$(nginx_packages)")
   fi
-  
+
   # install composer
   pkgs+=("$(composer_packages)")
 
@@ -153,20 +153,20 @@ validate_runtime_packages() {
 # Install php runtime, webservers, and any additional dependencies
 install_runtime_packages() {
   pkgs=("$(runtime)")
-  
+
   # add php/zend extensions
   pkgs+=("$(extension_packages)")
-  
+
   # add apache packages
   if [[ "$(webserver)" = "apache" ]]; then
     pkgs+=("$(apache_packages)")
   fi
-  
+
   # add nginx packages
   if [[ "$(webserver)" = "nginx" ]]; then
     pkgs+=("$(nginx_packages)")
   fi
-  
+
   # install composer
   pkgs+=("$(composer_packages)")
 
@@ -183,8 +183,8 @@ install_runtime_packages() {
     if [[ "$add" = "true" ]]; then
       install_pkgs+=(${i})
     fi
-  done 
-  
+  done
+
   nos_install ${install_pkgs[@]}
 }
 
@@ -216,34 +216,45 @@ php_profile_script() {
     "$(php_profile_payload)"
 }
 
-# Takes an argument as the webserver and returns true if it's configured    
-is_webserver() {    
-  # set the default webserver to apache   
-  webserver='apache'    
-      
-  if [[ -n "$(nos_payload 'config_webserver')" ]]; then   
-    webserver=$(nos_payload 'config_webserver')   
-  fi    
-      
-  if [[ "$webserver" = "$1" ]]; then    
-    echo "true"   
-  else    
-    echo "false"    
-  fi    
+# Takes an argument as the webserver and returns true if it's configured
+is_webserver() {
+  # set the default webserver to apache
+  webserver='apache'
+
+  if [[ -n "$(nos_payload 'config_webserver')" ]]; then
+    webserver=$(nos_payload 'config_webserver')
+  fi
+
+  if [[ "$webserver" = "$1" ]]; then
+    echo "true"
+  else
+    echo "false"
+  fi
+}
+
+document_root() {
+  # boxfile apache_document_root
+  docroot=$(nos_validate "$(nos_payload config_document_root)" "folder" "/")
+  if [[ ${docroot:0:1} = '/' ]]; then
+    echo $docroot
+  else
+    echo /$docroot
+  fi
 }
 
 php_server_script_payload() {
   cat <<-END
 {
   "env_dir": "$(nos_payload "env_dir")",
-  "apache": $(is_webserver 'apache'),    
-  "fpm": $(is_interpreter 'fpm'),   
-  "mod_php": $(is_interpreter 'mod_php'),   
-  "nginx": $(is_webserver 'nginx'),   
-  "builtin": $(is_webserver 'builtin'),   
-  "etc_dir": "$(nos_etc_dir)",    
-  "data_dir": "$(nos_data_dir)",    
+  "apache": $(is_webserver 'apache'),
+  "fpm": $(is_interpreter 'fpm'),
+  "mod_php": $(is_interpreter 'mod_php'),
+  "nginx": $(is_webserver 'nginx'),
+  "builtin": $(is_webserver 'builtin'),
+  "etc_dir": "$(nos_etc_dir)",
+  "data_dir": "$(nos_data_dir)",
   "code_dir": "$(nos_code_dir)",
+  "document_root": "$(document_root)",
 }
 END
 }

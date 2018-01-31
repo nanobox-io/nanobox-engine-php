@@ -14,7 +14,7 @@ web.main:
     apache[error]: {{data_dir}}/var/log/apache/error.log
     php[error]: {{data_dir}}/var/log/php/php_error.log
 {{#fpm}}
-    php[fpm]: {{data_dir}}/var/log/php/php_fpm.log
+    php[fpm]: {{data_dir}}/var/log/php/php-fpm.log
 {{/fpm}}
 {{/apache}}
 {{#nginx}}
@@ -25,7 +25,7 @@ web.main:
     nginx[access]: {{data_dir}}/var/log/nginx/access.log
     nginx[error]: {{data_dir}}/var/log/nginx/error.log
     php[error]: {{data_dir}}/var/log/php/php_error.log
-    php[fpm]: {{data_dir}}/var/log/php/php_fpm.log
+    php[fpm]: {{data_dir}}/var/log/php/php-fpm.log
 {{/nginx}}
 {{#builtin}}
   start: {{data_dir}}/bin/start-php
