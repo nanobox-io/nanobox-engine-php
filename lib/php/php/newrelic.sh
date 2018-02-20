@@ -10,6 +10,8 @@ generate_newrelic_ini() {
     "php/php.d/newrelic.ini.mustache" \
     "$(nos_etc_dir)/php.prod.d/newrelic.ini" \
     "$(newrelic_ini_payload)"
+
+  generate_newrelic_cfg
 }
 
 generate_dev_newrelic_ini() {
@@ -17,6 +19,13 @@ generate_dev_newrelic_ini() {
     "php/php.d/newrelic.ini.mustache" \
     "$(nos_etc_dir)/php.dev.d/newrelic.ini" \
     "$(newrelic_ini_payload)"
+}
+
+generate_newrelic_cfg() {
+  nos_template \
+    "newrelic.cfg.mustache" \
+    "$(nos_etc_dir)/newrelic.cfg" \
+    "$(newrelic_cfg_payload)"
 }
 
 report_newrelic_settings() {
@@ -64,6 +73,15 @@ newrelic_ini_payload() {
   "newrelic_webtransaction_name_functions": "$(newrelic_webtransaction_name_functions)",
   "newrelic_webtransaction_name_files": "$(newrelic_webtransaction_name_files)",
   "newrelic_webtransaction_name_remove_trailing_path": "$(newrelic_webtransaction_name_remove_trailing_path)"
+}
+END
+}
+
+newrelic_cfg_payload() {
+  cat <<-END
+{
+  "data_dir": "$(nos_data_dir)",
+  "newrelic_loglevel": "$(newrelic_loglevel)"
 }
 END
 }
