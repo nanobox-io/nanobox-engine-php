@@ -45,7 +45,6 @@ newrelic_ini_payload() {
   cat <<-END
 {
   "app_name": "$(app_name)",
-  "newrelic_license": "$(newrelic_license)",
   "newrelic_capture_params": "$(newrelic_capture_params)",
   "newrelic_ignored_params": "$(newrelic_ignored_params)",
   "newrelic_loglevel": "$(newrelic_loglevel)",
@@ -67,11 +66,6 @@ newrelic_ini_payload() {
   "newrelic_webtransaction_name_remove_trailing_path": "$(newrelic_webtransaction_name_remove_trailing_path)"
 }
 END
-}
-
-newrelic_license() {
-  # payload newrelic_license
-  echo "$(nos_payload newrelic_key)"
 }
 
 newrelic_capture_params() {
