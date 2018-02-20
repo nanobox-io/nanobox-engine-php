@@ -1,9 +1,7 @@
-
-{{#newrelic_license}}
 newrelic.daemon.dont_launch = 3
 newrelic.enabled=true
 newrelic.appname="nanobox {{app_name}}"
-newrelic.license="{{newrelic_license}}"
+newrelic.license=${NEWRELIC_LICENSE}
 newrelic.capture_params={{newrelic_capture_params}}
 newrelic.ignored_params="{{newrelic_ignored_params}}"
 newrelic.loglevel="{{newrelic_loglevel}}"
@@ -25,4 +23,3 @@ newrelic.error_collector.record_database_errors={{newrelic_error_collector_recor
 newrelic.webtransaction.name.functions="{{newrelic_webtransaction_name_functions}}"
 newrelic.webtransaction.name.files="{{newrelic_webtransaction_name_files}}"
 newrelic.webtransaction.name.remove_trailing_path={{newrelic_webtransaction_name_remove_trailing_path}}
-{{/newrelic_license}}

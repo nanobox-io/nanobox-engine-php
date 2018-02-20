@@ -10,6 +10,8 @@ generate_newrelic_ini() {
     "php/php.d/newrelic.ini.mustache" \
     "$(nos_etc_dir)/php.prod.d/newrelic.ini" \
     "$(newrelic_ini_payload)"
+
+  generate_newrelic_cfg
 }
 
 generate_dev_newrelic_ini() {
@@ -17,6 +19,13 @@ generate_dev_newrelic_ini() {
     "php/php.d/newrelic.ini.mustache" \
     "$(nos_etc_dir)/php.dev.d/newrelic.ini" \
     "$(newrelic_ini_payload)"
+}
+
+generate_newrelic_cfg() {
+  nos_template \
+    "newrelic.cfg.mustache" \
+    "$(nos_etc_dir)/newrelic.cfg" \
+    "$(newrelic_cfg_payload)"
 }
 
 report_newrelic_settings() {
@@ -45,7 +54,6 @@ newrelic_ini_payload() {
   cat <<-END
 {
   "app_name": "$(app_name)",
-  "newrelic_license": "$(newrelic_license)",
   "newrelic_capture_params": "$(newrelic_capture_params)",
   "newrelic_ignored_params": "$(newrelic_ignored_params)",
   "newrelic_loglevel": "$(newrelic_loglevel)",
@@ -69,9 +77,13 @@ newrelic_ini_payload() {
 END
 }
 
-newrelic_license() {
-  # payload newrelic_license
-  echo "$(nos_payload newrelic_key)"
+newrelic_cfg_payload() {
+  cat <<-END
+{
+  "data_dir": "$(nos_data_dir)",
+  "newrelic_loglevel": "$(newrelic_loglevel)"
+}
+END
 }
 
 newrelic_capture_params() {
