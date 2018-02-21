@@ -33,6 +33,4 @@ php_profile_script
 
 php_server_script
 
-composer_install
-
 exit 0

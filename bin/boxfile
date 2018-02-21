@@ -17,11 +17,5 @@ run.config:
     - ${HOME}/.composer/vendor/bin
     - $(nos_code_dir)/vendor/bin
 END
-if [[ $(grep -c build_triggers /opt/nanobox/hooks/lib/boxfile.rb) -gt 1 ]]; then
-	cat <<-END
-	  build_triggers:
-	    - composer.json
-	END
-fi
 
 exit 0
