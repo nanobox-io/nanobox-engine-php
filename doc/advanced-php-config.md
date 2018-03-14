@@ -50,6 +50,9 @@ run.config:
     session_autostart: false
     date_timezone: 'US/central'
     iconv_internal_encoding: 'UTF-8'
+    
+    # Composer Settings
+    composer_install: 'composer install --no-interaction --prefer-source'
 
     # Apache Settings
     apache_version: 2.2
@@ -155,6 +158,7 @@ run.config:
 ##### Quick Links
 [Web Server Settings](#web-server-settings)  
 [PHP Settings](#php-settings)  
+[Composer Settings](#composer-settings)  
 [Apache Settings](#apache-settings)  
 [Nginx Settings](#nginx-settings)  
 [Built-In PHP Web Server Settings](#built-in-php-web-server-settings)  
@@ -577,6 +581,25 @@ run.config:
   engine: php
   engine.config:
     iconv_internal_encoding: 'UTF-8'
+```
+
+---
+
+### Composer Settings
+The following settings allow you to customize how [Composer](https://getcomposer.org/) is used in your application.
+
+[composer_install](#composer_install)  
+
+---
+
+#### composer_install 
+Customize the `composer install` command that is run in your app's build process.
+
+```
+run.config:
+  engine: php
+  engine.config:
+    composer_install: 'composer install --no-interaction --prefer-source'
 ```
 
 ---

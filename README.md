@@ -11,6 +11,13 @@ run.config:
 
 ## Composer
 This engine uses [Composer](https://getcomposer.org) to manage dependencies. If a composer.json file exists at the root of your application, dependencies will be fetched during a build.
+The composer install command can be customized during the build process using a setting in the boxfile.yml.
+```yaml
+run.config:
+  engine: php
+  engine.config:
+    composer_install: "composer install --no-interaction --prefer-source"
+```
 
 ## Basic Configuration
 
