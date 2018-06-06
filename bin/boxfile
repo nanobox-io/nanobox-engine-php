@@ -13,17 +13,9 @@ nos_init "$@"
 
 cat <<-END
 run.config:
-  cache_dirs:
-    - /vendor
   extra_path_dirs:
     - ${HOME}/.composer/vendor/bin
     - $(nos_code_dir)/vendor/bin
 END
-if [[ $(grep -c build_triggers /opt/nanobox/hooks/lib/boxfile.rb) -gt 1 ]]; then
-	cat <<-END
-	  build_triggers:
-	    - composer.json
-	END
-fi
 
 exit 0
