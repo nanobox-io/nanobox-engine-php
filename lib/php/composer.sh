@@ -8,7 +8,7 @@ composer_packages() {
 }
 
 composer_required_extensions() {
-  exts=("phar" "json" "filter" "hash")
+  exts=("phar" "json" "filter" "hash" "mbstring")
   echo "${exts[@]}"
 }
 
