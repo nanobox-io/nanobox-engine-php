@@ -1,4 +1,4 @@
-# Integration test for a simple go app
+# Integration test for a simple php app
 
 # source environment helpers
 . util/env.sh
@@ -12,7 +12,7 @@ payload() {
   "cache_dir": "/tmp/cache",
   "etc_dir": "/data/etc",
   "env_dir": "/data/etc/env.d",
-  "config": { "runtime": "php-5.3", "extensions": ["amqp", "dom", "timezonedb"] }
+  "config": { "runtime": "php-5.3", "extensions": ["amqp", "dom", "timezonedb"], "webserver": "nginx" }
 }
 END
 }
@@ -105,11 +105,13 @@ setup() {
   # cd into the app code_dir
   cd /tmp/code
 
+  export TEST_VARIABLE=testing
+
   # start php-fpm
   # /data/bin/start-php &
 
   # start apache
-  # /data/bin/start-apache &
+  # /data/bin/start-nginx &
   php-server &
 
   # sleep a few seconds so the server can start
@@ -122,14 +124,18 @@ setup() {
 
   # kill the server
   # pkill php-fpm
-  # pkill httpd
+  # pkill nginx
   pkill php-server
 
   echo "$output"
+  echo
+
 
   [[ "$output" =~ "phpinfo()" ]]
   [[ "$output" =~ PHP\ Version\ 5\.3\.[0-9]{1,2} ]]
   [[ "$output" =~ amqp ]]
   [[ "$output" =~ dom ]]
   [[ "$output" =~ timezonedb ]]
+  # doesn't seem to work for php 5.3
+  # [[ "$output" =~ TEST_VARIABLE ]]
 }

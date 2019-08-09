@@ -12,7 +12,7 @@ payload() {
   "cache_dir": "/tmp/cache",
   "etc_dir": "/data/etc",
   "env_dir": "/data/etc/env.d",
-  "config": { "runtime": "php-5.6", "extensions": ["amqp", "dom", "timezonedb"], "webserver": "nginx" }
+  "config": { "runtime": "php-7.2", "extensions": ["amqp", "dom", "timezonedb"], "webserver": "builtin" }
 }
 END
 }
@@ -107,11 +107,8 @@ setup() {
 
   export TEST_VARIABLE=testing
 
-  # start php-fpm
+  # start php built-in server
   # /data/bin/start-php &
-
-  # start apache
-  # /data/bin/start-nginx &
   php-server &
 
   # sleep a few seconds so the server can start
@@ -120,20 +117,14 @@ setup() {
   # curl the index
   run curl -s 127.0.0.1:8080 2>/dev/null
 
-  expected="Hello world!"
-
   # kill the server
-  # pkill php-fpm
-  # pkill nginx
+  # pkill php
   pkill php-server
 
   echo "$output"
-  echo
-
 
   [[ "$output" =~ "phpinfo()" ]]
-  [[ "$output" =~ PHP\ Version\ 5\.6\.[0-9]{1,2} ]]
-  [[ "$output" =~ amqp ]]
+  [[ "$output" =~ PHP\ Version\ 7\.2\.[0-9]{1,2} ]]
   [[ "$output" =~ dom ]]
   [[ "$output" =~ timezonedb ]]
   [[ "$output" =~ TEST_VARIABLE ]]

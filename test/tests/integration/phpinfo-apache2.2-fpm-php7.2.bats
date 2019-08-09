@@ -1,4 +1,4 @@
-# Integration test for a simple go app
+# Integration test for a simple php app
 
 # source environment helpers
 . util/env.sh
@@ -12,7 +12,7 @@ payload() {
   "cache_dir": "/tmp/cache",
   "etc_dir": "/data/etc",
   "env_dir": "/data/etc/env.d",
-  "config": { "runtime": "php-5.5", "extensions": ["amqp", "dom", "timezonedb"], "apache_php_interpreter": "mod_php" }
+  "config": { "runtime": "php-7.2", "extensions": ["amqp", "dom", "timezonedb"], "apache_version": "2.2" }
 }
 END
 }
@@ -105,7 +105,8 @@ setup() {
   # cd into the app code_dir
   cd /tmp/code
 
-  export TEST_VARIABLE=testing
+  # start php-fpm
+  # /data/bin/start-php &
 
   # start apache
   # /data/bin/start-apache &
@@ -117,16 +118,18 @@ setup() {
   # curl the index
   run curl -s 127.0.0.1:8080 2>/dev/null
 
+  expected="Hello world!"
+
   # kill the server
+  # pkill php-fpm
   # pkill httpd
   pkill php-server
 
   echo "$output"
 
   [[ "$output" =~ "phpinfo()" ]]
-  [[ "$output" =~ PHP\ Version\ 5\.5\.[0-9]{1,2} ]]
+  [[ "$output" =~ PHP\ Version\ 7\.2\.[0-9]{1,2} ]]
   [[ "$output" =~ amqp ]]
   [[ "$output" =~ dom ]]
   [[ "$output" =~ timezonedb ]]
-  [[ "$output" =~ TEST_VARIABLE ]]
 }
