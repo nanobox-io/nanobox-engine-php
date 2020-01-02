@@ -52,7 +52,7 @@ run.config:
     iconv_internal_encoding: 'UTF-8'
     
     # Composer Settings
-    composer_install: 'composer install --no-interaction --prefer-source'
+    composer_install: 'composer install --no-interaction'
 
     # Apache Settings
     apache_version: 2.2
@@ -588,18 +588,18 @@ run.config:
 ### Composer Settings
 The following settings allow you to customize how [Composer](https://getcomposer.org/) is used in your application.
 
-[composer_install](#composer_install)  
+[composer_install](#composer_install)
 
 ---
 
-#### composer_install 
+#### composer_install
 Customize the `composer install` command that is run in your app's build process.
 
 ```
 run.config:
   engine: php
   engine.config:
-    composer_install: 'composer install --no-interaction --prefer-source'
+    composer_install: 'composer install --no-interaction'
 ```
 
 ---
